@@ -4,14 +4,30 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b7792ee3-ae78-4512-8b39-0bfbc986e2da" name="Changes" comment="Add Serializers">
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/pythonProject1.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="b7792ee3-ae78-4512-8b39-0bfbc986e2da" name="Changes" comment="First">
+      <change afterPath="$PROJECT_DIR$/Engineer/main-ui/src/actions/auth.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Engineer/main-ui/src/actions/types.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Engineer/main-ui/src/containers/Activate.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Engineer/main-ui/src/containers/Home.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Engineer/main-ui/src/containers/Login.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Engineer/main-ui/src/containers/Main.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Engineer/main-ui/src/containers/Signup.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Engineer/main-ui/src/containers/csrf_token.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Engineer/main-ui/src/hocs/Layout.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Engineer/main-ui/src/reducers/auth.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Engineer/main-ui/src/reducers/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Engineer/Engineer/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/Engineer/Engineer/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Engineer/Engineer/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/Engineer/Engineer/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Engineer/main-ui/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Engineer/main-ui/package-lock.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Engineer/main-ui/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Engineer/main-ui/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/Engineer/main-ui/public/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Engineer/main-ui/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/Engineer/main-ui/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Engineer/main-ui/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/Engineer/main-ui/src/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Engineer/teacher/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/Engineer/teacher/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Engineer/teacher/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/Engineer/teacher/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Engineer/teacher/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/Engineer/teacher/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,9 +37,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Python Script" />
         <option value="Python Stub" />
         <option value="HTML File" />
+        <option value="Python Script" />
       </list>
     </option>
   </component>
@@ -32,6 +48,9 @@
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 5
@@ -46,9 +65,30 @@
   &quot;keyToString&quot;: {
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/misha/Engineer/pythonProject1/Engineer/main-ui/src&quot;
+  },
+  &quot;keyToStringList&quot;: {
+    &quot;ChangesTree.GroupingKeys&quot;: [
+      &quot;directory&quot;
+    ]
   }
 }</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/Engineer/main-ui/src" />
+      <recent name="$PROJECT_DIR$/Engineer/main-ui/src/reducers" />
+      <recent name="$PROJECT_DIR$/Engineer/main-ui/src/hocs" />
+      <recent name="$PROJECT_DIR$/Engineer/main-ui/src/actions" />
+      <recent name="$PROJECT_DIR$/Engineer/main-ui/src/components" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/Engineer/main-ui/src/static" />
+      <recent name="$PROJECT_DIR$/Engineer/main-ui/src" />
+      <recent name="$PROJECT_DIR$/Engineer" />
+      <recent name="$PROJECT_DIR$/Engineer/Engineer" />
+    </key>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -81,11 +121,31 @@
       <option name="project" value="LOCAL" />
       <updated>1705315019303</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="First">
+      <option name="closed" value="true" />
+      <created>1705315057344</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1705315057344</updated>
+    </task>
+    <task id="LOCAL-00004" summary="First">
+      <option name="closed" value="true" />
+      <created>1705315076706</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1705315076706</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="com.intellij.fileTypeFactory" implementationName=".env" />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Add Serializers" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add Serializers" />
+    <MESSAGE value="First" />
+    <option name="LAST_COMMIT_MESSAGE" value="First" />
   </component>
 </project>

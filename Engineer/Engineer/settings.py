@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'student',
     'teacher',
+    'main',
     'rest_framework'
 ]
 
@@ -53,6 +54,13 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'Engineer.urls'
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ]
+}
 
 TEMPLATES = [
     {
@@ -125,9 +133,11 @@ STATICFILES_DIRS = (
     (BASE_DIR / 'main-ui/build/static'),
 )
 
+LOGIN_URL = '/teacher/auth/'
+
 MEDIA_ROOT = path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
-
+AUTH_USER_MODEL = 'teacher.User_model'
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
