@@ -58,7 +58,7 @@ ROOT_URLCONF = 'Engineer.urls'
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.BasicAuthentication',
-        'rest_framework.authentication.SessionAuthentication',
+        # 'rest_framework.authentication.SessionAuthentication',
     ]
 }
 
@@ -137,7 +137,7 @@ LOGIN_URL = '/teacher/auth/'
 
 MEDIA_ROOT = path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
-AUTH_USER_MODEL = 'teacher.User_model'
+AUTH_USER_MODEL = 'teacher.UserModel'
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 

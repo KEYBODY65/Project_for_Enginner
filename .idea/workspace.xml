@@ -4,29 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b7792ee3-ae78-4512-8b39-0bfbc986e2da" name="Changes" comment="First">
-      <change afterPath="$PROJECT_DIR$/Engineer/main-ui/src/actions/auth.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Engineer/main-ui/src/actions/types.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Engineer/main-ui/src/containers/Activate.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Engineer/main-ui/src/containers/Home.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Engineer/main-ui/src/containers/Login.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Engineer/main-ui/src/containers/Main.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Engineer/main-ui/src/containers/Signup.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Engineer/main-ui/src/containers/csrf_token.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Engineer/main-ui/src/hocs/Layout.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Engineer/main-ui/src/reducers/auth.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Engineer/main-ui/src/reducers/index.js" afterDir="false" />
+    <list default="true" id="b7792ee3-ae78-4512-8b39-0bfbc986e2da" name="Changes" comment="Add authenticate">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Engineer/Engineer/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/Engineer/Engineer/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Engineer/Engineer/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/Engineer/Engineer/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Engineer/main-ui/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Engineer/main-ui/package-lock.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Engineer/main-ui/package.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Engineer/main-ui/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/Engineer/main-ui/public/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Engineer/main-ui/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/Engineer/main-ui/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Engineer/main-ui/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/Engineer/main-ui/src/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Engineer/teacher/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/Engineer/teacher/admin.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Engineer/teacher/migrations/0001_initial.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Engineer/teacher/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/Engineer/teacher/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Engineer/teacher/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/Engineer/teacher/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Engineer/teacher/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/Engineer/teacher/serializers.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Engineer/teacher/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/Engineer/teacher/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -137,7 +121,15 @@
       <option name="project" value="LOCAL" />
       <updated>1705315076706</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Add authenticate">
+      <option name="closed" value="true" />
+      <created>1705677437402</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1705677437402</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="UnknownFeatures">
@@ -146,6 +138,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Add Serializers" />
     <MESSAGE value="First" />
-    <option name="LAST_COMMIT_MESSAGE" value="First" />
+    <MESSAGE value="Add authenticate" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add authenticate" />
   </component>
 </project>
