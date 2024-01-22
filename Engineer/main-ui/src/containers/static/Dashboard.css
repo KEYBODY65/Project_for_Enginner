@@ -1,0 +1,19 @@
+.new_test{
+    display: flex;
+    justify-content: space-between;
+    padding-right: 10%;
+
+}
+.new_test h5 {
+    margin-top: 13px;
+    margin-left: 5px;
+}
+.c {
+    justify-content: space-between;
+    flex-wrap: wrap;
+    text-decoration: none;
+    margin-top: 10px;
+}
+a {
+    text-decoration: none;
+}

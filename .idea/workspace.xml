@@ -5,13 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b7792ee3-ae78-4512-8b39-0bfbc986e2da" name="Changes" comment="Add authenticate">
+      <change afterPath="$PROJECT_DIR$/Engineer/main-ui/src/components/Navbar.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Engineer/main-ui/src/containers/CreateTask.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Engineer/main-ui/src/containers/CreateTest.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Engineer/main-ui/src/containers/Dashboard.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Engineer/main-ui/src/containers/Groups.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Engineer/main-ui/src/containers/static/Dashboard.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/pythonProject1.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/pythonProject1.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Engineer/Engineer/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/Engineer/Engineer/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Engineer/teacher/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/Engineer/teacher/admin.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Engineer/teacher/migrations/0001_initial.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Engineer/teacher/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/Engineer/teacher/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Engineer/teacher/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/Engineer/teacher/serializers.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Engineer/teacher/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/Engineer/teacher/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Engineer/main-ui/src/reducers/auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/Engineer/main-ui/src/reducers/auth.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,7 +53,8 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/misha/Engineer/pythonProject1/Engineer/main-ui/src&quot;
+    &quot;last_opened_file_path&quot;: &quot;/home/misha/Engineer/pythonProject1/Engineer/main-ui/src&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PythonContentEntriesConfigurable&quot;
   },
   &quot;keyToStringList&quot;: {
     &quot;ChangesTree.GroupingKeys&quot;: [
