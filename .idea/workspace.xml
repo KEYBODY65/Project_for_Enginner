@@ -4,19 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b7792ee3-ae78-4512-8b39-0bfbc986e2da" name="Changes" comment="Add authenticate">
+    <list default="true" id="b7792ee3-ae78-4512-8b39-0bfbc986e2da" name="Changes" comment="Delete Djoser">
+      <change afterPath="$PROJECT_DIR$/Engineer/main-ui/src/containers/Dashboard/Group.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Engineer/student/templates/student/main.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/pythonProject1.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/pythonProject1.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Engineer/main-ui/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/Engineer/main-ui/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Engineer/main-ui/src/actions/auth.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Engineer/main-ui/src/actions/types.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Engineer/main-ui/src/components/Navbar.js" beforeDir="false" afterPath="$PROJECT_DIR$/Engineer/main-ui/src/components/Navbar.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Engineer/main-ui/src/containers/Activate.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Engineer/main-ui/src/containers/Login.js" beforeDir="false" afterPath="$PROJECT_DIR$/Engineer/main-ui/src/containers/Login.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Engineer/main-ui/src/containers/Signup.js" beforeDir="false" afterPath="$PROJECT_DIR$/Engineer/main-ui/src/containers/Signup.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Engineer/main-ui/src/hocs/Layout.js" beforeDir="false" afterPath="$PROJECT_DIR$/Engineer/main-ui/src/hocs/Layout.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Engineer/main-ui/src/reducers/auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/Engineer/main-ui/src/reducers/auth.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Engineer/main-ui/src/containers/CreateTask.js" beforeDir="false" afterPath="$PROJECT_DIR$/Engineer/main-ui/src/containers/CreateTask.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Engineer/main-ui/src/containers/CreateTest.js" beforeDir="false" afterPath="$PROJECT_DIR$/Engineer/main-ui/src/containers/CreateTest.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Engineer/main-ui/src/containers/Dashboard.js" beforeDir="false" afterPath="$PROJECT_DIR$/Engineer/main-ui/src/containers/Dashboard.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Engineer/main-ui/src/containers/Groups.js" beforeDir="false" afterPath="$PROJECT_DIR$/Engineer/main-ui/src/containers/Groups.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Engineer/main-ui/src/containers/Home.js" beforeDir="false" afterPath="$PROJECT_DIR$/Engineer/main-ui/src/containers/Home.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Engineer/main-ui/src/containers/Main.js" beforeDir="false" afterPath="$PROJECT_DIR$/Engineer/main-ui/src/containers/Main.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,8 +27,9 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Python Stub" />
-        <option value="HTML File" />
         <option value="Python Script" />
+        <option value="JavaScript File" />
+        <option value="HTML File" />
       </list>
     </option>
   </component>
@@ -52,6 +53,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "DefaultHtmlFileTemplate": "HTML File",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "master",
@@ -80,6 +82,7 @@
       <recent name="$PROJECT_DIR$/Engineer/main-ui/src/components" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Lenovo X1\PycharmProjects\Project_for_Enginner\Engineer\main-ui\src\containers\Dashboard" />
       <recent name="$PROJECT_DIR$/Engineer/main-ui/src/static" />
       <recent name="$PROJECT_DIR$/Engineer/main-ui/src" />
       <recent name="$PROJECT_DIR$/Engineer" />
@@ -106,7 +109,7 @@
       <workItem from="1706110637214" duration="1134000" />
       <workItem from="1706167847637" duration="916000" />
       <workItem from="1706169101850" duration="2688000" />
-      <workItem from="1706623271101" duration="2675000" />
+      <workItem from="1706623271101" duration="4641000" />
     </task>
     <task id="LOCAL-00001" summary="Add Serializers">
       <option name="closed" value="true" />
@@ -148,7 +151,15 @@
       <option name="project" value="LOCAL" />
       <updated>1705677437402</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Delete Djoser">
+      <option name="closed" value="true" />
+      <created>1706626287977</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1706626287977</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -172,6 +183,7 @@
     <MESSAGE value="Add Serializers" />
     <MESSAGE value="First" />
     <MESSAGE value="Add authenticate" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add authenticate" />
+    <MESSAGE value="Delete Djoser" />
+    <option name="LAST_COMMIT_MESSAGE" value="Delete Djoser" />
   </component>
 </project>

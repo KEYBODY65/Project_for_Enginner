@@ -39,6 +39,11 @@ export default function CreateTask(){
     function renderTasks(){
         return  (
             <div>
+                <div className="form-floating">
+                    <input className="form-control" placeholder="Leave a comment here" id="describe" type='text'/>
+                    <label htmlFor="describe">Определите задание</label>
+                    <br/>
+                </div>
                 <div className='form-floating'>
                     <textarea className="form-control" placeholder="Leave a comment here" id="floatingTextarea" style={{height: 100}}></textarea>
                     <label htmlFor="floatingTextarea">Comments</label>

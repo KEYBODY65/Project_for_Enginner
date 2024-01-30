@@ -47,7 +47,7 @@ export default function Dashboard() {
             </div>
           </div>
         </Link>
-        <Link to='/teacher/dashboard/add_task'>
+        <Link to='/teacher/dashboard/new_task'>
           <div className='card border-primary mb-3' style={{ maxWidth: '18rem' }}>
             <div className='card-header' style={{ height: 40 }}></div>
             <div className='card-body'>
