@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { Link, Navigate } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { signup } from '../actions/auth';
+import { Link } from 'react-router-dom';
+// import { connect } from 'react-redux';
+// import { signup } from '../actions/auth';
 import axios from 'axios';
 
 
+// isAuthenticated
+const Signup = () => {
 
-const Signup = ({ signup, isAuthenticated }) => {
-
-    const [accountCreated, setAccountCreated] = useState(false);
+    // const [accountCreated, setAccountCreated] = useState(false);
     const [formData, setFormData] = useState({
         email: '',
         name: '',
@@ -36,19 +36,19 @@ const Signup = ({ signup, isAuthenticated }) => {
         e.preventDefault();
 
         if (password === re_password) {
-//        console.log(name, csrfToken)
-            signup(name, email, password, re_password, csrfToken);
-            setAccountCreated(true);
+            // signup(name, email, password, re_password, csrfToken);
+            // setAccountCreated(true);
         }
     };
 
 
-    if (isAuthenticated) {
-        return <Navigate to='/teacher' />
-    }
-    if (accountCreated) {
-        return <Navigate to='/teacher/auth' />
-    }
+    // if (isAuthenticated) {
+    //     return <Navigate to='/teacher' />
+    // }
+
+    // if (accountCreated) {
+    //     return <Navigate to='/teacher/auth' />
+    // }
 
     return (
         <div className='container mt-5'>
@@ -104,7 +104,7 @@ const Signup = ({ signup, isAuthenticated }) => {
                     <input
                         className='form-control'
                         type='password'
-                        placeholder='Ещё раз пароль'
+                        placeholder='Повторите пароль'
                         name='re_password'
                         value={re_password}
                         onChange={e => onChange(e)}
@@ -121,8 +121,9 @@ const Signup = ({ signup, isAuthenticated }) => {
     );
 };
 
-const mapStateToProps = state => ({
-    isAuthenticated: state.auth.isAuthenticated
-});
+// const mapStateToProps = state => ({
+//     isAuthenticated: state.auth.isAuthenticated
+// });
 
-export default connect(mapStateToProps, { signup })(Signup);
+export default Signup;
+// export default connect(mapStateToProps, { signup })(Signup);

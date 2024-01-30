@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Home from './containers/Home.js';
 import Login from './containers/Login.js';
 import Signup from './containers/Signup.js';
-import Activate from './containers/Activate.js';
+// import Activate from './containers/Activate.js';
 import Dashboard from './containers/Dashboard.js';
 import CreateTask from './containers/CreateTask.js';
 import CreateTest from './containers/CreateTest.js';

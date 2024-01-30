@@ -1,15 +1,15 @@
 import React, { Fragment, useState } from 'react';
 import { Link, redirect, Navigate} from 'react-router-dom';
 import { connect } from 'react-redux';
-import { logout } from '../actions/auth';
+// import { logout } from '../actions/auth';
 
 const Navbar = ({ logout, isAuthenticated }) => {
-    const [redirect, setRedirect] = useState(false);
+    // const [redirect, setRedirect] = useState(false);
 
-    const logout_user = () => {
-        logout();
-        setRedirect(true);
-    };
+    // const logout_user = () => {
+    //     logout();
+    //     setRedirect(true);
+    // };
 
     const guestLinks = () => (
         <Fragment>
@@ -17,14 +17,14 @@ const Navbar = ({ logout, isAuthenticated }) => {
                 <Link className='nav-link' to='/teacher/auth'>Войти</Link>
             </li>
             <li className='nav-item'>
-                <Link className='nav-link' to='/teacher/user'>Зарегистрироваться</Link>
+                <Link className='nav-link' to='/teacher/register'>Зарегистрироваться</Link>
             </li>
         </Fragment>
     );
 
     const authLinks = () => (
         <li className='nav-item'>
-            <a className='nav-link' href='/' onClick={logout_user}>Выйти</a>
+            {/*<a className='nav-link' href='/' onClick={logout_user}>Выйти</a>*/}
         </li>
     );
     const authLinks2 = () => (
@@ -53,18 +53,20 @@ const Navbar = ({ logout, isAuthenticated }) => {
                         <li className='nav-item active'>
                             <Link className='nav-link' to='/teacher'>Главная <span className='sr-only'></span></Link>
                         </li>
-                        {isAuthenticated && authLinks2()}
-                        {isAuthenticated ? authLinks() : guestLinks()}
+                        {guestLinks()}
+                        {/*{isAuthenticated && authLinks2()}*/}
+                        {/*{isAuthenticated ? authLinks() : guestLinks()}*/}
                     </ul>
                 </div>
             </nav>
-            {redirect ? <Navigate to='/' /> : <Fragment></Fragment>}
+            {/*{redirect ? <Navigate to='/' /> : <Fragment></Fragment>}*/}
         </Fragment>
     );
 };
 
-const mapStateToProps = state => ({
-    isAuthenticated: state.auth.isAuthenticated
-});
+// const mapStateToProps = state => ({
+//     isAuthenticated: state.auth.isAuthenticated
+// });
 
-export default connect(mapStateToProps, { logout })(Navbar);
+export default Navbar;
+// export default connect(mapStateToProps, { logout })(Navbar);
