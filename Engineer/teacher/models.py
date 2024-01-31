@@ -23,3 +23,5 @@ class UserModel(AbstractBaseUser):
 
     objects = UserManager()
     USERNAME_FIELD = 'email'
+
+
