@@ -27,7 +27,7 @@ const App = () => {
 
                     <Route path='/teacher' element={<Home />} />
                     <Route path='/teacher/auth' element={<Login />} />
-                    <Route path='/teacher/user' element={<Signup />} />
+                    <Route path='/teacher/register' element={<Signup />} />
                     <Route path='/teacher/dashboard' element={<Dashboard /> } />
                     <Route path='/teacher/dashboard/group' element={< Group/> } />
                     <Route path='/teacher/dashboard/new_task' element={<CreateTask /> } />
