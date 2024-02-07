@@ -8,7 +8,8 @@ import {
     USER_LOADED_SUCCESS,
     USER_LOADED_FAIL,
     AUTHENTICATED_FAIL,
-    AUTHENTICATED_SUCCESS
+    AUTHENTICATED_SUCCESS,
+    LOGOUT_FAIL
 } from './types';
 
 export const load_user = () => async dispatch => {
@@ -50,7 +51,7 @@ export const login = (email, password) => async dispatch => {
     const body = JSON.stringify({email, password});
 
     try {
-        const res = await axios.post(`'teacher/auth`, body, config);
+        const res = await axios.post(`/teacher/auth_data/`, body, config);
 
         dispatch({
             type: LOGIN_SUCCESS,
@@ -64,17 +65,17 @@ export const login = (email, password) => async dispatch => {
     }
 };
 
-export const signup = (first_name, last_name, email, password) => async dispatch => {
+export const signup = (name, surname, email, password) => async dispatch => {
     const config = {
         headers: {
             'Content-Type': 'application/json'
         }
     };
 
-    const body = JSON.stringify({first_name, last_name, email, password});
+    const body = JSON.stringify({name, surname, email, password});
     console.log(1)
     try {
-        const res = await axios.post(`register_data/`, body, config);
+        const res = await axios.post(`/teacher/register_data/`, body, config);
 
         dispatch({
             type: SIGNUP_SUCCESS,
@@ -124,8 +125,20 @@ export const checkAuthenticated = () => async dispatch => {
 };
 
 export const logout = () => dispatch => {
-    dispatch({
-        type: LOGOUT
-    });
+    try {
+        const res = axios.post(`/teacher/logout/`, {});
+
+        dispatch({
+            type: LOGOUT,
+            payload: res.data
+        })
+    }
+    catch(err)
+    {
+        dispatch({
+            type: LOGOUT_FAIL
+        })
+    }
+
 };
 

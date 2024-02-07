@@ -32,7 +32,7 @@ function Login({login, isAuthenticated}) {
     const onSubmit = e => {
         e.preventDefault();
 
-        login(email, password, csrfToken)
+        login(email, password)
         // .catch((err) => {
         //   console.error(err);
         //   setErr('Неправильная почта или пароль');
@@ -52,6 +52,7 @@ if (isAuthenticated){
             <h1>Вход</h1>
             <p>Войти в аккаунт</p>
             <form name='login' onSubmit={e => onSubmit(e)}>
+                <input type="hidden" name="csrfmiddlewaretoken" value={csrfToken}/>
                 <div className='form-group'>
                     <input
                         className='form-control'

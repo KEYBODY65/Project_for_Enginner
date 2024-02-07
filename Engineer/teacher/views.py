@@ -25,7 +25,6 @@ class login_user(APIView):
         log_data = LoginUser(data=request.data)
         if log_data.is_valid():
             user = UserModel.objects.filter(email=log_data.validated_data['email']).first()
-            print(user)
             if user is not None:
                 if user.check_password(log_data.validated_data['password']):
                     login(request, user)

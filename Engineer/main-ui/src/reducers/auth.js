@@ -1,4 +1,4 @@
-import{
+import {
     LOGIN_SUCCESS,
     LOGIN_FAIL,
     USER_LOADED_SUCCESS,
@@ -7,7 +7,8 @@ import{
     AUTHENTICATED_FAIL,
     SIGNUP_SUCCESS,
     SIGNUP_FAIL,
-    LOGOUT
+    LOGOUT,
+    LOGOUT_FAIL
 } from '../actions/types';
 
 const initialState = {
@@ -55,6 +56,9 @@ export default function MyComponent(state = initialState, action) {
                 ...state,
                 user: null
             }
+        case LOGOUT_FAIL:
+            return state
+
         case LOGIN_FAIL:
         case SIGNUP_FAIL:
         case LOGOUT:
