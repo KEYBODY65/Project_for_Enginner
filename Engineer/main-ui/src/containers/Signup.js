@@ -1,35 +1,13 @@
 import React, {useState, useEffect} from 'react';
-import {Link} from 'react-router-dom';
-// import { connect } from 'react-redux';
-// import { signup } from '../actions/auth';
+import {Link, Navigate} from 'react-router-dom';
+import { connect } from 'react-redux';
+import { signup } from '../actions/auth';
 import axios from 'axios';
 
 
-// isAuthenticated
-const Signup = () => {
-    const signup = (name, surname, email, password) => async dispatch => {
-        const config = {
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        };
 
-        console.log(2);
-        const body = JSON.stringify({name, surname, email, password, csrfToken});
-        console.log(body);
-        try {
-            const res = await axios.post('/teacher/auth/register_data/', body, config);
-            console.log(1);
-            dispatch({
-                payload: res.data
-            });
-        } catch (err) {
-            dispatch({});
-        }
-    };
-
-
-// const [accountCreated, setAccountCreated] = useState(false);
+const Signup = ({signup, isAuthenticated}) => {
+    const [accountCreated, setAccountCreated] = useState(false);
     const [formData, setFormData] = useState({
         email: '', name: '', surname: '', password: '', re_password: '', csrfToken: '',
     });
@@ -52,11 +30,8 @@ const Signup = () => {
         e.preventDefault();
 
         if (password === re_password) {
-            try {
-                signup(name, surname, email, password);
-            } catch (error) {
-                console.error(error);
-            }
+            signup(name, surname, email, password);
+            setAccountCreated(true);
         }
     };
 
@@ -65,9 +40,9 @@ const Signup = () => {
 //     return <Navigate to='/teacher' />
 // }
 
-// if (accountCreated) {
-//     return <Navigate to='/teacher/auth' />
-// }
+if (accountCreated) {
+    return <Navigate to='/teacher/auth' />
+}
 
     return (<div className='container mt-5'>
         <h1>Регистрация</h1>
@@ -140,9 +115,8 @@ const Signup = () => {
 };
 
 
-// const mapStateToProps = state => ({
-//     isAuthenticated: state.auth.isAuthenticated
-// });
+const mapStateToProps = state => ({
+    isAuthenticated: state.auth.isAuthenticated
+});
 
-export default Signup;
-// export default connect(mapStateToProps, { signup })(Signup);
+export default connect(mapStateToProps, { signup })(Signup);

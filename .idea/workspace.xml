@@ -4,14 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b7792ee3-ae78-4512-8b39-0bfbc986e2da" name="Changes" comment="New version of project">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/pythonProject1.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/pythonProject1.iml" afterDir="false" />
+    <list default="true" id="b7792ee3-ae78-4512-8b39-0bfbc986e2da" name="Changes" comment="промежуточный коммит">
+      <change afterPath="$PROJECT_DIR$/Engineer/main-ui/src/actions/auth.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Engineer/main-ui/src/actions/types.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Engineer/main-ui/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/Engineer/main-ui/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Engineer/Engineer/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/Engineer/Engineer/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Engineer/main-ui/src/components/Navbar.js" beforeDir="false" afterPath="$PROJECT_DIR$/Engineer/main-ui/src/components/Navbar.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Engineer/main-ui/src/containers/Login.js" beforeDir="false" afterPath="$PROJECT_DIR$/Engineer/main-ui/src/containers/Login.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Engineer/main-ui/src/containers/Signup.js" beforeDir="false" afterPath="$PROJECT_DIR$/Engineer/main-ui/src/containers/Signup.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Engineer/teacher/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/Engineer/teacher/serializers.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Engineer/teacher/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/Engineer/teacher/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Engineer/main-ui/src/hocs/Layout.js" beforeDir="false" afterPath="$PROJECT_DIR$/Engineer/main-ui/src/hocs/Layout.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Engineer/main-ui/src/reducers/auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/Engineer/main-ui/src/reducers/auth.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,8 +25,8 @@
       <list>
         <option value="Python Stub" />
         <option value="Python Script" />
-        <option value="JavaScript File" />
         <option value="HTML File" />
+        <option value="JavaScript File" />
       </list>
     </option>
   </component>
@@ -109,6 +111,11 @@
       <workItem from="1706698307663" duration="55000" />
       <workItem from="1706702517435" duration="4263000" />
       <workItem from="1706769398319" duration="16000" />
+      <workItem from="1706873960825" duration="3934000" />
+      <workItem from="1707053995898" duration="285000" />
+      <workItem from="1707161388937" duration="14000" />
+      <workItem from="1707209039696" duration="2346000" />
+      <workItem from="1707249436279" duration="3085000" />
     </task>
     <task id="LOCAL-00001" summary="Add Serializers">
       <option name="closed" value="true" />
@@ -166,7 +173,15 @@
       <option name="project" value="LOCAL" />
       <updated>1706628328787</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="промежуточный коммит">
+      <option name="closed" value="true" />
+      <created>1706874065633</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1706874065633</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -192,6 +207,7 @@
     <MESSAGE value="Add authenticate" />
     <MESSAGE value="Delete Djoser" />
     <MESSAGE value="New version of project" />
-    <option name="LAST_COMMIT_MESSAGE" value="New version of project" />
+    <MESSAGE value="промежуточный коммит" />
+    <option name="LAST_COMMIT_MESSAGE" value="промежуточный коммит" />
   </component>
 </project>
