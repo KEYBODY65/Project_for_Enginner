@@ -45,7 +45,7 @@ function Login({login, isAuthenticated}) {
 // Redirect them to the home page
 if (isAuthenticated){
     return <Navigate to='/teacher/dashboard' />
-};
+}
 
     return (
         <div className='container mt-5'>

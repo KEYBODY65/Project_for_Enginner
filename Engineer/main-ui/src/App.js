@@ -14,7 +14,6 @@ import CreateTest from './containers/CreateTest.js';
 import Groups from './containers/Groups.js';
 import Main from './containers/Main.js';
 import Group from './containers/Dashboard/Group.js';
-import PrivateRoute from './PrivateRoute.js';
 
 
 const App = () => {
@@ -28,13 +27,11 @@ const App = () => {
                         <Route path='/teacher' element={<Home/>}/>
                         <Route path='/teacher/auth' element={<Login/>}/>
                         <Route path='/teacher/register' element={<Signup/>}/>
-                        <Route element={<PrivateRoute />}>
-                            <Route path='/teacher/dashboard' element={<Dashboard/>}/>
-                            <Route path='/teacher/dashboard/group' element={<Group/>}/>
-                            <Route path='/teacher/dashboard/new_task' element={<CreateTask/>}/>
-                            <Route path='/teacher/dashboard/new_test' element={<CreateTest/>}/>
-                            <Route path='/teacher/dashboard/groups' element={<Groups/>}/>
-                        </Route>
+                        <Route path='/teacher/dashboard' element={<Dashboard/>}/>
+                        <Route path='/teacher/dashboard/group' element={<Group/>}/>
+                        <Route path='/teacher/dashboard/new_task' element={<CreateTask/>}/>
+                        <Route path='/teacher/dashboard/new_test' element={<CreateTest/>}/>
+                        <Route path='/teacher/dashboard/groups' element={<Groups/>}/>
                     </Routes>
                 </Layout>
             </Router>

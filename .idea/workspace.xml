@@ -4,19 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b7792ee3-ae78-4512-8b39-0bfbc986e2da" name="Changes" comment="redux промежуточный откат">
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/discord.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Engineer/main-ui/src/PrivateRoute.js" afterDir="false" />
+    <list default="true" id="b7792ee3-ae78-4512-8b39-0bfbc986e2da" name="Changes" comment="registration and login user (fix auth.js), fix auth.js(reducer) for new type LOGOUT_FAILED&#10;also add PrivateRoute.js">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Engineer/main-ui/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/Engineer/main-ui/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Engineer/main-ui/src/actions/auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/Engineer/main-ui/src/actions/auth.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Engineer/main-ui/src/actions/types.js" beforeDir="false" afterPath="$PROJECT_DIR$/Engineer/main-ui/src/actions/types.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Engineer/main-ui/src/PrivateRoute.js" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Engineer/main-ui/src/containers/Login.js" beforeDir="false" afterPath="$PROJECT_DIR$/Engineer/main-ui/src/containers/Login.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Engineer/main-ui/src/reducers/auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/Engineer/main-ui/src/reducers/auth.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Engineer/teacher/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/Engineer/teacher/serializers.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Engineer/teacher/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/Engineer/teacher/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Engineer/teacher/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/Engineer/teacher/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,32 +43,32 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "DefaultHtmlFileTemplate": "HTML File",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "master",
-    "last_opened_file_path": "/home/misha/Engineer/pythonProject1/Engineer/main-ui/src",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable",
-    "ts.external.directory.path": "C:\\Program Files\\JetBrains\\PyCharm 2023.3.2\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/misha/Engineer/pythonProject1/Engineer/main-ui/src&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;C:\\Program Files\\JetBrains\\PyCharm 2023.3.2\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "ChangesTree.GroupingKeys": [
-      "directory"
+  &quot;keyToStringList&quot;: {
+    &quot;ChangesTree.GroupingKeys&quot;: [
+      &quot;directory&quot;
     ],
-    "DatabaseDriversLRU": [
-      "sqlite"
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;sqlite&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/Engineer/main-ui/src" />
@@ -123,7 +115,7 @@
       <workItem from="1707161388937" duration="14000" />
       <workItem from="1707209039696" duration="2346000" />
       <workItem from="1707249436279" duration="3085000" />
-      <workItem from="1707290506339" duration="8515000" />
+      <workItem from="1707290506339" duration="9167000" />
     </task>
     <task id="LOCAL-00001" summary="Add Serializers">
       <option name="closed" value="true" />
@@ -197,7 +189,15 @@
       <option name="project" value="LOCAL" />
       <updated>1707290619022</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="registration and login user (fix auth.js), fix auth.js(reducer) for new type LOGOUT_FAILED&#10;also add PrivateRoute.js">
+      <option name="closed" value="true" />
+      <created>1707303373494</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1707303373494</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -225,6 +225,7 @@
     <MESSAGE value="New version of project" />
     <MESSAGE value="промежуточный коммит" />
     <MESSAGE value="redux промежуточный откат" />
-    <option name="LAST_COMMIT_MESSAGE" value="redux промежуточный откат" />
+    <MESSAGE value="registration and login user (fix auth.js), fix auth.js(reducer) for new type LOGOUT_FAILED&#10;also add PrivateRoute.js" />
+    <option name="LAST_COMMIT_MESSAGE" value="registration and login user (fix auth.js), fix auth.js(reducer) for new type LOGOUT_FAILED&#10;also add PrivateRoute.js" />
   </component>
 </project>
