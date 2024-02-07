@@ -1,17 +1,17 @@
 import React, {useState, useEffect} from 'react';
 import {Link, Navigate} from 'react-router-dom';
 import {connect} from 'react-redux';
-// import {login, isAuthenticated} from '../actions/auth'
+import {login} from '../actions/auth'
 import axios from 'axios';
 
-function Login() {
+function Login({login, isAuthenticated}) {
     const [formData, setFormData] = useState({
         email: '',
         password: '',
         csrfToken: ''
     });
-    const [err, setErr] = useState('');
-    const [hasError, setHasError] = useState(false)
+    // const [err, setErr] = useState('');
+    // const [hasError, setHasError] = useState(false)
 
     useEffect(() => {
         axios
@@ -32,7 +32,7 @@ function Login() {
     const onSubmit = e => {
         e.preventDefault();
 
-        // login(email, password, csrfToken)
+        login(email, password, csrfToken)
         // .catch((err) => {
         //   console.error(err);
         //   setErr('Неправильная почта или пароль');
@@ -43,9 +43,9 @@ function Login() {
 
 // Is the user authenticated?
 // Redirect them to the home page
-// if (isAuthenticated){
-//     return <Navigate to='/teacher/dashboard' />
-// };
+if (isAuthenticated){
+    return <Navigate to='/teacher/dashboard' />
+};
 
     return (
         <div className='container mt-5'>
@@ -91,8 +91,8 @@ function Login() {
 }
 
 
-// const mapStateToProps = state => ({
-//     isAuthenticated: state.auth.isAuthenticated
-// });
-export default Login;
-// export default connect(mapStateToProps, {login})(Login);
+const mapStateToProps = state => ({
+    isAuthenticated: state.auth.isAuthenticated
+});
+
+export default connect(mapStateToProps, {login})(Login);
