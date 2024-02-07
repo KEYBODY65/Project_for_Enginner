@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import UserModel
+from .models import *
 
 
 class Create_User(serializers.ModelSerializer):
@@ -12,3 +12,9 @@ class Create_User(serializers.ModelSerializer):
 class LoginUser(serializers.Serializer):
     email = serializers.EmailField()
     password = serializers.CharField()
+
+
+class Create_Task(serializers.ModelSerializer):
+    class Meta:
+        model = Task
+        fields = ['id', 'task_builder', 'task_name', 'weight', 'file', 'subject']

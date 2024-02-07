@@ -1,7 +1,7 @@
 from django.contrib.auth import login, logout
 from rest_framework.decorators import APIView
 from django.http import JsonResponse
-from .serializers import Create_User, LoginUser
+from .serializers import *
 from django.middleware.csrf import get_token
 from .models import UserModel
 from django.contrib.auth.decorators import login_required
@@ -46,3 +46,9 @@ def get_csrf(request):
     cookies = request.COOKIES
     csrf_token = cookies.get("csrftoken", get_token(request))
     return JsonResponse(data={'csrfToken': csrf_token})
+
+
+
+class create_tasks(APIView):
+    def post(self, request):
+        print(request.user.name)
