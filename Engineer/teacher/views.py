@@ -58,7 +58,6 @@ class Create_task(APIView):
         data['task_builder'] = user.id
         task_data = Create_TaskSerializer(data=data)
         task_data.is_valid()
-        print(task_data.initial_data, task_data.errors)
         if task_data.is_valid():
             task = task_data.save()
             return JsonResponse({'message': 'Task added successfully'}, status=200)
@@ -101,3 +100,9 @@ class Add_Test(APIView):
 class Statics_View(APIView):
     def post(self, request):
         pass
+
+
+def Dashboard_data(request):
+    name = UserModel.objects.get(id=request.user.id).name
+    pass
+
