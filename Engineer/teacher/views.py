@@ -48,16 +48,15 @@ def get_csrf(request):
     csrf_token = cookies.get("csrftoken", get_token(request))
     return JsonResponse(data={'csrfToken': csrf_token})
 
+def dash_board_data(request):
+    data = UserModel.objects.get(id=request.user.id)
+    return JsonResponse({'user_name': data.name})
 
 class Create_task(APIView):
     def post(self, request):
         user = UserModel.objects.get(id=request.user.id)
-        data = dict(request.data)
-        for k in data.keys():
-            data[k] = data[k][0]
-        data['task_builder'] = user.id
-        task_data = Create_TaskSerializer(data=data)
-        task_data.is_valid()
+        request.data['task_builder'] = user.id
+        task_data = Create_TaskSerializer(data=request.data)
         if task_data.is_valid():
             task = task_data.save()
             return JsonResponse({'message': 'Task added successfully'}, status=200)
@@ -101,8 +100,4 @@ class Statics_View(APIView):
     def post(self, request):
         pass
 
-
-def Dashboard_data(request):
-    name = UserModel.objects.get(id=request.user.id).name
-    pass
 
