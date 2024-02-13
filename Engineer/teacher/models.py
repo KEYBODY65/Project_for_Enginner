@@ -29,5 +29,24 @@ class Task(models.Model):
     task_builder = models.ForeignKey(UserModel, on_delete=models.PROTECT)
     task_name = models.CharField(max_length=255)
     weight = models.IntegerField()
+    true_answer = models.CharField(max_length=255)
     file = models.FileField(blank=True, null=True, upload_to='task_files/')
-    subjects = models.CharField(max_length=255)
+    subject = models.CharField(max_length=255)
+
+
+class Group(models.Model):
+    group_builder = models.ForeignKey(UserModel, on_delete=models.PROTECT)
+    group_name = models.CharField(max_length=255)
+
+
+class Student(models.Model):
+    student_teacher = models.ForeignKey(UserModel, on_delete=models.PROTECT)
+    student_group = models.ForeignKey(Group, on_delete=models.PROTECT)
+    student_name = models.CharField(max_length=255)
+    student_surname = models.CharField(max_length=255)
+    student_patronymic = models.CharField(max_length=255)
+    student_login = models.CharField(max_length=255)
+    student_password = models.CharField(max_length=255)
+
+
+

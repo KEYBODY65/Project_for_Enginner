@@ -58,7 +58,6 @@ ROOT_URLCONF = 'Engineer.urls'
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.BasicAuthentication',
-        # 'rest_framework.authentication.SessionAuthentication',
     ]
 }
 
@@ -133,7 +132,6 @@ STATICFILES_DIRS = (
     (BASE_DIR / 'main-ui/build/static'),
 )
 
-LOGIN_URL = '/teacher/auth/'
 
 MEDIA_ROOT = path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'

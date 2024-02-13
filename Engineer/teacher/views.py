@@ -4,14 +4,11 @@ from django.http import JsonResponse
 from .serializers import *
 from django.middleware.csrf import get_token
 from .models import UserModel
-from django.contrib.auth.decorators import login_required
-from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import ensure_csrf_cookie
-
-
-class create_user(APIView):
+from .generate_password import *
+class Create_user(APIView):
     def post(self, request):
-        serializer = Create_User(data=request.data)
+        serializer = Create_UserSerializer(data=request.data)
         if serializer.is_valid():
             user = serializer.save()
             user.set_password(serializer.validated_data['password'])
@@ -20,9 +17,9 @@ class create_user(APIView):
         return JsonResponse(data={'message': 'Not Register'}, status=400)
 
 
-class login_user(APIView):
+class Login_user(APIView):
     def post(self, request):
-        log_data = LoginUser(data=request.data)
+        log_data = Login_UserSerializer(data=request.data)
         if log_data.is_valid():
             user = UserModel.objects.filter(email=log_data.validated_data['email']).first()
             if user is not None:
@@ -33,15 +30,14 @@ class login_user(APIView):
         return JsonResponse(data={'message': 'Not Valid'}, status=400)
 
 
-@method_decorator(login_required(), name='dispatch')  # проверка на авторизованность (починить путь)
-class logout_user(APIView):
+class Logout_user(APIView):
 
     def post(self, request):
         logout(request)
         return JsonResponse(data={'message': 'The User was logout'}, status=200)
 
 
-@ensure_csrf_cookie
+@ensure_csrf_cookie # для получения CSRF-токена
 def get_csrf(request):
     cookies = request.COOKIES
     csrf_token = cookies.get("csrftoken", get_token(request))
@@ -49,6 +45,48 @@ def get_csrf(request):
 
 
 
-class create_tasks(APIView):
+class Create_task(APIView):
     def post(self, request):
-        print(request.user.name)
+        task_data = Create_TaskSerializer(data=request.data)
+        if task_data.is_valid():
+            task = task_data.save()
+            task.task_builder = UserModel.objects.get(id=request.user.id)
+            task.save()
+            return JsonResponse({'message': 'Task added successfully'}, status=200)
+        return JsonResponse({'message': 'Not valid data'}, status=400)
+
+
+class Add_group(APIView):
+    def post(self, request):
+        group_data = Create_GroupsSerializer(data=request.data)
+        if group_data.is_valid():
+            group = group_data.save()
+            group.group_builder = UserModel.objects.get(id=request.user.id)
+            group.save()
+            return JsonResponse({'message': 'Group added successfully'}, status=200)
+        return JsonResponse({'message': 'Not valid data'}, status=400)
+
+
+class Add_Student(APIView):
+    def post(self, request):
+        student_data = Create_StudentsSerializer(data=request.data)
+        if student_data.is_valid():
+            student = student_data.save(commit=False)
+            student.student_teacher = UserModel.objects.get(id=request.user.id)
+            student.student_group = Group.objects.get(student_group=student_data.validated_data.get('group_name'))
+            name = student_data.validated_data.get('student_name')
+            surname = student_data.validated_data.get('student_surname')
+            patronymic = student_data.validated_data.get('student_patronymic')
+            student.student_login = generate_login(f'{surname} {name} {patronymic}')
+            student.student_password = student.set_password(generate_password())
+            student.save()
+            return JsonResponse({'message': 'Student added successfully'}, status=200)
+        return JsonResponse({'message': 'Not valid data'}, status=400)
+
+class Add_Test(APIView):
+    def post(self, request):
+        pass
+
+class Statics_View(APIView):
+    def post(self, request):
+        pass
