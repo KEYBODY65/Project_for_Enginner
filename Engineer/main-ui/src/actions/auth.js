@@ -41,10 +41,11 @@ export const load_user = () => async dispatch => {
     }
 };
 
-export const login = (email, password) => async dispatch => {
+export const login = (email, password, csrfToken) => async dispatch => {
     const config = {
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'X-CSRFToken': csrfToken
         }
     };
 
@@ -65,10 +66,11 @@ export const login = (email, password) => async dispatch => {
     }
 };
 
-export const signup = (name, surname, email, password) => async dispatch => {
+export const signup = (name, surname, email, password, csrfToken) => async dispatch => {
     const config = {
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'X-CSRFToken': csrfToken
         }
     };
 

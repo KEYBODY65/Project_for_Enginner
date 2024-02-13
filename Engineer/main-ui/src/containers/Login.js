@@ -32,7 +32,7 @@ function Login({login, isAuthenticated}) {
     const onSubmit = e => {
         e.preventDefault();
 
-        login(email, password)
+        login(email, password, csrfToken)
         // .catch((err) => {
         //   console.error(err);
         //   setErr('Неправильная почта или пароль');

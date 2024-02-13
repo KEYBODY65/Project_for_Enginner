@@ -28,6 +28,7 @@ class UserModel(AbstractBaseUser):
 class Task(models.Model):
     task_builder = models.ForeignKey(UserModel, on_delete=models.PROTECT)
     task_name = models.CharField(max_length=255)
+    task_description = models.TextField()
     weight = models.IntegerField()
     true_answer = models.CharField(max_length=255)
     file = models.FileField(blank=True, null=True, upload_to='task_files/')

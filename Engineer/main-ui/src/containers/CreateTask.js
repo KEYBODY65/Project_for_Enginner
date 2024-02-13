@@ -26,55 +26,52 @@ export default function CreateTask() {
     function handleSubmit(event) {
         event.preventDefault();
         const newTask = {
-            describe: document.getElementById('describe').value,
-            comments: document.getElementById('floatingTextarea').value,
+            task_name: document.getElementById('describe').value,
+            task_description: document.getElementById('floatingTextarea').value,
+            true_answer: document.getElementById('true_answer').value,
             weight: document.getElementById('input').value,
-            files: document.getElementById('formFileMultiple').files,
+            file: document.getElementById('formFileMultiple').files[0],
+            subject: document.getElementById('floatingSelect').value
         };
-        setSubmittedTasks(newTask); // Добавление задания в список
+        setSubmittedTasks([newTask]); // Добавление задания в список
         console.log(submittedTasks);
-    }
-
-    function sendTasksToServer() {
-        const url = '/teacher/new_task_data/'; // Замените на ваш URL сервера
         const formData = new FormData();
 
-        submittedTasks.forEach((task, index) => {
-            Object.keys(task).forEach(key => {
-                if (key === 'files' && task[key] instanceof FileList) {
-                    // Если ключ - 'files' и значение является FileList (т.е. массивом файлов)
-                    Array.from(task[key]).forEach(file => {
-                        formData.append(`file_${index}_${file.name}`, file);
-                    });
-                } else {
-                    formData.append(`${key}_${index}`,task[key]);
-                }
-            });
-        });
-        // Отправка POST-запроса на сервер с данными списка заданий
-        const config = {
+        // Добавляем остальные данные в formData
+        formData.append('task_name', newTask.task_name);
+        formData.append('task_description', newTask.task_description);
+        formData.append('true_answer', newTask.true_answer);
+        formData.append('weight', newTask.weight);
+        formData.append('file', newTask.file);
+        formData.append('subject', newTask.subject);
+
+        // Отправляем formData на сервер
+        axios.post('/teacher/new_task_data/', formData, {
             headers: {
-                "Authorization": csrfToken,
+                'X-CSRFToken': csrfToken,
                 'Content-Type': 'multipart/form-data'
             }
-        }
-        fetch(url, {
-            method: 'POST',
-            body: formData,
         })
-            .then(response => response.json())
-            .then(data => {
-                // Данные успешно отправлены на сервер
+            .then(response => {
+                console.log(response.data);
             })
             .catch(error => {
-                console.log(error)
+                console.error('Error:', error);
             });
     }
-
 
     function renderTasks() {
         return (
             <div>
+                <div className="form-floating">
+                    <select className="form-select" id="floatingSelect" aria-label="Floating label select example">
+                        <option value='Алгебра' selected>Алгебра</option>
+                        <option value="Геометрия">Геометрия</option>
+                        <option value="Информатика">Информатика</option>
+                        <option value="Физика">Физика</option>
+                    </select>
+                    <label htmlFor="floatingSelect">Выберите предмет</label>
+                </div>
                 <div className="form-floating">
                     <input className="form-control" placeholder="Leave a comment here" id="describe" type='text'/>
                     <label htmlFor="describe">Определите задание</label>
@@ -83,7 +80,7 @@ export default function CreateTask() {
                 <div className='form-floating'>
                     <textarea className="form-control" placeholder="Leave a comment here" id="floatingTextarea"
                               style={{height: 100}}></textarea>
-                    <label htmlFor="floatingTextarea">Comments</label>
+                    <label htmlFor="floatingTextarea">Текст задания</label>
                 </div>
                 <div className="mb-3">
                     <input className="form-control" type="file" id="formFileMultiple" multiple/>
@@ -91,6 +88,10 @@ export default function CreateTask() {
                 <div className='form-floating'>
                     <input className="form-control" placeholder="Leave a comment here" id="input" type='number'/>
                     <label htmlFor="input">Вес задания</label>
+                </div>
+                <div className='form-floating'>
+                    <input className="form-control" placeholder="Leave a comment here" id="true_answer" type='number'/>
+                    <label htmlFor="input">Правильный ответ:</label>
                 </div>
                 <br/>
             </div>
@@ -117,13 +118,10 @@ export default function CreateTask() {
                         <input type="hidden" name="csrfmiddlewaretoken" value={csrfToken}/>
                         {renderTasks()}
                         <button type='button' onClick={handleSubmit}
-                                className='btn btn-primary mt-2'> Сохранить
+                                className='btn btn-primary mt-2'> Отправить данные на сервер
                         </button>
                         <br/>
                     </form>
-                    <button className='btn btn-primary mt-2' onClick={sendTasksToServer}>
-                        Отправить задания на сервер
-                    </button>
                 </>
             ) : (
                 <h5>

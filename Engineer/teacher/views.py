@@ -2,10 +2,13 @@ from django.contrib.auth import login, logout
 from rest_framework.decorators import APIView
 from django.http import JsonResponse
 from .serializers import *
+from django.contrib.auth.models import auth
 from django.middleware.csrf import get_token
 from .models import UserModel
 from django.views.decorators.csrf import ensure_csrf_cookie
 from .generate_password import *
+
+
 class Create_user(APIView):
     def post(self, request):
         serializer = Create_UserSerializer(data=request.data)
@@ -24,7 +27,9 @@ class Login_user(APIView):
             user = UserModel.objects.filter(email=log_data.validated_data['email']).first()
             if user is not None:
                 if user.check_password(log_data.validated_data['password']):
-                    login(request, user)
+                    user = auth.authenticate(email=log_data.validated_data['email'],
+                                             password=log_data.validated_data['password'])
+                    auth.login(request, user)
                     return JsonResponse(data={'message': 'All right'}, status=200)
             return JsonResponse(data={'message': 'This User is not on our database'})
         return JsonResponse(data={'message': 'Not Valid'}, status=400)
@@ -37,21 +42,25 @@ class Logout_user(APIView):
         return JsonResponse(data={'message': 'The User was logout'}, status=200)
 
 
-@ensure_csrf_cookie # для получения CSRF-токена
+@ensure_csrf_cookie  # для получения CSRF-токена
 def get_csrf(request):
     cookies = request.COOKIES
     csrf_token = cookies.get("csrftoken", get_token(request))
     return JsonResponse(data={'csrfToken': csrf_token})
 
 
-
 class Create_task(APIView):
     def post(self, request):
-        task_data = Create_TaskSerializer(data=request.data)
+        user = UserModel.objects.get(id=request.user.id)
+        data = dict(request.data)
+        for k in data.keys():
+            data[k] = data[k][0]
+        data['task_builder'] = user.id
+        task_data = Create_TaskSerializer(data=data)
+        task_data.is_valid()
+        print(task_data.initial_data, task_data.errors)
         if task_data.is_valid():
             task = task_data.save()
-            task.task_builder = UserModel.objects.get(id=request.user.id)
-            task.save()
             return JsonResponse({'message': 'Task added successfully'}, status=200)
         return JsonResponse({'message': 'Not valid data'}, status=400)
 
@@ -83,9 +92,11 @@ class Add_Student(APIView):
             return JsonResponse({'message': 'Student added successfully'}, status=200)
         return JsonResponse({'message': 'Not valid data'}, status=400)
 
+
 class Add_Test(APIView):
     def post(self, request):
         pass
+
 
 class Statics_View(APIView):
     def post(self, request):

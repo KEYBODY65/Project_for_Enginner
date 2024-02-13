@@ -30,7 +30,7 @@ const Signup = ({signup, isAuthenticated}) => {
         e.preventDefault();
 
         if (password === re_password) {
-            signup(name, surname, email, password);
+            signup(name, surname, email, password, csrfToken);
             setAccountCreated(true);
         }
     };
