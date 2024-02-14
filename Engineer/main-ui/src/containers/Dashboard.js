@@ -9,7 +9,7 @@ export default function Dashboard() {
     axios
       .get('/teacher/dashboard_json')
       .then(res => {
-        const name = res.data.data.groups[0].group_builder;
+        const name = res.data.user_name;
         setName(name);
       })
       .catch(err => {

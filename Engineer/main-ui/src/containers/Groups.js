@@ -40,23 +40,14 @@ export default function CreateTask() {
     }
   }, []);
 
-  function onChange(e) {
-    setGroup(e.target.value);
-    setSendGroup(prevState => ({
-        ...prevState,
-        Group: e.target.value
-    }));
-  }
 
   function onSubmit(e) {
     e.preventDefault();
-    setSubmittedGroup([...submittedGroup, Group]);
+    const formData = new FormData();
 
-    console.log(SendGroup);
-    localStorage.setItem('submittedGroup', JSON.stringify([...submittedGroup, Group]));
+    formData.append('group_name', document.getElementById('name_group').value);
 
-    e.preventDefault();
-    axios.post('/teacher/dashboard/groups', SendGroup, config)
+    axios.post('/teacher/new_group_data/', formData, config)
       .then(response => {
         // Обработайте ответ сервера здесь
         console.log(response.data);
@@ -77,34 +68,17 @@ export default function CreateTask() {
     return (
       <div>
         <form onSubmit={onSubmit}>
-          <div className="input-group mb-3">
-            <label className="input-group-text" htmlFor="inputGroupSelect01">
-              Options
-            </label>
-            <select className="form-select" id="inputGroupSelect01" onChange={onChange}>
-              <option selected>Предмет</option>
-              <option value="math">Алгебра</option>
-              <option value="phys">Физика</option>
-              <option value="info">Информатика</option>
-              <option value="geo">Геометрия</option>
-              <option value="rus lang">Русский язык</option>
-              <option value="bio">Биология</option>
-            </select>
-          </div>
-          <div>
             <div className="input-group mb-3">
               <span className="input-group-text" id="inputGroup-sizing-default">Имя группы</span>
               <input
                 type="text"
                 className="form-control"
-                value={Group}
-                onChange={onChange}
+                id='name_group'
                 required
                 aria-label="Sizing example input"
                 aria-describedby="inputGroup-sizing-default"
               />
             </div>
-          </div>
           <input type="submit" className="btn btn-primary mt-2" />
         </form>
       </div>

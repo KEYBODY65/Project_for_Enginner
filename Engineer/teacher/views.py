@@ -65,22 +65,23 @@ class Create_task(APIView):
 
 class Add_group(APIView):
     def post(self, request):
+        user = UserModel.objects.get(id=request.user.id)
+        request.data['group_builder'] = user.id
         group_data = Create_GroupsSerializer(data=request.data)
         if group_data.is_valid():
             group = group_data.save()
-            group.group_builder = UserModel.objects.get(id=request.user.id)
-            group.save()
             return JsonResponse({'message': 'Group added successfully'}, status=200)
         return JsonResponse({'message': 'Not valid data'}, status=400)
 
 
 class Add_Student(APIView):
     def post(self, request):
+        # stud = UserModel.objects.get(id=request.user.id)
+        # student.student_group = Group.objects.get(student_group=student_data.validated_data.get('group_name'))
         student_data = Create_StudentsSerializer(data=request.data)
         if student_data.is_valid():
             student = student_data.save(commit=False)
-            student.student_teacher = UserModel.objects.get(id=request.user.id)
-            student.student_group = Group.objects.get(student_group=student_data.validated_data.get('group_name'))
+
             name = student_data.validated_data.get('student_name')
             surname = student_data.validated_data.get('student_surname')
             patronymic = student_data.validated_data.get('student_patronymic')

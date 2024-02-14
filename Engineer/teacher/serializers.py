@@ -23,7 +23,7 @@ class Create_TaskSerializer(serializers.ModelSerializer):
 class Create_GroupsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Group
-        fields = ['id', 'group_name']
+        fields = ['id', 'group_builder', 'group_name']
 
 
 class Create_StudentsSerializer(serializers.ModelSerializer):
