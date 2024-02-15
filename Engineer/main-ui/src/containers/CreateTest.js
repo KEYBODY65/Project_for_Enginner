@@ -16,6 +16,7 @@ export default function Group() {
         axios.get('/teacher/add_test_data')
             .then(response => {
                 setTasks(response.data);
+
             })
             .catch(error => {
                 console.error(error);

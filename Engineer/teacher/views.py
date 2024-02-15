@@ -94,8 +94,20 @@ class Add_Student(APIView):
 
 
 def students_data(request):
-    students = Student.objects.get(id=request.user.id)
-    return JsonResponse(data={'students': students.name}, status=200)
+    students = Student.objects.filter(id=request.user.id)
+    students_names = []
+    for elem in students: students_names.append(elem)
+    return JsonResponse(data={'students': students_names}, status=200)
+
+def task_data(request):
+    data = Task.objects.get(id=request.data['task_id'])
+    task_data = {
+        'task_name': data.task_name,
+        'task_description': data.task_description,
+        'weight': data.weight,
+        'file': data.file
+    }
+    return JsonResponse(data={'task':task_data}, status=200)
 
 
 class Add_Student_to_group(APIView):
@@ -118,8 +130,10 @@ class Add_Test(APIView):
         pass
 
     def get(self, request):
-        tasks = Task.objects.get(task_builder=request.user.id)
-        return JsonResponse(data={'tasks': tasks}, status=200)
+        tasks_data = Task.objects.filter(task_builder=request.user.id)
+        task_ids, tasks_names = [], []
+        for task in tasks_data: tasks_names.append(task.task_name), task_ids.append(task.id)
+        return JsonResponse(data={'task_ids': task_ids, 'task_names': tasks_names}, status=200)
 
 
 class Statics_View(APIView):

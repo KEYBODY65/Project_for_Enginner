@@ -42,7 +42,7 @@ class Group(models.Model):
 
 class Student(models.Model):
     student_teacher = models.ForeignKey(UserModel, on_delete=models.PROTECT)
-    student_group = models.ManyToManyField(Group, null=True, blank=True)
+    student_group = models.ManyToManyField(Group)
     student_name = models.CharField(max_length=255)
     student_surname = models.CharField(max_length=255)
     student_login = models.CharField(max_length=255)

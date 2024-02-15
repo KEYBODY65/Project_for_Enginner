@@ -39,7 +39,7 @@ export default function CreateTask() {
         e.preventDefault();
         const formData = new FormData();
 
-        formData.append('name_group', document.getElementById('name_group').value);
+        formData.append('group_name', document.getElementById('group_name').value);
 
         axios.post('/teacher/new_group_data/', formData, config)
             .then(response => {
@@ -65,7 +65,7 @@ export default function CreateTask() {
                         <input
                             type="text"
                             className="form-control"
-                            id='name_group'
+                            id='group_name'
                             required
                             aria-label="Sizing example input"
                             aria-describedby="inputGroup-sizing-default"
