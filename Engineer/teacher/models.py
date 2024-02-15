@@ -48,6 +48,3 @@ class Student(models.Model):
     student_patronymic = models.CharField(max_length=255)
     student_login = models.CharField(max_length=255)
     student_password = models.CharField(max_length=255)
-
-
-

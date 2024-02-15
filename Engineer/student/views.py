@@ -1,17 +1,19 @@
 from rest_framework.decorators import APIView
-from teacher.models import Group
+from teacher.models import Student
 from .serializers import Login_StudentSerializer
-from django.contrib.auth import login, logout
+from django.contrib.auth import logout
 from rest_framework.exceptions import JsonResponse
 
 class Login_student(APIView):
     def post(self, request):
-        data = Login_StudentSerializer(data=request.data)
-        if data.is_valid():
-            stud = Group.objects.filter(login=data.validated_data['login']).first()
+        serializer = Login_StudentSerializer(data=request.data)
+        if serializer.is_valid():
+            stud = Student.objects.filter(login=serializer.validated_data['login']).first()
             if stud is not None:
-                if stud.check_password(data.validated_data['password']):
-                    login(request, stud)
+                if stud.check_password(serializer.validated_data['password']):
+                    stud = auth.authenticate(email=serializer.validated_data['email'],
+                                             password=serializer.validated_data['password'])
+                    auth.login(request, stud)
                     return JsonResponse(data={'message': 'Student was successfully logged in!'}, status=200)
                 return JsonResponse(data={'message': 'Student was`t successfully logged'}, status=400)
             return JsonResponse(data={'message': 'This Student is not on database'}, status=400)

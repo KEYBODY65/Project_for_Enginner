@@ -1,4 +1,4 @@
-from django.contrib.auth import login, logout
+from django.contrib.auth import logout
 from rest_framework.decorators import APIView
 from django.http import JsonResponse
 from .serializers import *
@@ -46,11 +46,13 @@ class Logout_user(APIView):
 def get_csrf(request):
     cookies = request.COOKIES
     csrf_token = cookies.get("csrftoken", get_token(request))
-    return JsonResponse(data={'csrfToken': csrf_token})
+    return JsonResponse(data={'csrfToken': csrf_token}, status=200)
+
 
 def dash_board_data(request):
     data = UserModel.objects.get(id=request.user.id)
-    return JsonResponse({'user_name': data.name})
+    return JsonResponse({'user_name': data.name}, status=200)
+
 
 class Create_task(APIView):
     def post(self, request):
@@ -76,12 +78,13 @@ class Add_group(APIView):
 
 class Add_Student(APIView):
     def post(self, request):
-        # stud = UserModel.objects.get(id=request.user.id)
-        # student.student_group = Group.objects.get(student_group=student_data.validated_data.get('group_name'))
+        user = UserModel.objects.get(id=request.user.id)
+        group = Group.objects.get(group_builder=request.user.id)
+        request.data['student_teacher'] = user.id
+        request.data['group_name'] = group.group_name
         student_data = Create_StudentsSerializer(data=request.data)
         if student_data.is_valid():
             student = student_data.save(commit=False)
-
             name = student_data.validated_data.get('student_name')
             surname = student_data.validated_data.get('student_surname')
             patronymic = student_data.validated_data.get('student_patronymic')
@@ -95,10 +98,12 @@ class Add_Student(APIView):
 class Add_Test(APIView):
     def post(self, request):
         pass
+    def get(self, request):
+        tasks = Task.objects.get(task_builder=request.user.id)
+        return JsonResponse({'tasks': tasks}, status=200)
+
 
 
 class Statics_View(APIView):
-    def post(self, request):
+    def get(self, request):
         pass
-
-
