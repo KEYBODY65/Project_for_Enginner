@@ -10,6 +10,7 @@ export default function Dashboard() {
       .get('/teacher/dashboard_json')
       .then(res => {
         const name = res.data.user_name;
+        console.log(name);
         setName(name);
       })
       .catch(err => {

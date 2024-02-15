@@ -5,10 +5,10 @@ import { checkAuthenticated, load_user } from '../actions/auth';
 
 // checkAuthenticated, load_user,
 const Layout = ({checkAuthenticated, load_user, children}) => {
-    useEffect(() => {
-        checkAuthenticated();
-        load_user();
-    }, []);
+    // useEffect(() => {
+    //     checkAuthenticated();
+    //     load_user();
+    // }, []);
 
     return (
         <div>
@@ -19,4 +19,4 @@ const Layout = ({checkAuthenticated, load_user, children}) => {
 };
 
 
-export default connect(null, { checkAuthenticated, load_user })(Layout);
+export default Layout;

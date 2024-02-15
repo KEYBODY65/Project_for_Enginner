@@ -28,10 +28,23 @@ const Navbar = ({logout, isAuthenticated}) => {
         </li>
     );
     const authLinks2 = () => (
-        <li className='nav-item'>
-            <a className='nav-link' href='/teacher/dashboard'>Личный кабинет</a>
-        </li>
-    );
+            <div style={{
+                display: 'flex',
+                justifyContent: "space-between"
+            }}>
+                <div>
+                    <li className='nav-item'>
+                        <a className='nav-link' href='/teacher/dashboard'>Личный кабинет</a>
+                    </li>
+                </div>
+                <div>
+                    <li className='nav-item'>
+                        <a className='nav-link' href='/teacher/dashboard'>Личный кабинет</a>
+                    </li>
+                </div>
+            </div>
+        )
+    ;
 
     return (
         <Fragment>
