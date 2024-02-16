@@ -35,6 +35,10 @@ class Login_user(APIView):
             return JsonResponse(data={'message': 'This User is not on our database'})
         return JsonResponse(data={'message': 'Not Valid'}, status=400)
 
+    def get(self, request):
+        data = UserModel.objects.get(id=request.user.id)
+        return JsonResponse(data={'user_name': data.name}, status=200)
+
 
 class Logout_user(APIView):
 
@@ -50,11 +54,6 @@ def get_csrf(request):
     return JsonResponse(data={'csrfToken': csrf_token}, status=200)
 
 
-def dash_board_data(request):
-    data = UserModel.objects.get(id=request.user.id)
-    return JsonResponse(data={'user_name': data.name}, status=200)
-
-
 class Create_task(APIView):
     def post(self, request):
         user = UserModel.objects.get(id=request.user.id)
@@ -64,6 +63,16 @@ class Create_task(APIView):
             task = task_data.save()
             return JsonResponse(data={'message': 'Task added successfully'}, status=200)
         return JsonResponse(data={'message': 'Not valid data'}, status=400)
+
+    def get(self, request):
+        data = Task.objects.get(id=request.data['task_id'])
+        task_data = {
+            'task_name': data.task_name,
+            'task_description': data.task_description,
+            'weight': data.weight,
+            'file': data.file
+        }
+        return JsonResponse(data={'task': task_data}, status=200)
 
 
 class Add_group(APIView):
@@ -75,6 +84,12 @@ class Add_group(APIView):
             group = group_data.save()
             return JsonResponse(data={'message': 'Group added successfully'}, status=200)
         return JsonResponse(data={'message': 'Not valid data'}, status=400)
+
+    def get(self, request):
+        group_data = Group.objects.filter(id=request.user.id)
+        groups = []
+        for elem in group_data: groups.append(elem.group_name)
+        return JsonResponse(data={'groups': groups}, status=200)
 
 
 class Add_Student(APIView):
@@ -92,23 +107,11 @@ class Add_Student(APIView):
             return JsonResponse(data={'message': 'Student added successfully'}, status=200)
         return JsonResponse(data={'message': 'Not valid data'}, status=400)
 
-
-def students_data(request):
-    students = Student.objects.filter(id=request.user.id)
-    students_names = []
-    for elem in students: students_names.append(elem)
-    return JsonResponse(data={'students': students_names}, status=200)
-
-
-def task_data(request):
-    data = Task.objects.get(id=request.data['task_id'])
-    task_data = {
-        'task_name': data.task_name,
-        'task_description': data.task_description,
-        'weight': data.weight,
-        'file': data.file
-    }
-    return JsonResponse(data={'task': task_data}, status=200)
+    def get(self, request):
+        students = Student.objects.filter(id=request.user.id)
+        students_names = []
+        for elem in students: students_names.append(elem)
+        return JsonResponse(data={'students': students_names}, status=200)
 
 
 class Add_Student_to_group(APIView):
