@@ -36,3 +36,9 @@ class Create_StudentsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Student
         fields = ['id', 'student_name', 'student_surname', 'student_teacher']
+
+
+class Create_TestsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Task
+        fields = ['id', 'task_builder', 'test_name', 'test_task', 'test_group']

@@ -47,3 +47,10 @@ class Student(models.Model):
     student_surname = models.CharField(max_length=255)
     student_login = models.CharField(max_length=255)
     student_password = models.CharField(max_length=255)
+
+
+class Test(models.Model):
+    test_builder = models.ForeignKey(UserModel, on_delete=models.PROTECT)
+    test_name = models.CharField(max_length=255)
+    test_task = models.ManyToManyField(Task)
+    test_group = models.ForeignKey(Group, on_delete=models.PROTECT)

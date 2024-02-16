@@ -99,6 +99,7 @@ def students_data(request):
     for elem in students: students_names.append(elem)
     return JsonResponse(data={'students': students_names}, status=200)
 
+
 def task_data(request):
     data = Task.objects.get(id=request.data['task_id'])
     task_data = {
@@ -107,7 +108,7 @@ def task_data(request):
         'weight': data.weight,
         'file': data.file
     }
-    return JsonResponse(data={'task':task_data}, status=200)
+    return JsonResponse(data={'task': task_data}, status=200)
 
 
 class Add_Student_to_group(APIView):
@@ -127,7 +128,17 @@ class Add_Student_to_group(APIView):
 
 class Add_Test(APIView):
     def post(self, request):
-        pass
+        user = UserModel.objects.get(id=request.user.id)
+        request.data['test_builder'] = user.id
+        group = Group.objects.get(group_name=request.data['group_name'])
+        request.data['test_group'] = group.id
+        serializers = Create_TestsSerializer(request.data)
+        if serializers.is_valid():
+            tasks = serializers.validated_data['test_task']
+            Test.test_group.add(*tasks)
+            tasks.save()
+            return JsonResponse(data={'message': "Task add"}, status=200)
+        return JsonResponse(data={'message': 'Not valid data'}, status=400)
 
     def get(self, request):
         tasks_data = Task.objects.filter(task_builder=request.user.id)
