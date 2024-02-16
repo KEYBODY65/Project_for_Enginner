@@ -91,7 +91,6 @@ class Add_group(APIView):
         for elem in group_data: groups.append(elem.group_name)
         return JsonResponse(data={'groups': groups}, status=200)
 
-
 class Add_Student(APIView):
     def post(self, request):
         user = UserModel.objects.get(id=request.user.id)
@@ -144,7 +143,7 @@ class Add_Test(APIView):
         return JsonResponse(data={'message': 'Not valid data'}, status=400)
 
     def get(self, request):
-        tasks_data = Task.objects.filter(task_builder=request.user.id)
+        tasks_data = Task.objects.filter(id=request.user.id)
         task_ids, tasks_names = [], []
         for task in tasks_data: tasks_names.append(task.task_name), task_ids.append(task.id)
         return JsonResponse(data={'task_ids': task_ids, 'task_names': tasks_names}, status=200)
