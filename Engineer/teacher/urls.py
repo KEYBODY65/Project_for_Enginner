@@ -17,9 +17,7 @@ urlpatterns = [
     path('add_student_data/', Add_Student.as_view(), name='add_student'),
     path('dashboard/add_test/', include('main.urls')),
     path('add_test_data/', Add_Test.as_view(), name='add_test'),
-    path('dashboard_json/', dash_board_data, name='dash_board'),
     path('dashboard/add_students_to_group', include('main.urls')),
     path('dashboard/add_students_to_group_data', Add_Student_to_group.as_view(), name='add_students_to_group'),
-    path('task/data', task_data, name='task_data'),
     path('get_csrf/', get_csrf)
 ]
