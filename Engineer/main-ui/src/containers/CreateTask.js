@@ -58,6 +58,7 @@ export default function CreateTask() {
             .catch(error => {
                 console.error('Error:', error);
             });
+        setTasks(false);
     }
 
     function renderTasks() {

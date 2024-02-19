@@ -11,10 +11,11 @@ import {
     LOGOUT_FAIL
 } from '../actions/types';
 
+const localStorageIsAuthenticated = JSON.parse(localStorage.getItem('isAuthenticated'));
 const initialState = {
     access: localStorage.getItem('access'),
     refresh: localStorage.getItem('refresh'),
-    isAuthenticated: null,
+    isAuthenticated: localStorageIsAuthenticated,
     user: null
 };
 
@@ -23,11 +24,13 @@ export default function MyComponent(state = initialState, action) {
 
     switch(type) {
         case AUTHENTICATED_SUCCESS:
+            localStorage.setItem('isAuthenticated', 'true');
             return {
                 ...state,
                 isAuthenticated: true
             }
         case LOGIN_SUCCESS:
+            localStorage.setItem('isAuthenticated', 'true');
             localStorage.setItem('access', payload.access);
             localStorage.setItem('refresh', payload.refresh);
             return {
@@ -47,21 +50,17 @@ export default function MyComponent(state = initialState, action) {
                 user: payload
             }
         case AUTHENTICATED_FAIL:
-            return {
-                ...state,
-                isAuthenticated: false
-            }
         case USER_LOADED_FAIL:
             return {
                 ...state,
                 user: null
             }
         case LOGOUT_FAIL:
-            return state
-
+            return state;
         case LOGIN_FAIL:
         case SIGNUP_FAIL:
         case LOGOUT:
+            localStorage.removeItem('isAuthenticated');
             localStorage.removeItem('access');
             localStorage.removeItem('refresh');
             return {

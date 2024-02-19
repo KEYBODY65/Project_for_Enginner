@@ -15,13 +15,13 @@ export default function Group() {
     useEffect(() => {
         axios.get('/teacher/add_test_data')
             .then(response => {
-                setTasks(response.data);
+                const data = response.data
 
             })
             .catch(error => {
                 console.error(error);
             });
-        // axios.get('/teacher/groups_data')
+        // axios.get('/teacher/')
         //     .then(response => {
         //         setTests(response.data);
         //     })
@@ -29,20 +29,20 @@ export default function Group() {
         //         console.error(error);
         //     });
 
-        // axios.get('/teacher/get_csrf')
-        //     .then(res => {
-        //         const Token = res.data.csrfToken;
-        //         setToken(Token);
-        //     })
-        //     .catch(err => {
-        //         console.error(err);
-        //     });
+        axios.get('/teacher/get_csrf')
+            .then(res => {
+                const Token = res.data.csrfToken;
+                setToken(Token);
+            })
+            .catch(err => {
+                console.error(err);
+            });
     }, []);
 
     function onSubmit(e) {
         e.preventDefault();
         const formData = new FormData();
-        formData.append('student_name', document.getElementById('student_name').value);
+        formData.append('name_of_test', document.getElementById('name_of_test').value);
 
         axios.post('/teacher/add_test_data/', formData, config)
             .then(response => {

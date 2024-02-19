@@ -16,7 +16,7 @@ export default function CreateTask() {
     };
 
     useEffect(() => {
-        axios.get('/teacher/groups_data')
+        axios.get('/teacher/new_group_data')
             .then(response => {
                 setGroups(response.data);
             })

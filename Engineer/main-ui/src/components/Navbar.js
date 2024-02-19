@@ -39,7 +39,7 @@ const Navbar = ({logout, isAuthenticated}) => {
                 </div>
                 <div>
                     <li className='nav-item'>
-                        <a className='nav-link' href='/teacher/dashboard'>Личный кабинет</a>
+                        <a className='nav-link' href='/teacher/dashboard'>Добавить студента</a>
                     </li>
                 </div>
             </div>

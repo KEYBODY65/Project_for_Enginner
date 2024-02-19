@@ -32,7 +32,7 @@ const App = () => {
                         <Route path='/teacher/dashboard/add_student' element={<Add_student/>}/>
                         <Route path='/teacher/dashboard/group' element={<Group/>}/>
                         <Route path='/teacher/dashboard/new_task' element={<CreateTask/>}/>
-                        <Route path='/teacher/dashboard/new_test' element={<CreateTest/>}/>
+                        <Route path='/teacher/dashboard/add_test' element={<CreateTest/>}/>
                         <Route path='/teacher/dashboard/groups' element={<Groups/>}/>
                     </Routes>
                 </Layout>
