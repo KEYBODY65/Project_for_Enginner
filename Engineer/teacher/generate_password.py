@@ -1,6 +1,6 @@
 from random import choice
 from string import *
-
+from random import randrange
 def generate_password(length: int = 8):
     output_password = ""
     for i in range(length):
@@ -10,7 +10,6 @@ def generate_password(length: int = 8):
 
 def generate_login(pupil_username: str):
     stroka = pupil_username.split()
-    usernamae = f'{stroka[0]}{stroka[1][0]}{stroka[-1][0]}'
+    usernamae = f'{stroka[0]}{stroka[1][0]}{randrange(100)}'
     return usernamae
 
-# print(generate_login('Попов Михаил Павлович'), generate_password())
