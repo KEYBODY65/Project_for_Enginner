@@ -1,5 +1,6 @@
 import axios from 'axios';
-import React, {useState, useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
+import {Link} from "react-router-dom";
 
 export default function Group() {
     const [Test, setTest] = useState(false);
@@ -13,9 +14,16 @@ export default function Group() {
     };
 
     useEffect(() => {
-        axios.get('/teacher/add_test_data')
+        axios.get('/teacher/teacher_tasks_data')
             .then(response => {
                 const data = response.data
+                setTasks([])
+                const {task_ids, task_names} = data;
+                const UpdTasks = task_ids.map((id, index) => {
+                    return `${id} ${task_names[index]}`;
+                });
+                setTasks(UpdTasks);
+                console.log(tasks);
 
             })
             .catch(error => {
@@ -77,13 +85,13 @@ export default function Group() {
                     <div className="input-group mb-3">
                         <div className='d-block'>
                             {tasks.length > 0 ? ( // Проверка наличия заданий в списке
-                                <ul>
-                                    {tests.map((task) => (
+                                <ul style={{listStyleType: 'none'}}>
+                                    {tasks.map((task) => (
                                         <li key={task.id}>
-                                            <input className="form-check-input" type="checkbox"
-                                                   value="" id={task.id}/>
-                                            <label className="form-check-label" htmlFor={task.id}>
-                                                <a>{task.name}</a>
+                                            <input className="form-check-input mr-3" type="checkbox"
+                                                   value="" id={task.slice(0, 1)}/>
+                                            <label className="form-check-label" htmlFor={task.slice(0, 1)}>
+                                                <Link to='/'>{task}</Link>
                                             </label>
                                         </li>))}
                                 </ul>) : (<p>Вы не добавили задания</p>)}

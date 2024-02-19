@@ -7,7 +7,7 @@ export default function Dashboard() {
 
   useEffect(() => {
     axios
-      .get('/teacher/dashboard_json')
+      .get('/teacher/auth_data')
       .then(res => {
         const name = res.data.user_name;
         console.log(name);
