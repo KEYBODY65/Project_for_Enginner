@@ -161,7 +161,7 @@ class Add_Test(APIView):
         return JsonResponse(data={'message': 'Not valid data'}, status=400)
 
     def get(self, request):
-        tests_data = Test.objects.filter(id=request.user.id)
+        tests_data = Test.objects.filter(task_builder=request.user.id)
         tests = [], tests_id = []
         for elem in tests_data: tests.append(elem.name), tests_data.append(elem.id), tests_id.append(elem.id)
         if all([tests, tests_id]):
