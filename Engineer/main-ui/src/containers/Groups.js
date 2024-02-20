@@ -18,13 +18,13 @@ export default function CreateTask() {
     useEffect(() => {
         axios.get('/teacher/new_group_data')
             .then(response => {
-                const data = response.data
+                console.log(response.data)
                 setGroups([])
-                const updGroups = data.map((index) => {
-                    return `${data[index]}`
+                const {group_names, group_ids} = data;
+                const UpdTasks = group_names.map((index) => {
+                    return `${group_names[index]}`;
                 });
-                setGroups(updGroups);
-                console.log(groups);
+                setGroups(UpdTasks);
             })
             .catch(error => {
                 console.error(error);
@@ -41,8 +41,7 @@ export default function CreateTask() {
     }, []);
 
 
-    function onSubmit(e) {
-        e.preventDefault();
+    function onSubmit() {
         const formData = new FormData();
 
         formData.append('group_name', document.getElementById('group_name').value);
@@ -113,7 +112,7 @@ export default function CreateTask() {
                         <ul>
                             {groups.map((group) => (
                                 <li key={group.id}>
-                                    <a href="/teacher/dashboard/group">{group}</a>
+                                    <a href="/teacher/dashboard/`${group.id}`">{group}</a>
                                 </li>
                             ))}
                         </ul>

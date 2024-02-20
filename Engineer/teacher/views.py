@@ -90,10 +90,12 @@ class Add_group(APIView):
     def get(self, request):
         group_data = Group.objects.filter(group_builder=request.user.id)
         groups = []
+        groups_ids = []
         for elem in group_data:
             groups.append(elem.group_name)
+            groups_ids.append(elem.id)
         if groups:
-            return JsonResponse(data={'groups': groups}, status=200)
+            return JsonResponse(data={'groups': groups, 'groups_ids': groups_ids}, status=200)
         return JsonResponse(data={'Message': 'List is empty'}, status=400)
 
 
@@ -122,11 +124,11 @@ class Add_Student(APIView):
 
 
 class Add_Student_to_group(APIView):
-    def post(self, request):
+    def post(self, request, id):
         serializer = Studentsgroups_Serializer(data=request.data)
         if serializer.is_valid():
             student = Student.objects.filter(name=serializer.validated_data['student_name'])
-            group = Group.objects.filter(name=serializer.validated_data['group_name'])
+            group = Group.objects.filter(id=id)
             if not student:
                 return JsonResponse(data={'message': 'Student not found'}, status=404)
             if not group:
