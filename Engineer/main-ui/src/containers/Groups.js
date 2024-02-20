@@ -18,9 +18,13 @@ export default function CreateTask() {
     useEffect(() => {
         axios.get('/teacher/new_group_data')
             .then(response => {
-                console.log(response.data)
-                setGroups(response.data.groups);
-                console.log(groups())
+                const data = response.data
+                setGroups([])
+                const updGroups = data.map((index) => {
+                    return `${data[index]}`
+                });
+                setGroups(updGroups);
+                console.log(groups);
             })
             .catch(error => {
                 console.error(error);
@@ -109,7 +113,7 @@ export default function CreateTask() {
                         <ul>
                             {groups.map((group) => (
                                 <li key={group.id}>
-                                    <a href="/teacher/dashboard/group">{group.name}</a>
+                                    <a href="/teacher/dashboard/group">{group}</a>
                                 </li>
                             ))}
                         </ul>
