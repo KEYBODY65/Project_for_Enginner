@@ -55,7 +55,7 @@ def get_csrf(request):
 
 class Create_task(APIView):
     def post(self, request):
-        user = UserModel.objects.get(task_builder=request.user.id)
+        user = UserModel.objects.get(id=request.user.id)
         request.data['task_builder'] = user.id
         task_data = Create_TaskSerializer(data=request.data)
         if task_data.is_valid():
@@ -79,7 +79,7 @@ class Create_task(APIView):
 
 class Add_group(APIView):
     def post(self, request):
-        user = UserModel.objects.get(group_builder=request.user.id)
+        user = UserModel.objects.get(id=request.user.id)
         request.data['group_builder'] = user.id
         group_data = Create_GroupsSerializer(data=request.data)
         if group_data.is_valid():
@@ -90,7 +90,8 @@ class Add_group(APIView):
     def get(self, request):
         group_data = Group.objects.filter(group_builder=request.user.id)
         groups = []
-        for elem in group_data: groups.append(elem.group_name)
+        for elem in group_data:
+            groups.append(elem.group_name)
         if groups:
             return JsonResponse(data={'groups': groups}, status=200)
         return JsonResponse(data={'Message': 'List is empty'}, status=400)
@@ -160,7 +161,7 @@ class Add_Test(APIView):
         return JsonResponse(data={'message': 'Not valid data'}, status=400)
 
     def get(self, request):
-        tests_data = Test.objects.filter(test_builder=request.user.id)
+        tests_data = Test.objects.filter(id=request.user.id)
         tests = [], tests_id = []
         for elem in tests_data: tests.append(elem.name), tests_data.append(elem.id), tests_id.append(elem.id)
         if all([tests, tests_id]):
