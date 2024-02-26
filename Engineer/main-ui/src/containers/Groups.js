@@ -18,13 +18,18 @@ export default function CreateTask() {
     useEffect(() => {
         axios.get('/teacher/new_group_data')
             .then(response => {
-                console.log(response.data)
-                setGroups([])
-                const {group_names, group_ids} = data;
-                const UpdTasks = group_names.map((index) => {
-                    return `${group_names[index]}`;
+                console.log(response.data);
+                setGroups([]);
+                const groups = response.data.groups
+                const group_ids = response.data.groups_ids;
+                const processedGroups = groups.map((group, index) => {
+                    return {
+                        name: group,
+                        id: group_ids[index]
+                    };
                 });
-                setGroups(UpdTasks);
+                console.log(processedGroups);
+                setGroups(processedGroups);
             })
             .catch(error => {
                 console.error(error);
@@ -110,9 +115,9 @@ export default function CreateTask() {
                 <div className='d-block'>
                     {groups.length > 0 ? ( // Проверка наличия групп в списке
                         <ul>
-                            {groups.map((group) => (
-                                <li key={group.id}>
-                                    <a href="/teacher/dashboard/`${group.id}`">{group}</a>
+                            {groups.map((group, index) => (
+                                <li key={index}>
+                                    <a href={`/teacher/dashboard/groups/${group.id}`}>{group.name}</a>
                                 </li>
                             ))}
                         </ul>

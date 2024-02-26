@@ -51,7 +51,11 @@ export default function Group() {
         e.preventDefault();
         const formData = new FormData();
         formData.append('name_of_test', document.getElementById('name_of_test').value);
+        const taskIds = tasks.map(task => task.slice(0, 1));
 
+        taskIds.forEach(id => {
+            formData.append('task_ids', id);
+        });
         axios.post('/teacher/add_test_data/', formData, config)
             .then(response => {
                 // Обработайте ответ сервера здесь
