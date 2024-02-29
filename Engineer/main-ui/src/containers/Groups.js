@@ -117,7 +117,7 @@ export default function CreateTask() {
                         <ul>
                             {groups.map((group, index) => (
                                 <li key={index}>
-                                    <a href={`/teacher/dashboard/groups/${group.id}`}>{group.name}</a>
+                                    <a href={`/teacher/dashboard/add_students_to_group_data/${group.id}`}>{group.name}</a>
                                 </li>
                             ))}
                         </ul>

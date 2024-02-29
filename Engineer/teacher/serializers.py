@@ -26,10 +26,9 @@ class Create_GroupsSerializer(serializers.ModelSerializer):
         fields = ['id', 'group_builder', 'group_name']
 
 
-class Studentsgroups_Serializer(serializers.ModelSerializer):
-    class Meta:
-        model = Student
-        fields = ['id', 'group_name', 'student_name']
+class Studentsgroups_Serializer(serializers.Serializer):
+    student_group = serializers.CharField(max_length=255)
+    student_name = serializers.CharField(max_length=255)
 
 
 class Create_StudentsSerializer(serializers.ModelSerializer):

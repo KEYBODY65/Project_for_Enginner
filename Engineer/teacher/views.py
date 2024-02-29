@@ -7,8 +7,7 @@ from django.middleware.csrf import get_token
 from .models import UserModel
 from django.views.decorators.csrf import ensure_csrf_cookie
 from .generate_password import *
-
-
+from django.contrib.auth import hashers
 class Create_user(APIView):
     def post(self, request):
         serializer = Create_UserSerializer(data=request.data)
@@ -105,11 +104,11 @@ class Add_Student(APIView):
         request.data['student_teacher'] = user.id
         student_data = Create_StudentsSerializer(data=request.data)
         if student_data.is_valid():
-            student = student_data.save(commit=False)
+            student = student_data.save()
             name = student_data.validated_data.get('student_name')
             surname = student_data.validated_data.get('student_surname')
             student.student_login = generate_login(f'{surname} {name}')
-            student.student_password = student.set_password(generate_password())
+            student.student_password = generate_password()
             student.save()
             return JsonResponse(data={'message': 'Student added successfully'}, status=200)
         return JsonResponse(data={'message': 'Not valid data'}, status=400)
@@ -125,7 +124,9 @@ class Add_Student(APIView):
 
 class Add_Student_to_group(APIView):
     def post(self, request, id):
+        print(id)
         serializer = Studentsgroups_Serializer(data=request.data)
+        print(serializer.initial_data)
         if serializer.is_valid():
             student = Student.objects.filter(name=serializer.validated_data['student_name'])
             group = Group.objects.filter(id=id)
@@ -134,7 +135,7 @@ class Add_Student_to_group(APIView):
             if not group:
                 return JsonResponse(data={'message': 'Group not found'}, status=404)
             student, group = student[0], group[0]
-            student.student_groups = group
+            student.student_group = group
         return JsonResponse(data={'message': 'Not valid data'}, status=400)
 
 

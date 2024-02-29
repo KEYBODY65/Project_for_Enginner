@@ -23,7 +23,7 @@ export default function Dashboard() {
       <div className='jumbotron mt-5'>
         <h1 className='display-4'>Добро пожаловать в вашу панель управления, {name}</h1>
         <p className='lead'>
-          Это удобная учебная система для написания самостоятельных и контрольных работ, а также для составления
+          Это удобная учебная платформа для написания самостоятельных и контрольных работ, а также для составления
           собственных вариантов заданий с удобным интерфейсом.
         </p>
       </div>
@@ -53,6 +53,15 @@ export default function Dashboard() {
             <div className='card-header' style={{ height: 40 }}></div>
             <div className='card-body'>
               <h5 className='card-title'>Добавить задание</h5>
+              <p className='card-text'>Добавить задачу в перечень всех заданий</p>
+            </div>
+          </div>
+        </Link>
+        <Link to='/teacher/dashboard/add_student'>
+          <div className='card border-primary mb-3' style={{ maxWidth: '18rem' }}>
+            <div className='card-header' style={{ height: 40 }}></div>
+            <div className='card-body'>
+              <h5 className='card-title'>Добавить ученика</h5>
               <p className='card-text'>Добавить задачу в перечень всех заданий</p>
             </div>
           </div>
