@@ -8,6 +8,8 @@ from .models import UserModel
 from django.views.decorators.csrf import ensure_csrf_cookie
 from .generate_password import *
 from django.contrib.auth import hashers
+
+
 class Create_user(APIView):
     def post(self, request):
         serializer = Create_UserSerializer(data=request.data)
@@ -63,17 +65,20 @@ class Create_task(APIView):
         return JsonResponse(data={'message': 'Not valid data'}, status=400)
 
     def get(self, request):
-        data = Task.objects.get(id=request.data['task_id'])
-        task_data = {
-            'task_id': data.id,
-            'task_name': data.task_name,
-            'task_description': data.task_description,
-            'weight': data.weight,
-            'file': data.file
-        }
-        if task_data:
-            return JsonResponse(data={'task': task_data}, status=200)
-        return JsonResponse(data={'Message': 'Dictionary is empty'}, status=400)
+        task_id = Task_View(data=request.data)
+        if task_id.is_valid():
+            data = Task.objects.get(task_id.validated_data['task_id'])
+            task_data = {
+                'task_id': data.id,
+                'task_name': data.task_name,
+                'task_description': data.task_description,
+                'weight': data.weight,
+                'file': data.file
+            }
+            if task_data:
+                return JsonResponse(data={'task': task_data}, status=200)
+            return JsonResponse(data={'message': 'Dictionary is empty'}, status=400)
+        return JsonResponse(data={'Message': 'Not valid data'}, status=400)
 
 
 class Add_group(APIView):
@@ -153,23 +158,33 @@ class Add_Test(APIView):
     def post(self, request):
         user = UserModel.objects.get(id=request.user.id)
         request.data['test_builder'] = user.id
-        group = Group.objects.get(group_name=request.data['group_name'])
-        request.data['test_group'] = group.id
-        serializers = Create_TestsSerializer(request.data)
+        serializers = Create_TestsSerializer(data=request.data)
         if serializers.is_valid():
-            tasks = serializers.validated_data['test_task']
-            Test.test_group.add(*tasks)
-            tasks.save()
-            return JsonResponse(data={'message': "Task add"}, status=200)
+            save_test = serializers.save()
+            tasks = serializers.validated_data['task_ids']
+            save_test.task_ids.add(*tasks)
+            save_test.save()
+            return JsonResponse(data={'message': "Tasks add"}, status=200)
         return JsonResponse(data={'message': 'Not valid data'}, status=400)
 
     def get(self, request):
-        tests_data = Test.objects.filter(task_builder=request.user.id)
-        tests = [], tests_id = []
-        for elem in tests_data: tests.append(elem.name), tests_data.append(elem.id), tests_id.append(elem.id)
+        tests_data = Test.objects.filter(test_builder=request.user.id)
+        tests = []
+        tests_id = []
+        for elem in tests_data:
+            tests.append(elem.name_of_test)
+            tests_id.append(elem.id)
         if all([tests, tests_id]):
             return JsonResponse(data={'tests': tests, 'tests_id': tests_id}, status=200)
         return JsonResponse(data={'Message': 'Lists is empty'}, status=400)
+
+
+class Tests(APIView):
+    def get(self, request):
+        test_id = Test_View(data=request.data)
+        if test_id.is_valid():
+            data = Task.objects.get(id=test_id.validated_data['test_id'])
+            print(data)  # Доделать после начала работы над самими вариантами
 
 
 class Statics_View(APIView):

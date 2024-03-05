@@ -51,6 +51,5 @@ class Student(models.Model):
 
 class Test(models.Model):
     test_builder = models.ForeignKey(UserModel, on_delete=models.PROTECT)
-    test_name = models.CharField(max_length=255)
-    test_task = models.ManyToManyField(Task)
-    test_group = models.ForeignKey(Group, on_delete=models.PROTECT)
+    name_of_test = models.CharField(max_length=255)
+    task_ids = models.ManyToManyField(Task)
