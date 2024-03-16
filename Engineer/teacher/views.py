@@ -7,8 +7,6 @@ from django.middleware.csrf import get_token
 from .models import UserModel
 from django.views.decorators.csrf import ensure_csrf_cookie
 from .generate_password import *
-from django.contrib.auth import hashers
-
 
 class Create_user(APIView):
     def post(self, request):
@@ -129,7 +127,6 @@ class Add_Student(APIView):
 
 class Add_Student_to_group(APIView):
     def post(self, request, id):
-        print(id)
         serializer = Studentsgroups_Serializer(data=request.data)
         print(serializer.initial_data)
         if serializer.is_valid():
@@ -181,11 +178,8 @@ class Add_Test(APIView):
 
 class Tests(APIView):
     def get(self, request):
-        test_id = Test_View(data=request.data)
-        if test_id.is_valid():
-            data = Task.objects.get(id=test_id.validated_data['test_id'])
-            print(data)  # Доделать после начала работы над самими вариантами
-
+        data = Test.objects.get(test_builder=request.user.id)
+        print(data)# Доделать после начала работы над самими вариантами
 
 class Statics_View(APIView):
     def get(self, request):
