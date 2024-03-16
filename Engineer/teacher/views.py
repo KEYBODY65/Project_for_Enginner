@@ -176,10 +176,7 @@ class Add_Test(APIView):
         return JsonResponse(data={'Message': 'Lists is empty'}, status=400)
 
 
-class Tests(APIView):
-    def get(self, request):
-        data = Test.objects.get(test_builder=request.user.id)
-        print(data)# Доделать после начала работы над самими вариантами
+
 
 class Statics_View(APIView):
     def get(self, request):

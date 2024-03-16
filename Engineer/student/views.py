@@ -27,6 +27,10 @@ def logout_student(request):
 class StudentStatistics_view(APIView):
     def post(self, request):
         pass
+class UploadAnswers_view(APIView):
+    def post(self, request, id):
+        true_answers = Student.objects.filter(id=id)
+
 
 
 

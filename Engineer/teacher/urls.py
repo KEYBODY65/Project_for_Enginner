@@ -17,7 +17,6 @@ urlpatterns = [
     path('add_student_data/', Add_Student.as_view(), name='add_student'),
     path('dashboard/add_test/', include('main.urls')),
     path('add_test_data/', Add_Test.as_view(), name='add_test'),
-    path('test_data/', Tests.as_view(), name='test_data'),
     path('dashboard/add_students_to_group', include('main.urls')),
     path('dashboard/add_students_to_group_data/<int:id>', Add_Student_to_group.as_view(), name='add_students_to_group'),
     path('teacher_tasks_data/', Teacher_tasks.as_view(), name='all_of_current_teacher_tasks'),
