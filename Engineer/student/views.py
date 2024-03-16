@@ -1,6 +1,6 @@
 from rest_framework.decorators import APIView
 from teacher.models import Student
-from .serializers import Login_StudentSerializer
+from .serializers import *
 from django.contrib.auth import logout
 from rest_framework.exceptions import JsonResponse
 
@@ -29,7 +29,16 @@ class StudentStatistics_view(APIView):
         pass
 class UploadAnswers_view(APIView):
     def post(self, request, id):
+        # true_answ = Answer_Serializer(data=request.data)
+        # if true_answ.is_valid():
+        d = []
         true_answers = Student.objects.filter(id=id)
+        for i in true_answers:
+            d.append(i)
+        return JsonResponse({'answers': d}, status=200)
+
+
+
 
 
 
