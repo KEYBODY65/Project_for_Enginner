@@ -99,7 +99,7 @@ export default function Group() {
                                             <input className="form-check-input mr-3" type="checkbox"
                                                    value="" id={task.slice(0, 1)}/>
                                             <label className="form-check-label" htmlFor={task.slice(0, 1)}>
-                                                <Link to='/'>{task}</Link>
+                                                <h3>{task}</h3>
                                             </label>
                                         </li>))}
                                 </ul>) : (<p>Вы не добавили задания</p>)}

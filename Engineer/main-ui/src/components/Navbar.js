@@ -28,6 +28,7 @@ const Navbar = ({logout, isAuthenticated}) => {
         </li>
     );
     const authLinks2 = () => (
+
             <div style={{
                 display: 'flex',
                 justifyContent: "space-between"
@@ -35,6 +36,9 @@ const Navbar = ({logout, isAuthenticated}) => {
                 <div>
                     <li className='nav-item'>
                         <a className='nav-link' href='/teacher/dashboard'>Личный кабинет</a>
+                    </li>
+                    <li className='nav-item'>
+                        <a className='nav-link' href='/' onClick={logout_user}>Выйти</a>
                     </li>
                 </div>
                 <div>
@@ -63,9 +67,6 @@ const Navbar = ({logout, isAuthenticated}) => {
                 </button>
                 <div className='collapse navbar-collapse' id='navbarNav'>
                     <ul className='navbar-nav'>
-                        <li className='nav-item active'>
-                            <Link className='nav-link' to='/teacher'>Главная <span className='sr-only'></span></Link>
-                        </li>
                         {isAuthenticated && authLinks2()}
                         {isAuthenticated ? authLinks() : guestLinks()}
                     </ul>
