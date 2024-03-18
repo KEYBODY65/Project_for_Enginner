@@ -62,18 +62,14 @@ export default function Group() {
         const formData = new FormData();
         formData.append('name_of_test', document.getElementById('name_of_test').value);
         let taskIds = [];
-        console.log(1);
-        console.log(document.querySelectorAll('input[type="checkbox"]:checked').length);
-        // for (let i = 1, i < document.querySelectorAll('input[type="checkbox"]:checked').length, i ++)
         document.querySelectorAll('input[type="checkbox"]:checked').forEach(elem => {
-            console.log(elem)
-            console.log(elem.id)
-            taskIds.push(elem.id.substring(0, 1));
-
+            taskIds.push(elem.id);
         })
         console.log(taskIds)
 
-        formData.append('task_ids', taskIds );
+
+        formData.append('task_ids',[taskIds]);
+        console.log(FormData)
         axios.post('/teacher/add_test_data/', formData, config)
             .then(response => {
                 // Обработайте ответ сервера здесь
