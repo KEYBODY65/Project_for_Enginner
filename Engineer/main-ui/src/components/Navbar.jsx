@@ -1,7 +1,7 @@
 import React, {Fragment, useState} from 'react';
 import {Link, redirect, Navigate} from 'react-router-dom';
 import {connect} from 'react-redux';
-import {logout} from '../actions/auth';
+import {logout} from '../actions/auth.jsx';
 
 const Navbar = ({logout, isAuthenticated}) => {
     const [redirect, setRedirect] = useState(false);
@@ -33,7 +33,10 @@ const Navbar = ({logout, isAuthenticated}) => {
                 display: 'flex',
                 justifyContent: "space-between"
             }}>
-                <div>
+                <div style={{
+                display: 'flex',
+                justifyContent: "space-between"
+            }}>
                     <li className='nav-item'>
                         <a className='nav-link' href='/teacher/dashboard'>Личный кабинет</a>
                     </li>
@@ -67,8 +70,7 @@ const Navbar = ({logout, isAuthenticated}) => {
                 </button>
                 <div className='collapse navbar-collapse' id='navbarNav'>
                     <ul className='navbar-nav'>
-                        {isAuthenticated && authLinks2()}
-                        {isAuthenticated ? authLinks() : guestLinks()}
+                        {isAuthenticated ? authLinks2() : guestLinks()}
                     </ul>
                 </div>
             </nav>

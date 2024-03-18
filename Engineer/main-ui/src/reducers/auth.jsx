@@ -9,7 +9,7 @@ import {
     SIGNUP_FAIL,
     LOGOUT,
     LOGOUT_FAIL
-} from '../actions/types';
+} from '../actions/types.jsx';
 
 const localStorageIsAuthenticated = JSON.parse(localStorage.getItem('isAuthenticated'));
 const initialState = {

@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {Link, Navigate} from 'react-router-dom';
 import {connect} from 'react-redux';
-import {login} from '../actions/auth'
+import {login} from '../actions/auth.jsx'
 import axios from 'axios';
 
 function Login({login, isAuthenticated}) {
@@ -63,7 +63,6 @@ if (isAuthenticated){
                         id='email'
                         //                        pattern='[a-z0-9._%+-]+@[a-z0-9._]+.[a-z]{2,4}$'
                         value={email}
-                        id='username'
                         onChange={e => onChange(e)}
                     />
                     <input

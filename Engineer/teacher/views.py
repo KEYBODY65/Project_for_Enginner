@@ -161,7 +161,7 @@ class Add_Test(APIView):
             tasks = serializers.validated_data['task_ids']
             save_test.task_ids.add(*tasks)
             save_test.save()
-            return JsonResponse(data={'message': "Tasks add"}, status=200)
+            return JsonResponse(data={'message': "Test add"}, status=200)
         return JsonResponse(data={'message': 'Not valid data'}, status=400)
 
     def get(self, request):

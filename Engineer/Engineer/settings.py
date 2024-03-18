@@ -64,7 +64,7 @@ REST_FRAMEWORK = {
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'main-ui/build'],
+        'DIRS': [BASE_DIR.joinpath('main-ui')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -129,7 +129,7 @@ STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR / 'static'
 
 STATICFILES_DIRS = (
-    (BASE_DIR / 'main-ui/build/static'),
+    BASE_DIR.joinpath('main-ui', 'dist'),
 )
 
 

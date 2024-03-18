@@ -10,7 +10,7 @@ import {
     AUTHENTICATED_FAIL,
     AUTHENTICATED_SUCCESS,
     LOGOUT_FAIL
-} from './types';
+} from './types.jsx';
 
 export const load_user = () => async dispatch => {
     if (localStorage.getItem('access')) {
