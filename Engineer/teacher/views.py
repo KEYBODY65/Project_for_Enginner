@@ -156,6 +156,7 @@ class Add_Test(APIView):
         user = UserModel.objects.get(id=request.user.id)
         request.data['test_builder'] = user.id
         serializers = Create_TestsSerializer(data=request.data)
+        print(serializers.initial_data)
         if serializers.is_valid():
             save_test = serializers.save()
             tasks = serializers.validated_data['task_ids']

@@ -7,4 +7,5 @@ class Login_StudentSerializer(serializers.Serializer):
 
 
 class Answer_Serializer(serializers.Serializer):
-    true_answers = serializers.ListField()
+    test_id = serializers.IntegerField()
+    true_answers = serializers.ListField(child=serializers.CharField()) # child - в какой типизации передаются объекты в массиве
