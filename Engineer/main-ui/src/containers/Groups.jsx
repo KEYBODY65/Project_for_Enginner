@@ -4,7 +4,8 @@ import React, {useState, useEffect} from 'react';
 
 export default function CreateTask() {
     const [Group, setGroup] = useState(false);
-    const [groups, setGroups] = useState([])
+    const [groups, setGroups] = useState([]);
+    const [url, setUrl] = useState([]);
     const [Token, setToken] = useState('');
 
     const config = {
@@ -14,7 +15,6 @@ export default function CreateTask() {
             'X-CSRFToken': Token
         }
     };
-    let url = new URL('')
 
     useEffect(() => {
         axios.get('/teacher/new_group_data')
@@ -29,7 +29,18 @@ export default function CreateTask() {
                         id: group_ids[index]
                     };
                 });
-                console.log(processedGroups);
+
+                let paramsUrl = []
+                group_ids.forEach(id => {
+                    let url = new URL('/teacher/dashboard/groups/group', window.location.origin);
+                    url.searchParams.set('id', id)
+                    console.log(url)
+                    paramsUrl.push(url)
+                })
+                console.log(paramsUrl)
+                setUrl(paramsUrl);
+
+                // setUrl(paramsUrl);
                 setGroups(processedGroups);
             })
             .catch(error => {
@@ -118,7 +129,7 @@ export default function CreateTask() {
                         <ul>
                             {groups.map((group, index) => (
                                 <li key={index}>
-                                    <a href={`/teacher/dashboard/add_students_to_group_data/${group.id}`}>{group.name}</a>
+                                    <a href={`${url[index]}`}>{group.name}</a>
                                 </li>
                             ))}
                         </ul>

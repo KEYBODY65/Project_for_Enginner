@@ -1,5 +1,6 @@
 from django.urls import path, include
 from .views import *
+
 app_name = 'teacher'
 
 urlpatterns = [
@@ -12,6 +13,7 @@ urlpatterns = [
     path('dashboard/new_task/', include('main.urls')),
     path('new_task_data/', Create_task.as_view(), name='creation_tasks'),
     path('dashboard/groups/', include('main.urls')),
+    path('dashboard/groups/group', include('main.urls')),
     path('new_group_data/', Add_group.as_view(), name='creation_groups'),
     path('dashboard/add_student', include('main.urls')),
     path('add_student_data/', Add_Student.as_view(), name='add_student'),
