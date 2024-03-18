@@ -1,5 +1,5 @@
 from rest_framework.decorators import APIView
-from teacher.models import Student, Test
+from teacher.models import Student, Test, Statistic
 from .serializers import *
 from django.contrib.auth import logout
 from rest_framework.exceptions import JsonResponse
@@ -30,19 +30,21 @@ class StudentStatistics_view(APIView):
 class UploadAnswers_view(APIView):
     def post(self, request):
         true_answers = Answer_Serializer(data=request.data)
+        student = Student.objects.get(id=1)
         if true_answers.is_valid():
-            scores_col = 0
-            h = 0
+            scores_col, iteration = 0, 0
             test = Test.objects.get(id=true_answers.validated_data['test_id'])
             task = test.task_ids.all()
             for i in task:
-                if i.true_answer == true_answers.validated_data['true_answers'][h]:
+                if i.true_answer == true_answers.validated_data['true_answers'][iteration]:
                     scores_col += i.weight
-                    h += 1
-                elif true_answers.validated_data['true_answers'][h] == '-':
-                    h += 1
+                    iteration += 1
+                elif true_answers.validated_data['true_answers'][iteration] == '-':
+                    iteration += 1
                 else:
-                    h += 1
+                    iteration += 1
+            statistics = Statistic(student=student, col_balls=scores_col)
+            statistics.save()
             return JsonResponse(data={'score': scores_col}, status=200)
         return JsonResponse(data={'message': 'Not valid data'}, status=400)
 
