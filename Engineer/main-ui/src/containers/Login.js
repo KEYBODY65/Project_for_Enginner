@@ -63,7 +63,6 @@ if (isAuthenticated){
                         id='email'
                         //                        pattern='[a-z0-9._%+-]+@[a-z0-9._]+.[a-z]{2,4}$'
                         value={email}
-                        id='username'
                         onChange={e => onChange(e)}
                     />
                     <input

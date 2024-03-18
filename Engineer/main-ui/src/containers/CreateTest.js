@@ -17,15 +17,13 @@ export default function Group() {
         axios.get('/teacher/teacher_tasks_data')
             .then(response => {
                 const data = response.data
-                console.log(response.data)
                 setTasks([])
                 let task_ids = data.task_ids;
                 let task_names = data.task_names;
                 let UpdTasks = [];
-                task_ids.forEach(function(id){
+                task_ids.forEach(function (id) {
                     UpdTasks.push(`${id} ${task_names[id - 1]}`);
                 });
-                console.log(UpdTasks);
                 setTasks(UpdTasks);
 
             })
@@ -34,8 +32,16 @@ export default function Group() {
             });
         axios.get('/teacher/add_test_data')
             .then(response => {
+                const data = response.data;
                 console.log(response.data);
-                setTests(response.data);
+                setTests([])
+                let test_ids = data.test_ids;
+                let tests_names = data.test_names;
+                let UpdTests = [];
+                test_ids.forEach(function (id) {
+                    UpdTests.push(`${id} ${tests_names[id - 1]}`);
+                });
+                setTests(UpdTests);
             })
             .catch(error => {
                 console.error(error);
@@ -55,11 +61,15 @@ export default function Group() {
         e.preventDefault();
         const formData = new FormData();
         formData.append('name_of_test', document.getElementById('name_of_test').value);
-        const taskIds = tasks.map(task => task.slice(0, 1));
+        let taskIds = [];
+        document.querySelectorAll('input[type="checkbox"]:checked').forEach(elem => {
+            taskIds.push(elem.id);
+        })
+        console.log(taskIds)
 
-        taskIds.forEach(id => {
-            formData.append('task_ids', id);
-        });
+
+        formData.append('task_ids',[taskIds]);
+        console.log(FormData)
         axios.post('/teacher/add_test_data/', formData, config)
             .then(response => {
                 // Обработайте ответ сервера здесь

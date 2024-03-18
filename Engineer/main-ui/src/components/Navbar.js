@@ -33,7 +33,10 @@ const Navbar = ({logout, isAuthenticated}) => {
                 display: 'flex',
                 justifyContent: "space-between"
             }}>
-                <div>
+                <div style={{
+                display: 'flex',
+                justifyContent: "space-between"
+            }}>
                     <li className='nav-item'>
                         <a className='nav-link' href='/teacher/dashboard'>Личный кабинет</a>
                     </li>
@@ -67,8 +70,7 @@ const Navbar = ({logout, isAuthenticated}) => {
                 </button>
                 <div className='collapse navbar-collapse' id='navbarNav'>
                     <ul className='navbar-nav'>
-                        {isAuthenticated && authLinks2()}
-                        {isAuthenticated ? authLinks() : guestLinks()}
+                        {isAuthenticated ? authLinks2() : guestLinks()}
                     </ul>
                 </div>
             </nav>
