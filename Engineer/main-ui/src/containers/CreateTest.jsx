@@ -22,7 +22,7 @@ export default function Group() {
                 let task_names = data.task_names;
                 let UpdTasks = [];
                 task_ids.forEach(function (id) {
-                    UpdTasks.push(`${id} ${task_names[id - 1]}`);
+                    UpdTasks.push(`${task_names[id - 1]}`);
                 });
                 setTasks(UpdTasks);
 
@@ -33,14 +33,13 @@ export default function Group() {
         axios.get('/teacher/add_test_data')
             .then(response => {
                 const data = response.data;
-                console.log(response.data);
                 setTests([])
-                let test_ids = data.test_ids;
-                let tests_names = data.test_names;
+                let test_ids = data.tests_id;
+                let tests_names = data.tests;
                 let UpdTests = [];
-                test_ids.forEach(function (id) {
-                    UpdTests.push(`${id} ${tests_names[id - 1]}`);
-                });
+                test_ids.forEach(id => {
+                    UpdTests.push(`${tests_names[id - 1]}`);
+                })
                 setTests(UpdTests);
             })
             .catch(error => {
@@ -62,21 +61,22 @@ export default function Group() {
         const formData = new FormData();
         formData.append('name_of_test', document.getElementById('name_of_test').value);
         let taskIds = [];
+
         document.querySelectorAll('input[type="checkbox"]:checked').forEach(elem => {
             taskIds.push(elem.id);
         })
         console.log(taskIds)
 
-
-        formData.append('task_ids',[taskIds]);
+        taskIds.forEach(id => {
+            formData.append('task_ids[]', id);
+        });
         console.log(FormData)
         axios.post('/teacher/add_test_data/', formData, config)
             .then(response => {
-                // Обработайте ответ сервера здесь
                 console.log(response.data);
+                location.reload();
             })
             .catch(error => {
-                // Обработайте ошибку здесь
                 console.error(error);
             });
     }
@@ -145,8 +145,8 @@ export default function Group() {
             <div className='d-block'>
                 {tests.length > 0 ? ( // Проверка наличия групп в списке
                     <ul>
-                        {tests.map((group) => (<li key={test}>
-                            <a href="/dashboard/{group}">{test.id}</a>
+                        {tests.map((test) => (<li key={test}>
+                            <a href={`/dashboard/${test}`}>{test}</a>
                         </li>))}
                     </ul>) : (<p>Вы не составили ни одного варианта</p>)}
             </div>

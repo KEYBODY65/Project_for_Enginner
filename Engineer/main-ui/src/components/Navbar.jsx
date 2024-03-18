@@ -1,5 +1,5 @@
 import React, {Fragment, useState} from 'react';
-import {Link, redirect, Navigate} from 'react-router-dom';
+import {Link, Navigate} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {logout} from '../actions/auth.jsx';
 
@@ -31,11 +31,7 @@ const Navbar = ({logout, isAuthenticated}) => {
 
             <div style={{
                 display: 'flex',
-                justifyContent: "space-between"
-            }}>
-                <div style={{
-                display: 'flex',
-                justifyContent: "space-between"
+                justifyContent: 'space-between'
             }}>
                     <li className='nav-item'>
                         <a className='nav-link' href='/teacher/dashboard'>Личный кабинет</a>
@@ -43,12 +39,9 @@ const Navbar = ({logout, isAuthenticated}) => {
                     <li className='nav-item'>
                         <a className='nav-link' href='/' onClick={logout_user}>Выйти</a>
                     </li>
-                </div>
-                <div>
                     <li className='nav-item'>
-                        <a className='nav-link' href='/teacher/dashboard'>Добавить студента</a>
+                        <a className='nav-link' href='/teacher/dashboard/add_student'>Добавить студента</a>
                     </li>
-                </div>
             </div>
         )
     ;

@@ -29,7 +29,9 @@ export default function Dashboard() {
       </div>
       <hr className='my-4' />
 
-      <div className='c d-flex '>
+      <div className='c d-flex' style={{
+        justifyContent: "center"
+      }}>
         <Link to='/teacher/dashboard/groups'>
           <div className='card border-primary mb-3' style={{ maxWidth: '18rem' }}>
             <div className='card-header' style={{ height: 40 }}></div>
