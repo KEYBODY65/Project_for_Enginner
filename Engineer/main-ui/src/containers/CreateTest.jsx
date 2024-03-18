@@ -22,7 +22,7 @@ export default function Group() {
                 let task_names = data.task_names;
                 let UpdTasks = [];
                 task_ids.forEach(function (id) {
-                    UpdTasks.push(`${task_names[id - 1]}`);
+                    UpdTasks.push([`${task_names[id - 1]}`, id]);
                 });
                 setTasks(UpdTasks);
 
@@ -107,9 +107,9 @@ export default function Group() {
                                     {tasks.map((task) => (
                                         <li key={task.id}>
                                             <input className="form-check-input mr-3" type="checkbox"
-                                                   value="" id={task.slice(0, 1)}/>
-                                            <label className="form-check-label" htmlFor={task.slice(0, 1)}>
-                                                <h3>{task}</h3>
+                                                   value="" id={task[1]}/>
+                                            <label className="form-check-label" htmlFor={task[1]}>
+                                                <h3>{task[0]}</h3>
                                             </label>
                                         </li>))}
                                 </ul>) : (<p>Вы не добавили задания</p>)}

@@ -14,6 +14,7 @@ export default function CreateTask() {
             'X-CSRFToken': Token
         }
     };
+    let url = new URL('')
 
     useEffect(() => {
         axios.get('/teacher/new_group_data')
