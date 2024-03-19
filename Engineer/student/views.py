@@ -27,6 +27,7 @@ def logout_student(request):
 class StudentStatistics_view(APIView):
     def post(self, request):
         pass
+
 class UploadAnswers_view(APIView):
     def post(self, request):
         true_answers = Answer_Serializer(data=request.data)
