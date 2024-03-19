@@ -1,6 +1,6 @@
 import './static/Dashboard.css';
 import axios from 'axios';
-import React, {useState, useEffect} from 'react';
+import {useState, useEffect} from 'react';
 
 export default function CreateTask() {
     const [Group, setGroup] = useState(false);

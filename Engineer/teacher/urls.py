@@ -20,9 +20,9 @@ urlpatterns = [
     path('dashboard/add_test/', include('main.urls')),
     path('add_test_data/', Add_Test.as_view(), name='add_test'),
     path('dashboard/add_students_to_group', include('main.urls')),
-    path('dashboard/groups/group_name', Group_name.as_view(), name='group_name'),
-    path('dashboard/add_test_to_group', Add_Test_to_group.as_view(), name='add_test_to_group'),
-    path('dashboard/add_students_to_group_data', Add_Student_to_group.as_view(), name='add_students_to_group'),
+    path('dashboard/groups/group_name/', Group_name.as_view(), name='group_name'),
+    path('dashboard/add_test_to_group_data/', Add_Test_to_group.as_view(), name='add_test_to_group'),
+    path('dashboard/add_students_to_group_data/', Add_Student_to_group.as_view(), name='add_students_to_group'),
     path('teacher_tasks_data/', Teacher_tasks.as_view(), name='all_of_current_teacher_tasks'),
     path('get_csrf/', get_csrf)
 ]

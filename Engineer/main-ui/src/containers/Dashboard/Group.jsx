@@ -1,32 +1,71 @@
 import axios from 'axios';
-import React, {useState, useEffect} from 'react';
+import {useState, useEffect} from 'react';
+
 
 export default function Group() {
+    const [token, setToken] = useState('');
+    const config = {
+        headers: {
+            'Content-Type': 'application/json', 'Accept': 'application/json', 'X-CSRFToken': token
+        }
+    };
+    const [succes, setSuccess] = useState(false);
     const [Groups, setGroups] = useState(false);
     const [Group, setGroup] = useState("");
+    const [testIds, setTestIds] = useState([]);
+    const [groupName, setGroupName] = useState("");
+    const [tests, setTests] = useState([]);
     const [SendGroup, setSendGroup] = useState({
         Group: ''
     });
-    const [submittedGroup, setSubmittedGroup] = useState([]); // Сохранение введенных данных в отдельной переменной
-    const savedGroup = localStorage.getItem('submittedGroup');
 
-    if (savedGroup) {
-        const parsedGroup = JSON.parse(savedGroup);
-
+    let params = new URLSearchParams(document.location.search);
+    let groupId = params.get('id');
+    const formData = new FormData();
+    if (groupId) {
+        formData.append('group_id', groupId.toString());
     }
 
-    function show_test() {
-        return (
-            <div class="btn-group-vertical" role="group" aria-label="Vertical radio toggle button group">
-                <input type="radio" className="btn-check" name="vbtn-radio" id="vbtn-radio1" autocomplete="off"/>
-                <label class="btn btn-outline-danger" for="vbtn-radio1">1 задание 2947</label>
-                <input type="radio" className="btn-check" name="vbtn-radio" id="vbtn-radio2" autocomplete="off"/>
-                <label class="btn btn-outline-danger" for="vbtn-radio2">1 задание 2048</label>
-                <input type="radio" className="btn-check" name="vbtn-radio" id="vbtn-radio3" autocomplete="off"/>
-                <label class="btn btn-outline-danger" for="vbtn-radio3">1 задание 3892</label>
-            </div>
-        );
-    };
+    const [submittedGroup, setSubmittedGroup] = useState([]);
+
+    useEffect(() => {
+        axios.get('/teacher/get_csrf')
+            .then(res => {
+                const Token = res.data.csrfToken;
+                setToken(Token);
+            })
+            .catch(err => {
+                console.error(err);
+            });
+        console.log(token);
+
+        axios.get('/teacher/add_test_data')
+            .then(response => {
+                const data = response.data;
+                setTests([])
+                let test_ids = data.tests_id;
+                let tests_names = data.tests;
+                setTestIds([]);
+                setTestIds(test_ids);
+                let UpdTests = [];
+                test_ids.forEach(id => {
+                    UpdTests.push(`${tests_names[id - 1]}`);
+                })
+                setTests(UpdTests);
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    }, []);
+
+    axios.post('/teacher/dashboard/groups/group_name/', formData, config)
+        .then(response => {
+            const data = response.data
+            setGroupName(data.group_name);
+        })
+        .catch(err => {
+            console.error(err);
+        })
 
     function onChange(e) {
         setGroup(e.target.value);
@@ -47,6 +86,48 @@ export default function Group() {
 
         setGroup(""); // Очищаем поле после отправки
 
+    }
+
+    function PublishTest(e) {
+        e.preventDefault();
+        setSuccess(false);
+        const formData = new FormData();
+        let test = [];
+
+        document.querySelectorAll('input[type="radio"]:checked').forEach(elem => {
+            test.push(elem.id);
+        })
+        if (test.length === 0) {
+            document.getElementById('hiddenText').style.display = 'block';
+        } else {
+            document.getElementById('hiddenText').style.display = 'none';
+            console.log(test);
+            formData.append('group_id', groupId);
+            formData.append('test_id', test[0])
+            axios.post('/teacher/dashboard/add_test_to_group_data/', formData, config)
+                .then(response => {
+                    console.log(response.data)
+                    setSuccess(true);
+                    document.querySelectorAll('input[type="radio"]:checked').forEach(input => {
+                        input.checked = false;
+                    })
+                })
+                .catch(err => {
+                    console.error(err);
+                    setSuccess(false);
+                })
+        }
+    }
+
+    function Succes() {
+        return (
+            <div className="tn-box tn-box-color-1">
+
+                <p>Succes</p>
+
+            </div>
+
+        )
     }
 
     function handleNewTaskClick() {
@@ -90,7 +171,7 @@ export default function Group() {
 
     return (
         <div className="container d-">
-            <h2 style={{textAlign: 'center', marginTop: 20}}>Группа: Информатика 11Т </h2>
+            <h2 style={{textAlign: 'center', marginTop: 20}}>Группа: {groupName} </h2>
             <hr className="my-4"/>
             <div className="new_test mb-3">
                 <div className="d-flex">
@@ -128,17 +209,33 @@ export default function Group() {
                 </div>
             </div>
             <br/>
-            <div>
-                <button className="btn btn-primary mt-2" type='submit'>Прикрепить тест</button>
-            </div>
-            <br/>
-            <p> Составленные тесты: </p>
-            <div class="btn-group-vertical" role="group" aria-label="Vertical radio toggle button group">
-                <input type="radio" className="" name="vbtn-radio" id="vbtn-radio1" autocomplete="off"/>
-                <label class="btn btn-outline-danger" for="vbtn-radio1">17.12 0389</label>
-                <input type="radio" className="" name="vbtn-radio" id="vbtn-radio2" autocomplete="off"/>
-                <label class="btn btn-outline-danger" for="vbtn-radio2">18.12 4672</label>
-            </div>
+            <form onSubmit={PublishTest}>
+                <div>
+                    <button className="btn btn-primary mt-2" type='submit'>Прикрепить тест</button>
+                </div>
+                {succes && (<Succes/>)}
+                <div id={'hiddenText'} style={{
+                    color: 'red',
+                    display: "none"
+                }}>
+                    Вы не выбрали тест
+                </div>
+                <br/>
+                <p> Составленные тесты: </p>
+                <div className="btn-group-vertical" role="group" aria-label="Vertical radio toggle button group">
+                    <div className='d-block'>
+                        {tests.length > 0 ? ( // Проверка наличия групп в списке
+                            <ul>
+                                {tests.map((test) => (<h4 key={tests.indexOf(test)}>
+                                    <input type="radio" className="" name="vbtn-radio"
+                                           id={testIds[tests.indexOf(test)]}/>
+                                    <label className="btn btn-outline-danger"
+                                           htmlFor={testIds[tests.indexOf(test)]}>{test}</label>
+                                </h4>))}
+                            </ul>) : (<p>Вы не составили ни одного варианта</p>)}
+                    </div>
+                </div>
+            </form>
         </div>
     );
 }

@@ -164,8 +164,9 @@ class Add_Test_to_group(APIView):
 
 
 class Group_name(APIView):
-    def get(self, request):
-        serializer = GroupsName_serializer(data=request.query_params)
+    def post(self, request):
+        serializer = GroupsName_serializer(data=request.data)
+        print(serializer.initial_data)
         if serializer.is_valid():
             g_name = Group.objects.get(id=serializer.validated_data['group_id'])
             return JsonResponse(data={'group_name': g_name.group_name}, status=200)
