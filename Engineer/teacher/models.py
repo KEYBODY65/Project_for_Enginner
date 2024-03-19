@@ -53,6 +53,7 @@ class Test(models.Model):
     test_builder = models.ForeignKey(UserModel, on_delete=models.PROTECT)
     name_of_test = models.CharField(max_length=255)
     task_ids = models.ManyToManyField(Task)
+    group_test = models.ForeignKey(Group, on_delete=models.PROTECT, blank=True, null=True)
 
 
 class Statistic(models.Model):

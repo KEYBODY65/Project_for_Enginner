@@ -4,7 +4,7 @@ from django.http import JsonResponse
 from .serializers import *
 from django.contrib.auth.models import auth
 from django.middleware.csrf import get_token
-from .models import UserModel
+from .models import *
 from django.views.decorators.csrf import ensure_csrf_cookie
 from .generate_password import *
 
@@ -126,18 +126,37 @@ class Add_Student(APIView):
 
 
 class Add_Student_to_group(APIView):
-    def post(self, request, id):
+    def post(self, request):
         serializer = Studentsgroups_Serializer(data=request.data)
         print(serializer.initial_data)
         if serializer.is_valid():
+            group = Group.objects.filter(id=serializer.validated_data['group_id'])
             student = Student.objects.filter(name=serializer.validated_data['student_name'])
-            group = Group.objects.filter(id=id)
             if not student:
                 return JsonResponse(data={'message': 'Student not found'}, status=404)
             if not group:
                 return JsonResponse(data={'message': 'Group not found'}, status=404)
             student, group = student[0], group[0]
             student.student_group = group
+        return JsonResponse(data={'message': 'Not valid data'}, status=400)
+
+
+class Add_Test_to_group(APIView):
+    def post(self, request):
+        serializer = Testgroups_serializer(data=request.data)
+        print(serializer.initial_data)
+        if serializer.is_valid():
+            try:
+                group = Group.objects.get(id=serializer.validated_data['group_id'])
+                test = Test.objects.get(id=serializer.validated_data['test_id'])
+                test.group_test = group.id
+                test.save()
+                return JsonResponse(data={'message': 'Test added to group successfully'}, status=200)
+            except Test.DoesNotExist:
+                return JsonResponse(data={'message': 'Test not found'}, status=404)
+            except Group.DoesNotExist:
+                return JsonResponse(data={'message': 'Group not found'}, status=404)
+
         return JsonResponse(data={'message': 'Not valid data'}, status=400)
 
 
