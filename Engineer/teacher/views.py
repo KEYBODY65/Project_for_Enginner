@@ -130,14 +130,17 @@ class Add_Student_to_group(APIView):
         serializer = Studentsgroups_Serializer(data=request.data)
         print(serializer.initial_data)
         if serializer.is_valid():
-            group = Group.objects.filter(id=serializer.validated_data['group_id'])
-            student = Student.objects.filter(name=serializer.validated_data['student_name'])
-            if not student:
+            try:
+                group = Group.objects.filter(id=serializer.validated_data['group_id'])
+                student = Student.objects.filter(name=serializer.validated_data['student_name'])
+                student, group = student[0], group[0]
+                student.student_group = group
+                return JsonResponse(data={'message': 'Student added to group successfully'}, status=200)
+            except Student.DoesNotExist:
                 return JsonResponse(data={'message': 'Student not found'}, status=404)
-            if not group:
+            except Group.DoesNotExist:
                 return JsonResponse(data={'message': 'Group not found'}, status=404)
-            student, group = student[0], group[0]
-            student.student_group = group
+
         return JsonResponse(data={'message': 'Not valid data'}, status=400)
 
 
@@ -149,7 +152,7 @@ class Add_Test_to_group(APIView):
             try:
                 group = Group.objects.get(id=serializer.validated_data['group_id'])
                 test = Test.objects.get(id=serializer.validated_data['test_id'])
-                test.group_test = group.id
+                test.group_test = group
                 test.save()
                 return JsonResponse(data={'message': 'Test added to group successfully'}, status=200)
             except Test.DoesNotExist:
