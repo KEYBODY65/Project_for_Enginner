@@ -119,7 +119,7 @@ class Add_Student(APIView):
     def get(self, request):
         students = Student.objects.filter(student_teacher=request.user.id)
         students_names = []
-        for elem in students: students_names.append(elem)
+        for elem in students: students_names.append(f'{elem.student_surname}{elem.student_name}')
         if students_names:
             return JsonResponse(data={'students': students_names}, status=200)
         return JsonResponse(data={'Message': 'List is empty'}, status=400)
