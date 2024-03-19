@@ -175,7 +175,9 @@ class Teacher_tasks(APIView):
     def get(self, request):
         tasks_data = Task.objects.filter(task_builder=request.user.id)
         task_ids, tasks_names = [], []
-        for task in tasks_data: tasks_names.append(task.task_name), task_ids.append(task.id)
+        for task in tasks_data:
+            tasks_names.append(task.task_name)
+            task_ids.append(task.id)
         if all([tasks_names, task_ids]):
             return JsonResponse(data={'task_ids': task_ids, 'task_names': tasks_names}, status=200)
         return JsonResponse(data={'Message': 'Lists is empty'}, status=400)
@@ -211,4 +213,10 @@ class Add_Test(APIView):
 
 class Statics_View(APIView):
     def get(self, request):
-        pass
+        statistic = Statistic.objects.all()
+        data = dict()
+        for elem in statistic:
+            data.setdefault(elem.student, elem.col_balls)
+
+        return JsonResponse(data={'data': data}, status=200)
+
