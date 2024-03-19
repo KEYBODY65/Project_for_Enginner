@@ -163,6 +163,14 @@ class Add_Test_to_group(APIView):
         return JsonResponse(data={'message': 'Not valid data'}, status=400)
 
 
+class Group_name(APIView):
+    def get(self, request):
+        serializer = GroupsName_serializer(data=request.query_params)
+        if serializer.is_valid():
+            g_name = Group.objects.get(id=serializer.validated_data['group_id'])
+            return JsonResponse(data={'group_name': g_name.group_name}, status=200)
+        return JsonResponse(data={'message': 'Group not found'}, status=404)
+
 class Teacher_tasks(APIView):
     def get(self, request):
         tasks_data = Task.objects.filter(task_builder=request.user.id)
