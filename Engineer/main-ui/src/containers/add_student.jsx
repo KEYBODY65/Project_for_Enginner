@@ -28,8 +28,9 @@ export default function Add_student() {
 
     function onSubmit(e) {
         e.preventDefault();
-        const formData = new FormData();
+        setSucces(false);
 
+        const formData = new FormData();
         formData.append('student_name', document.getElementById('student_name').value);
         formData.append('student_surname', document.getElementById('student_surname').value);
 
@@ -37,12 +38,15 @@ export default function Add_student() {
             .then(response => {
                 // Обработайте ответ сервера здесь
                 console.log(response.data);
-                setSucces(true)
+                setSucces(true);
+                document.querySelectorAll('input').forEach(input => {
+                    input.value = '';
+                });
             })
             .catch(error => {
                 // Обработайте ошибку здесь
                 console.error(error);
-                setSucces(false)
+                setSucces(false);
             });
 
     }

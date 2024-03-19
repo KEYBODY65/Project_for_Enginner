@@ -177,10 +177,10 @@ export default function Group() {
                                 <ul>
                                     {filteredStudents.map((student, index) => (
                                         <li key={index}>
-                                            <input type="checkbox" className="btn-check" id={index}
+                                            <input type="checkbox" className="btn-check" id={`stud_${index}`}
                                                    onChange={() => handleCheckboxChange(student)}/>
                                             <label className="btn btn-outline-primary"
-                                                   htmlFor={index}>{student}</label>
+                                                   htmlFor={`stud_${index}`}>{student}</label>
                                         </li>
                                     ))}
                                 </ul>
