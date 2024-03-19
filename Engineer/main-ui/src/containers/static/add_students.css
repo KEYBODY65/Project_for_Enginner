@@ -1,5 +1,7 @@
 .tn-box {
-  animation: fadeOut 3s forwards;
+  position: absolute;
+  color: #4cae4c;
+  animation: fadeOut 5s forwards;
 }
 
 @keyframes fadeOut {

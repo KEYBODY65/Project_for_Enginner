@@ -9,15 +9,17 @@ export default function Group() {
             'Content-Type': 'application/json', 'Accept': 'application/json', 'X-CSRFToken': token
         }
     };
+    const [searchQuery, setSearchQuery] = useState('');
+    const [selectedStudents, setSelectedStudents] = useState('');
+    const [students, setStudents] = useState([])
     const [succes, setSuccess] = useState(false);
     const [Groups, setGroups] = useState(false);
-    const [Group, setGroup] = useState("");
     const [testIds, setTestIds] = useState([]);
     const [groupName, setGroupName] = useState("");
     const [tests, setTests] = useState([]);
-    const [SendGroup, setSendGroup] = useState({
-        Group: ''
-    });
+    // const [SendGroup, setSendGroup] = useState({
+    //     Group: ''
+    // });
 
     let params = new URLSearchParams(document.location.search);
     let groupId = params.get('id');
@@ -26,9 +28,17 @@ export default function Group() {
         formData.append('group_id', groupId.toString());
     }
 
-    const [submittedGroup, setSubmittedGroup] = useState([]);
+    const [gettingStudents, setGettingStudents] = useState([]);
 
     useEffect(() => {
+        axios.get('/teacher/add_student_data/')
+            .then(res => {
+                setStudents([]);
+                setStudents(res.data.student);
+            })
+            .catch(err => {
+                console.error(err);
+            })
         axios.get('/teacher/get_csrf')
             .then(res => {
                 const Token = res.data.csrfToken;
@@ -37,7 +47,6 @@ export default function Group() {
             .catch(err => {
                 console.error(err);
             });
-        console.log(token);
 
         axios.get('/teacher/add_test_data')
             .then(response => {
@@ -67,25 +76,22 @@ export default function Group() {
             console.error(err);
         })
 
-    function onChange(e) {
-        setGroup(e.target.value);
-        setSendGroup(prevState => ({
-            ...prevState,
-            Group: e.target.value
-        }));
-    }
-
     function onSubmit(e) {
         e.preventDefault();
-        setSubmittedGroup([...submittedGroup, Group]);
-
-        console.log(SendGroup);
-        localStorage.setItem('submittedGroup', JSON.stringify([...submittedGroup, Group]));
-
-        e.preventDefault();
-
-        setGroup(""); // Очищаем поле после отправки
-
+        const formData = new FormData();
+        let params = new URLSearchParams(document.location.search);
+        let groupId = params.get('id');
+        if (groupId) {
+            formData.append('group_id', groupId.toString());
+        }
+        formData.append('student_name', selectedStudents);
+        axios.post('/teacher/dashboard/add_students_to_group_data/', formData, config)
+            .then(res => {
+                console.log(res.data)
+            })
+            .catch(err => {
+                console.error(err);
+            })
     }
 
     function PublishTest(e) {
@@ -101,7 +107,6 @@ export default function Group() {
             document.getElementById('hiddenText').style.display = 'block';
         } else {
             document.getElementById('hiddenText').style.display = 'none';
-            console.log(test);
             formData.append('group_id', groupId);
             formData.append('test_id', test[0])
             axios.post('/teacher/dashboard/add_test_to_group_data/', formData, config)
@@ -123,7 +128,7 @@ export default function Group() {
         return (
             <div className="tn-box tn-box-color-1">
 
-                <p>Succes</p>
+                <h5>Succes</h5>
 
             </div>
 
@@ -133,6 +138,20 @@ export default function Group() {
     function handleNewTaskClick() {
         setGroups(true);
     }
+
+    const handleSearchChange = (event) => {
+        setSearchQuery(event.target.value);
+    };
+
+    const filteredStudents = students.filter((student) =>
+        student.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+    const handleCheckboxChange = (student) => {
+        {
+            document.querySelectorAll('input[type="checkbox"]:checked').length !== 0 ?
+                setSelectedStudents(student) : setSelectedStudents('')
+        }
+    };
 
     function renderGroups() {
         return (
@@ -145,25 +164,32 @@ export default function Group() {
                             <input
                                 type="text"
                                 className="form-control"
-                                value={Group}
-                                onChange={onChange}
+                                placeholder="Search for a student..."
+                                value={searchQuery}
+                                onChange={handleSearchChange}
                                 required
                                 aria-label="Sizing example input"
                                 aria-describedby="inputGroup-sizing-default"
                             />
                         </div>
                         <div className="btn-group" role="group" aria-label="Basic checkbox toggle button group">
-                            <input type="checkbox" className="btn-check" id="btncheck1"/>
-                            <label className="btn btn-outline-primary" htmlFor="btncheck1">Андреев Иван</label>
-
-                            <input type="checkbox" className="btn-check" id="btncheck2"/>
-                            <label className="btn btn-outline-primary" htmlFor="btncheck2">Попов Михаил</label>
-
-                            <input type="checkbox" className="btn-check" id="btncheck3"/>
-                            <label className="btn btn-outline-primary" htmlFor="btncheck3">Петров Василий </label>
+                            {searchQuery.length > 0 && (
+                                <ul>
+                                    {filteredStudents.map((student, index) => (
+                                        <li key={index}>
+                                            <input type="checkbox" className="btn-check" id={index}
+                                                   onChange={() => handleCheckboxChange(student)}/>
+                                            <label className="btn btn-outline-primary"
+                                                   htmlFor={index}>{student}</label>
+                                        </li>
+                                    ))}
+                                </ul>
+                            )}
                         </div>
                     </div>
-                    <input type="submit" className="btn btn-primary mt-2"/>
+                    {document.querySelectorAll('input[type="checkbox"]:checked').length !== 0 &&
+                        <input type="submit" className="btn btn-primary mt-2"/>
+                    }
                 </form>
             </div>
         );
@@ -195,9 +221,9 @@ export default function Group() {
                     </h5>
                 )}
                 <div className='d-block'>
-                    {submittedGroup.length > 0 ? ( // Проверка наличия групп в списке
+                    {gettingStudents.length > 0 ? ( // Проверка наличия групп в списке
                         <ul>
-                            {submittedGroup.map((group, index) => (
+                            {gettingStudents.map((group, index) => (
                                 <li key={index}>
                                     <a href="/dashboard/{group}">{group}</a>
                                 </li>
@@ -209,6 +235,9 @@ export default function Group() {
                 </div>
             </div>
             <br/>
+            <hr className="my-4" style={{
+                width: '43%'
+            }}/>
             <form onSubmit={PublishTest}>
                 <div>
                     <button className="btn btn-primary mt-2" type='submit'>Прикрепить тест</button>
