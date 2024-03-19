@@ -134,16 +134,29 @@ class Add_Student_to_group(APIView):
             try:
                 group = Group.objects.get(id=serializer.validated_data['group_id'])
                 student = Student.objects.get(id=serializer.validated_data['student_id'])
-                print(student)
-                print(group)
-                # student, group = student[0], group[0]
-                # student.student_group = group
+                student.student_group.add(group)
+                student.save()
                 return JsonResponse(data={'message': 'Student added to group successfully'}, status=200)
             except Student.DoesNotExist:
                 return JsonResponse(data={'message': 'Student not found'}, status=404)
             except Group.DoesNotExist:
                 return JsonResponse(data={'message': 'Group not found'}, status=404)
 
+        return JsonResponse(data={'message': 'Not valid data'}, status=400)
+
+
+
+class Group_Names(APIView):
+    def post(self, request):
+        serializer = StudentGroup_Serializer(data=request.data)
+        if serializer.is_valid():
+            group_students = Student.objects.filter(student_group=serializer.validated_data['group_id'])
+            if group_students:
+                data = []
+                for student in group_students:
+                    data.append(f'{student.student_name} {student.student_surname}')
+                return JsonResponse(data={'group_students': data}, status=200)
+            return JsonResponse(data={'message': 'Student not found'}, status=404)
         return JsonResponse(data={'message': 'Not valid data'}, status=400)
 
 

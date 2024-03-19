@@ -42,6 +42,8 @@ class Testgroups_serializer(serializers.Serializer):
 class GroupsName_serializer(serializers.Serializer):
     group_id = serializers.IntegerField()
 
+class StudentGroup_Serializer(serializers.Serializer):
+    group_id = serializers.IntegerField()
 
 class Create_StudentsSerializer(serializers.ModelSerializer):
     class Meta:

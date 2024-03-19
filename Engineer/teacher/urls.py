@@ -19,6 +19,7 @@ urlpatterns = [
     path('add_student_data/', Add_Student.as_view(), name='add_student'),
     path('dashboard/add_test/', include('main.urls')),
     path('add_test_data/', Add_Test.as_view(), name='add_test'),
+    path('grop_student/', Group_Names.as_view(), name='grop_student'),
     path('dashboard/add_students_to_group', include('main.urls')),
     path('dashboard/groups/group_name/', Group_name.as_view(), name='group_name'),
     path('dashboard/add_test_to_group_data/', Add_Test_to_group.as_view(), name='add_test_to_group'),
