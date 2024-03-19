@@ -12,15 +12,12 @@ export default function Group() {
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedStudents, setSelectedStudents] = useState('');
     const [students, setStudents] = useState([])
+    const [studentObject, setStudentObject] = useState({});
     const [succes, setSuccess] = useState(false);
     const [Groups, setGroups] = useState(false);
     const [testIds, setTestIds] = useState([]);
     const [groupName, setGroupName] = useState("");
     const [tests, setTests] = useState([]);
-    // const [SendGroup, setSendGroup] = useState({
-    //     Group: ''
-    // });
-
     let params = new URLSearchParams(document.location.search);
     let groupId = params.get('id');
     const formData = new FormData();
@@ -33,8 +30,19 @@ export default function Group() {
     useEffect(() => {
         axios.get('/teacher/add_student_data/')
             .then(res => {
+                setGettingStudents(Object.values(res.data.student))
+            })
+            .catch(err => {
+                console.error(err);
+            })
+        axios.get('/teacher/add_student_data/')
+            .then(res => {
+                let data = res.data.student;
+                setStudentObject({});
                 setStudents([]);
-                setStudents(res.data.student);
+                setStudentObject(data);
+                setStudents(Object.values(data));
+                // setStudents(res.data.student);
             })
             .catch(err => {
                 console.error(err);
@@ -84,7 +92,7 @@ export default function Group() {
         if (groupId) {
             formData.append('group_id', groupId.toString());
         }
-        formData.append('student_name', selectedStudents);
+        formData.append('student_id', selectedStudents);
         axios.post('/teacher/dashboard/add_students_to_group_data/', formData, config)
             .then(res => {
                 console.log(res.data)
@@ -177,10 +185,10 @@ export default function Group() {
                                 <ul>
                                     {filteredStudents.map((student, index) => (
                                         <li key={index}>
-                                            <input type="checkbox" className="btn-check" id={`stud_${index}`}
-                                                   onChange={() => handleCheckboxChange(student)}/>
+                                            <input type="checkbox" className="btn-check" id={`stud_${Object.keys(studentObject).find(k => studentObject[k] === student)}`}
+                                                   onChange={() => handleCheckboxChange(() => Object.keys(studentObject).find(k => studentObject[k] === student))}/>
                                             <label className="btn btn-outline-primary"
-                                                   htmlFor={`stud_${index}`}>{student}</label>
+                                                   htmlFor={`stud_${Object.keys(studentObject).find(k => studentObject[k] === student)}`}>{student}</label>
                                         </li>
                                     ))}
                                 </ul>
@@ -223,9 +231,9 @@ export default function Group() {
                 <div className='d-block'>
                     {gettingStudents.length > 0 ? ( // Проверка наличия групп в списке
                         <ul>
-                            {gettingStudents.map((group, index) => (
+                            {gettingStudents.map((student, index) => (
                                 <li key={index}>
-                                    <a href="/dashboard/{group}">{group}</a>
+                                    <h4>{student}</h4>
                                 </li>
                             ))}
                         </ul>
