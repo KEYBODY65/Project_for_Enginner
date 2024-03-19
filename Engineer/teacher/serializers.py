@@ -33,7 +33,7 @@ class Create_GroupsSerializer(serializers.ModelSerializer):
 
 class Studentsgroups_Serializer(serializers.Serializer):
     group_id = serializers.IntegerField()
-    student_name = serializers.CharField(max_length=255)
+    student_id = serializers.CharField(max_length=255)
 
 class Testgroups_serializer(serializers.Serializer):
     group_id = serializers.IntegerField()
