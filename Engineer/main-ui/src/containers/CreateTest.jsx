@@ -108,7 +108,7 @@ export default function Group() {
                                             <input className="form-check-input mr-3" type="checkbox"
                                                    value="" id={task[1]}/>
                                             <label className="form-check-label" htmlFor={task[1]}>
-                                                <h3>{task[0]}</h3>
+                                                <p>{task[0]}</p>
                                             </label>
                                         </li>))}
                                 </ul>) : (<p>Вы не добавили задания</p>)}
@@ -145,7 +145,7 @@ export default function Group() {
                 {tests.length > 0 ? ( // Проверка наличия групп в списке
                     <ul>
                         {tests.map((test) => (<li key={test}>
-                            <a href={`/dashboard/${test}`}>{test}</a>
+                            <h6>{test}</h6>
                         </li>))}
                     </ul>) : (<p>Вы не составили ни одного варианта</p>)}
             </div>

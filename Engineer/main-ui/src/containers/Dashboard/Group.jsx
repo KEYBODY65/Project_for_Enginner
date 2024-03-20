@@ -1,14 +1,9 @@
 import axios from 'axios';
 import {useState, useEffect} from 'react';
+import Cookies from "universal-cookie";
 
 
 export default function Group() {
-    const [token, setToken] = useState('');
-    const config = {
-        headers: {
-            'Content-Type': 'application/json', 'Accept': 'application/json', 'X-CSRFToken': token
-        }
-    };
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedStudents, setSelectedStudents] = useState('');
     const [students, setStudents] = useState([])
@@ -18,23 +13,19 @@ export default function Group() {
     const [testIds, setTestIds] = useState([]);
     const [groupName, setGroupName] = useState("");
     const [tests, setTests] = useState([]);
-    let params = new URLSearchParams(document.location.search);
-    let groupId = params.get('id');
-    const formData = new FormData();
-    if (groupId) {
-        formData.append('group_id', groupId.toString());
-    }
-
     const [gettingStudents, setGettingStudents] = useState([]);
 
+    let params = new URLSearchParams(document.location.search);
+    let groupId = params.get('id');
+
+    const cookies = new Cookies();
+    const config = {
+        headers: {
+            'Content-Type': 'application/json', 'Accept': 'application/json', 'X-CSRFToken': cookies.get('csrftoken')
+        }
+    };
+
     useEffect(() => {
-        axios.get('/teacher/add_student_data/')
-            .then(res => {
-                setGettingStudents(Object.values(res.data.student))
-            })
-            .catch(err => {
-                console.error(err);
-            })
         axios.get('/teacher/add_student_data/')
             .then(res => {
                 let data = res.data.student;
@@ -42,19 +33,33 @@ export default function Group() {
                 setStudents([]);
                 setStudentObject(data);
                 setStudents(Object.values(data));
-                // setStudents(res.data.student);
             })
             .catch(err => {
                 console.error(err);
             })
-        axios.get('/teacher/get_csrf')
+        let params = new URLSearchParams(document.location.search);
+        let groupId = params.get('id');
+        const formData = new FormData();
+        if (groupId) {
+            formData.append('group_id', groupId.toString());
+        }
+        axios.post('/teacher/dashboard/groups/group_name/', formData, config)
+            .then(response => {
+                const data = response.data
+                setGroupName(data.group_name);
+            })
+            .catch(err => {
+                console.error(err);
+            })
+
+        axios.post('/teacher/group_student/', formData, config)
             .then(res => {
-                const Token = res.data.csrfToken;
-                setToken(Token);
+                console.log(res.data);
+                setGettingStudents(res.data.group_students);
             })
             .catch(err => {
                 console.error(err);
-            });
+            })
 
         axios.get('/teacher/add_test_data')
             .then(response => {
@@ -75,17 +80,9 @@ export default function Group() {
             });
     }, []);
 
-    axios.post('/teacher/dashboard/groups/group_name/', formData, config)
-        .then(response => {
-            const data = response.data
-            setGroupName(data.group_name);
-        })
-        .catch(err => {
-            console.error(err);
-        })
 
     function onSubmit(e) {
-        e.preventDefault();
+        e.preventDefault()
         const formData = new FormData();
         let params = new URLSearchParams(document.location.search);
         let groupId = params.get('id');
@@ -96,6 +93,7 @@ export default function Group() {
         axios.post('/teacher/dashboard/add_students_to_group_data/', formData, config)
             .then(res => {
                 console.log(res.data)
+                location.reload();
             })
             .catch(err => {
                 console.error(err);
@@ -185,7 +183,8 @@ export default function Group() {
                                 <ul>
                                     {filteredStudents.map((student, index) => (
                                         <li key={index}>
-                                            <input type="checkbox" className="btn-check" id={`stud_${Object.keys(studentObject).find(k => studentObject[k] === student)}`}
+                                            <input type="checkbox" className="btn-check"
+                                                   id={`stud_${Object.keys(studentObject).find(k => studentObject[k] === student)}`}
                                                    onChange={() => handleCheckboxChange(() => Object.keys(studentObject).find(k => studentObject[k] === student))}/>
                                             <label className="btn btn-outline-primary"
                                                    htmlFor={`stud_${Object.keys(studentObject).find(k => studentObject[k] === student)}`}>{student}</label>
@@ -233,7 +232,7 @@ export default function Group() {
                         <ul>
                             {gettingStudents.map((student, index) => (
                                 <li key={index}>
-                                    <h4>{student}</h4>
+                                    <p>{student}</p>
                                 </li>
                             ))}
                         </ul>
