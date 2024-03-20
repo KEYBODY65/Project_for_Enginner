@@ -236,7 +236,7 @@ class Login_Passwords(APIView):
         return JsonResponse(data={'Message': 'Not valid data'}, status=400)
 
 
-class Students_by(APIView):
+class Students_by(APIView): # группы
     def post(self, request):
         serializer = Student_by_login(data=request.data)
         if serializer.is_valid():
@@ -248,7 +248,7 @@ class Students_by(APIView):
         return JsonResponse(data={'message': 'Not valid data'}, status=400)
 
 
-class Student_id(APIView):
+class Student_id(APIView): # айдишники
     def post(self, request):
         serializer = Student_id_Serializer(data=request.data)
         if serializer.is_valid():
