@@ -230,12 +230,10 @@ class Login_Passwords(APIView):
         if log.is_valid():
             logins = Student.objects.filter(student_group=log.validated_data['group_id'])
             logins_passwords = {
-                f"{elem.student_name} {elem.student_surname}": f"Логин:{elem.student_login} Пароль:{elem.student_password}" for elem in logins}
+                f"{elem.student_name} {elem.student_surname}": f"Логин:{elem.student_login} Пароль:{elem.student_password}"
+                for elem in logins}
             return JsonResponse(data={'logins_passwords': logins_passwords}, status=200)
         return JsonResponse(data={'Message': 'Not valid data'}, status=400)
-
-
-
 
 
 class Students_by(APIView):
@@ -259,6 +257,7 @@ class Student_id(APIView):
                 return JsonResponse(data={'student_id': student_id[0].id}, status=200)
             return JsonResponse(data={'message': 'Id is Null'}, status=404)
         return JsonResponse(data={'message': 'Not valid data'}, status=400)
+
 
 class Statics_View(APIView):
     def get(self, request):
