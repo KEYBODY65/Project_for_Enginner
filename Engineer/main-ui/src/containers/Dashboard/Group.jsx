@@ -17,7 +17,8 @@ export default function Group() {
 
     let params = new URLSearchParams(document.location.search);
     let groupId = params.get('id');
-
+    let url = new URL('/teacher/dashboard/students_logins', window.location.origin);
+    url.searchParams.set('id', groupId)
     const cookies = new Cookies();
     const config = {
         headers: {
@@ -245,33 +246,42 @@ export default function Group() {
             <hr className="my-4" style={{
                 width: '43%'
             }}/>
-            <form onSubmit={PublishTest}>
-                <div>
-                    <button className="btn btn-primary mt-2" type='submit'>Прикрепить тест</button>
-                </div>
-                {succes && (<Succes/>)}
-                <div id={'hiddenText'} style={{
-                    color: 'red',
-                    display: "none"
-                }}>
-                    Вы не выбрали тест
-                </div>
-                <br/>
-                <p> Составленные тесты: </p>
-                <div className="btn-group-vertical" role="group" aria-label="Vertical radio toggle button group">
-                    <div className='d-block'>
-                        {tests.length > 0 ? ( // Проверка наличия групп в списке
-                            <ul>
-                                {tests.map((test) => (<h4 key={tests.indexOf(test)}>
-                                    <input type="radio" className="" name="vbtn-radio"
-                                           id={testIds[tests.indexOf(test)]}/>
-                                    <label className="btn btn-outline-danger"
-                                           htmlFor={testIds[tests.indexOf(test)]}>{test}</label>
-                                </h4>))}
-                            </ul>) : (<p>Вы не составили ни одного варианта</p>)}
+            <div className={'d-flex'} style={{
+                justifyContent: 'space-between'
+            }}>
+                <form onSubmit={PublishTest}>
+                    <div>
+                        <button className="btn btn-primary mt-2" type='submit'>Прикрепить тест</button>
                     </div>
+                    {succes && (<Succes/>)}
+                    <div id={'hiddenText'} style={{
+                        color: 'red',
+                        display: "none"
+                    }}>
+                        Вы не выбрали тест
+                    </div>
+                    <br/>
+                    <p> Составленные тесты: </p>
+                    <div className="btn-group-vertical" role="group" aria-label="Vertical radio toggle button group">
+                        <div className='d-block'>
+                            {tests.length > 0 ? ( // Проверка наличия групп в списке
+                                <ul>
+                                    {tests.map((test) => (<h4 key={tests.indexOf(test)}>
+                                        <input type="radio" className="" name="vbtn-radio"
+                                               id={testIds[tests.indexOf(test)]}/>
+                                        <label className="btn btn-outline-danger"
+                                               htmlFor={testIds[tests.indexOf(test)]}>{test}</label>
+                                    </h4>))}
+                                </ul>) : (<p>Вы не составили ни одного варианта</p>)}
+                        </div>
+                    </div>
+                </form>
+                <div>
+                    <a href={url}>
+                        <button className={'btn btn-primary mt-2'} type={'button'}>Данные учеников</button>
+                    </a>
                 </div>
-            </form>
+            </div>
         </div>
     );
 }

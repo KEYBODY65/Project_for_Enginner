@@ -17,6 +17,7 @@ import Add_student from './containers/add_student.jsx'
 
 import LoginStudent from "./containers/stud/Login.jsx";
 import DashboardStudent from "./containers/stud/Dashboard.jsx";
+import DataStudents from "./containers/Dashboard/Data_students.jsx";
 
 const App = () => {
     return (
@@ -42,6 +43,7 @@ const App = () => {
                             path="/teacher/dashboard/add_test"
                             element={<CreateTest/>}
                         />
+                        <Route path={'/teacher/dashboard/students_logins'} element={<DataStudents/>}/>
                         <Route path="/teacher/dashboard/groups" element={<Groups/>}/>
 
                         <Route path="/student/student_login" element={<LoginStudent/>}/>
