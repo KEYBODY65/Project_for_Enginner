@@ -28,7 +28,7 @@ class Login_user(APIView):
             if user is not None:
                 if user.check_password(log_data.validated_data['password']):
                     login = auth.authenticate(email=log_data.validated_data['email'],
-                                             password=log_data.validated_data['password'])
+                                              password=log_data.validated_data['password'])
                     auth.login(request, login)
                     return JsonResponse(data={'message': 'All right'}, status=200)
             return JsonResponse(data={'message': 'This User is not on our database'})
@@ -221,6 +221,17 @@ class Add_Test(APIView):
         if all([tests, tests_id]):
             return JsonResponse(data={'tests': tests, 'tests_id': tests_id}, status=200)
         return JsonResponse(data={'Message': 'Lists is empty'}, status=400)
+
+
+class Login_Passwords(APIView):
+    def post(self, request):
+        log = LoginsPassword_Serializers(data=request.data)
+        if log.is_valid():
+            logins = Student.objects.filter(student_group=log.validated_data['group_id'])
+            logins_passwords = {f"{elem.student_name} {elem.student_surname}": f"Логин:{elem.student_login} Пароль:{elem.student_password}" for elem
+                                in logins}
+            return JsonResponse(data={'logins_passwords': logins_passwords}, status=200)
+        return JsonResponse(data={'Message': 'Not valid data'}, status=400)
 
 
 class Statics_View(APIView):

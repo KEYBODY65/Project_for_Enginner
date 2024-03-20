@@ -1,5 +1,4 @@
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
-from datetime import datetime
 from django.db import models
 
 

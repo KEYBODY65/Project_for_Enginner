@@ -58,6 +58,10 @@ class Create_StudentsSerializer(serializers.ModelSerializer):
         fields = ['id', 'student_name', 'student_surname', 'student_teacher']
 
 
+class LoginsPassword_Serializers(serializers.Serializer):
+    group_id = serializers.IntegerField()
+
+
 class Create_TestsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Test
