@@ -19,11 +19,14 @@ class Create_TaskSerializer(serializers.ModelSerializer):
         model = Task
         fields = ['id', 'task_builder', 'task_name', 'task_description', 'true_answer', 'weight', 'file', 'subject']
 
+
 class Task_View(serializers.Serializer):
     id = serializers.IntegerField()
 
+
 class Test_View(serializers.Serializer):
     id = serializers.IntegerField()
+
 
 class Create_GroupsSerializer(serializers.ModelSerializer):
     class Meta:
@@ -35,15 +38,19 @@ class Studentsgroups_Serializer(serializers.Serializer):
     group_id = serializers.IntegerField()
     student_id = serializers.CharField(max_length=255)
 
+
 class Testgroups_serializer(serializers.Serializer):
     group_id = serializers.IntegerField()
     test_id = serializers.IntegerField()
 
+
 class GroupsName_serializer(serializers.Serializer):
     group_id = serializers.IntegerField()
 
+
 class StudentGroup_Serializer(serializers.Serializer):
     group_id = serializers.IntegerField()
+
 
 class Create_StudentsSerializer(serializers.ModelSerializer):
     class Meta:

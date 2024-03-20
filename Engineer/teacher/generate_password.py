@@ -12,4 +12,3 @@ def generate_login(pupil_username: str):
     stroka = pupil_username.split()
     usernamae = f'{stroka[0]}{stroka[1][0]}{randrange(100)}'
     return usernamae
-

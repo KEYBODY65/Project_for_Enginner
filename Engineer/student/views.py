@@ -1,32 +1,35 @@
 from rest_framework.decorators import APIView
 from teacher.models import Student, Test, Statistic
 from .serializers import *
+from django.contrib.auth.models import auth
+from django.contrib.auth import login, logout
 from django.contrib.auth import logout
 from rest_framework.exceptions import JsonResponse
+
 
 class Login_student(APIView):
     def post(self, request):
         serializer = Login_StudentSerializer(data=request.data)
         if serializer.is_valid():
-            stud = Student.objects.filter(login=serializer.validated_data['login']).first()
+            stud = Student.objects.filter(student_login=serializer.validated_data['student_login']).first()
             if stud is not None:
-                if stud.check_password(serializer.validated_data['password']):
-                    stud = auth.authenticate(email=serializer.validated_data['email'],
-                                             password=serializer.validated_data['password'])
-                    auth.login(request, stud)
-                    return JsonResponse(data={'message': 'Student was successfully logged in!'}, status=200)
-                return JsonResponse(data={'message': 'Student was`t successfully logged'}, status=400)
-            return JsonResponse(data={'message': 'This Student is not on database'}, status=400)
+                student_user = auth.authenticate(student_login=serializer.validated_data['student_login'],
+                                                 student_password=serializer.validated_data['student_password'])
+                login(request, student_user)
+                return JsonResponse(data={'message': 'Student was successfully logged in!'}, status=200)
+            return JsonResponse(data={'message': 'Student was`t successfully logged'}, status=400)
         return JsonResponse(data={'message': 'Invalid data'}, status=400)
 
+
 def logout_student(request):
-     logout(request)
-     return JsonResponse({'message': 'Student was logout'})
+    logout(request)
+    return JsonResponse({'message': 'Student was logout'})
 
 
 class StudentStatistics_view(APIView):
     def post(self, request):
         pass
+
 
 class UploadAnswers_view(APIView):
     def post(self, request):
@@ -48,9 +51,3 @@ class UploadAnswers_view(APIView):
             statistics.save()
             return JsonResponse(data={'score': scores_col}, status=200)
         return JsonResponse(data={'message': 'Not valid data'}, status=400)
-
-
-
-
-
-

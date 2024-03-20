@@ -8,6 +8,7 @@ from .models import *
 from django.views.decorators.csrf import ensure_csrf_cookie
 from .generate_password import *
 
+
 class Create_user(APIView):
     def post(self, request):
         serializer = Create_UserSerializer(data=request.data)
@@ -26,9 +27,9 @@ class Login_user(APIView):
             user = UserModel.objects.filter(email=log_data.validated_data['email']).first()
             if user is not None:
                 if user.check_password(log_data.validated_data['password']):
-                    user = auth.authenticate(email=log_data.validated_data['email'],
+                    login = auth.authenticate(email=log_data.validated_data['email'],
                                              password=log_data.validated_data['password'])
-                    auth.login(request, user)
+                    auth.login(request, login)
                     return JsonResponse(data={'message': 'All right'}, status=200)
             return JsonResponse(data={'message': 'This User is not on our database'})
         return JsonResponse(data={'message': 'Not Valid'}, status=400)
@@ -129,7 +130,6 @@ class Add_Student(APIView):
 class Add_Student_to_group(APIView):
     def post(self, request):
         serializer = Studentsgroups_Serializer(data=request.data)
-        print(serializer.initial_data)
         if serializer.is_valid():
             try:
                 group = Group.objects.get(id=serializer.validated_data['group_id'])
@@ -143,7 +143,6 @@ class Add_Student_to_group(APIView):
                 return JsonResponse(data={'message': 'Group not found'}, status=404)
 
         return JsonResponse(data={'message': 'Not valid data'}, status=400)
-
 
 
 class Group_Names(APIView):
@@ -163,7 +162,6 @@ class Group_Names(APIView):
 class Add_Test_to_group(APIView):
     def post(self, request):
         serializer = Testgroups_serializer(data=request.data)
-        print(serializer.initial_data)
         if serializer.is_valid():
             try:
                 group = Group.objects.get(id=serializer.validated_data['group_id'])
@@ -182,11 +180,11 @@ class Add_Test_to_group(APIView):
 class Group_name(APIView):
     def post(self, request):
         serializer = GroupsName_serializer(data=request.data)
-        print(serializer.initial_data)
         if serializer.is_valid():
             g_name = Group.objects.get(id=serializer.validated_data['group_id'])
             return JsonResponse(data={'group_name': g_name.group_name}, status=200)
         return JsonResponse(data={'message': 'Group not found'}, status=404)
+
 
 class Teacher_tasks(APIView):
     def get(self, request):
@@ -205,7 +203,6 @@ class Add_Test(APIView):
         user = UserModel.objects.get(id=request.user.id)
         request.data['test_builder'] = user.id
         serializers = Create_TestsSerializer(data=request.data)
-        print(serializers.initial_data)
         if serializers.is_valid():
             save_test = serializers.save()
             tasks = serializers.validated_data['task_ids']
@@ -226,8 +223,6 @@ class Add_Test(APIView):
         return JsonResponse(data={'Message': 'Lists is empty'}, status=400)
 
 
-
-
 class Statics_View(APIView):
     def get(self, request):
         statistic = Statistic.objects.all()
@@ -236,4 +231,3 @@ class Statics_View(APIView):
             data.setdefault(elem.student, elem.col_balls)
 
         return JsonResponse(data={'data': data}, status=200)
-
