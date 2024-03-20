@@ -9,7 +9,7 @@ import {
     USER_LOADED_FAIL,
     AUTHENTICATED_FAIL,
     AUTHENTICATED_SUCCESS,
-    LOGOUT_FAIL
+    LOGOUT_FAIL, LOGIN_STUDENT_SUCCESS, LOGIN_STUDENT_FAIL, LOGOUT_STUDENT, LOGOUT_STUDENT_FAIL
 } from './types.jsx';
 
 export const load_user = () => async dispatch => {
@@ -90,6 +90,32 @@ export const signup = (name, surname, email, password, csrfToken) => async dispa
     }
 };
 
+export const loginStudent = (student_login, student_password, csrfToken) => async dispatch => {
+    const config = {
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': csrfToken
+        }
+    };
+
+    const body = JSON.stringify({student_login, student_password});
+
+    try {
+        const res = await axios.post(`/student/student_login_data/`, body, config);
+        document.getElementById('incorrectValue').style.display = 'none';
+        dispatch({
+            type: LOGIN_STUDENT_SUCCESS,
+            payload: res.data
+        });
+
+    } catch (err) {
+        document.getElementById('incorrectValue').style.display = 'block';
+        dispatch({
+            type: LOGIN_STUDENT_FAIL
+        })
+    }
+};
+
 export const checkAuthenticated = () => async dispatch => {
     if (localStorage.getItem('access')) {
         const config = {
@@ -141,6 +167,25 @@ export const logout = () => dispatch => {
             type: LOGOUT_FAIL
         })
     }
+
+
+};
+export const logoutStudent = () => dispatch => {
+    try {
+        const res = axios.post(`/student/student_logout/`, {});
+
+        dispatch({
+            type: LOGOUT_STUDENT,
+            payload: res.data
+        })
+    }
+    catch(err)
+    {
+        dispatch({
+            type: LOGOUT_STUDENT_FAIL
+        })
+    }
+
 
 };
 

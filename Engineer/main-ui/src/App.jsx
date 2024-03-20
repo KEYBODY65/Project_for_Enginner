@@ -1,4 +1,3 @@
-import React from 'react'
 import {Provider} from 'react-redux'
 import {Route, BrowserRouter as Router, Routes} from 'react-router-dom'
 
@@ -15,6 +14,9 @@ import Groups from './containers/Groups.jsx'
 import Home from './containers/Home.jsx'
 import Main from './containers/Main.jsx'
 import Add_student from './containers/add_student.jsx'
+
+import LoginStudent from "./containers/stud/Login.jsx";
+import DashboardStudent from "./containers/stud/Dashboard.jsx";
 
 const App = () => {
     return (
@@ -41,6 +43,9 @@ const App = () => {
                             element={<CreateTest/>}
                         />
                         <Route path="/teacher/dashboard/groups" element={<Groups/>}/>
+
+                        <Route path="/student/student_login" element={<LoginStudent/>}/>
+                        <Route path="/student/dashboard" element={<DashboardStudent/>}/>
                     </Routes>
                 </Layout>
             </Router>

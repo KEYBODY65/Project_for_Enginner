@@ -14,7 +14,7 @@ const Main = () => (
             <p> Выберите свою роль</p>
             <p className='lead'>
             <div style={{display: 'flex', justifyContent: 'space-evenly'}}>
-                <a className='btn btn-primary btn-lg' href='/student' role='button'>Ученик</a>
+                <a className='btn btn-primary btn-lg' href='/student/student_login' role='button'>Ученик</a>
                 <a className='btn btn-primary btn-lg' href='/teacher/auth' role='button'>Учитель</a>
             </div>
             </p>

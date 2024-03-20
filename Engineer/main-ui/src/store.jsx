@@ -1,10 +1,11 @@
-import { createStore, applyMiddleware, compose } from 'redux';
+import { createStore, applyMiddleware} from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import thunk from 'redux-thunk';
 import rootReducer from './reducers/index.jsx';
 
 const initialState = {
-    isAuthenticated: localStorage.getItem('isAuthenticated') === 'true'
+    isAuthenticated: localStorage.getItem('isAuthenticated') === 'true',
+    isStudentAuthenticated: localStorage.getItem('isStudentAuthenticated') === 'true'
 };
 
 const middleware = [thunk];

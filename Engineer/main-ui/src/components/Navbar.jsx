@@ -22,6 +22,7 @@ const Navbar = ({logout, isAuthenticated}) => {
         </Fragment>
     );
 
+
     const authLinks = () => (
         <li className='nav-item'>
             <a className='nav-link' href='/' onClick={logout_user}>Выйти</a>
@@ -65,6 +66,13 @@ const Navbar = ({logout, isAuthenticated}) => {
                     <div className='collapse navbar-collapse' id='navbarNav'>
                         <ul className='navbar-nav'>
                             {isAuthenticated ? authLinks2() : guestLinks()}
+                        </ul>
+                    </div>
+                }
+                {document.location.pathname.startsWith('/student') &&
+                    <div className='collapse navbar-collapse' id='navbarNav'>
+                        <ul className='navbar-nav'>
+                            {isAuthenticated && authLinks()}
                         </ul>
                     </div>
                 }
