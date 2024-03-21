@@ -252,7 +252,7 @@ class Student_id(APIView): # айдишники
     def post(self, request):
         serializer = Student_id_Serializer(data=request.data)
         if serializer.is_valid():
-            student_id = Student.objects.filter(student_login=request)
+            student_id = Student.objects.filter(student_login=serializer.validated_data["login"])
             if student_id:
                 return JsonResponse(data={'student_id': student_id[0].id}, status=200)
             return JsonResponse(data={'message': 'Id is Null'}, status=404)

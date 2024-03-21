@@ -27,7 +27,7 @@ urlpatterns = [
     path('teacher_tasks_data/', Teacher_tasks.as_view(), name='all of current teacher_tasks'),
     path('dashboard/students_logins', include('main.urls')),
     path('students_logins/', Login_Passwords.as_view(), name='all of student logins of current group'),
-    path('students_groups', Students_by.as_view(), name='all of group'),
-    path('students_data', Student_id.as_view(), name='all of students data'),
+    path('students_groups/', Students_by.as_view(), name='all of group'),
+    path('students_data/', Student_id.as_view(), name='all of students data'),
     path('get_csrf/', get_csrf)
 ]

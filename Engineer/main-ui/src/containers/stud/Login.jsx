@@ -1,8 +1,9 @@
 import {useState, useEffect} from 'react';
-import {Navigate} from 'react-router-dom';
+import {Navigate, useNavigate} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {loginStudent} from '../../actions/auth.jsx'
 import Cookies from "universal-cookie";
+import axios from "axios";
 
 // eslint-disable-next-line react/prop-types,react-refresh/only-export-components
 function LoginStudent({loginStudent, isStudentAuthenticated}) {
@@ -18,11 +19,26 @@ function LoginStudent({loginStudent, isStudentAuthenticated}) {
         let login = document.getElementById('login').value;
         let password = document.getElementById('password').value;
         loginStudent(login, password, token)
+        const cookies = new Cookies();
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'X-CSRFToken': cookies.get('csrftoken')
+            }
+        };
+        const formData = new FormData();
+        formData.append('login', login);
+        axios.post('/teacher/students_data/', formData, config)
+            .then(res => {
+                localStorage.setItem('id', res.data.student_id);
+            })
     };
-
-
-    if (isStudentAuthenticated) {
-        return <Navigate to='/student/dashboard'/>
+    const navigate = useNavigate();
+    if (JSON.parse(isStudentAuthenticated)) {
+        let url = `/student/dashboard?id=${encodeURIComponent(localStorage.getItem("id"))}`;
+        console.log(url);
+        navigate(url);
     }
 
     return (

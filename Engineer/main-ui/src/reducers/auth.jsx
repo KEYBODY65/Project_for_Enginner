@@ -42,7 +42,7 @@ export default function MyComponent(state = initialState, action) {
                 refresh: payload.refresh
             }
         case LOGIN_STUDENT_SUCCESS:
-            localStorage.setItem('isAuthenticated', 'true');
+            localStorage.setItem('isStudentAuthenticated', 'true');
             localStorage.setItem('access', payload.access);
             localStorage.setItem('refresh', payload.refresh);
             return {
@@ -87,7 +87,7 @@ export default function MyComponent(state = initialState, action) {
             }
         case LOGIN_STUDENT_FAIL:
         case LOGOUT_STUDENT:
-            localStorage.removeItem('isAuthenticated');
+            localStorage.removeItem('isStudentAuthenticated');
             return {
                 ...state,
                 access: null,
