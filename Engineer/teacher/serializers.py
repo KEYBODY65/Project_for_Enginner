@@ -20,14 +20,6 @@ class Create_TaskSerializer(serializers.ModelSerializer):
         fields = ['id', 'task_builder', 'task_name', 'task_description', 'true_answer', 'weight', 'file', 'subject']
 
 
-class Task_View(serializers.Serializer):
-    id = serializers.IntegerField()
-
-
-class Test_View(serializers.Serializer):
-    id = serializers.IntegerField()
-
-
 class Create_GroupsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Group
@@ -44,31 +36,26 @@ class Testgroups_serializer(serializers.Serializer):
     test_id = serializers.IntegerField()
 
 
-class GroupsName_serializer(serializers.Serializer):
-    group_id = serializers.IntegerField()
-
-
-class StudentGroup_Serializer(serializers.Serializer):
-    group_id = serializers.IntegerField()
-
-
 class Create_StudentsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Student
         fields = ['id', 'student_name', 'student_surname', 'student_teacher']
 
 
-class Student_by_id(serializers.Serializer):
+class Data_by_id_serializer(serializers.Serializer):
     id = serializers.IntegerField()
 
-class Test_Task_id_serializer(serializers.Serializer):
+
+class Tets_Data_by_id_serializer(serializers.Serializer):
     test_id = serializers.IntegerField()
+
+
+class Id_Group_serializer(serializers.Serializer):
+    group_id = serializers.IntegerField()
+
 
 class Student_id_Serializer(serializers.Serializer):
     login = serializers.CharField()
-
-class LoginsPassword_Serializers(serializers.Serializer):
-    group_id = serializers.IntegerField()
 
 
 class Create_TestsSerializer(serializers.ModelSerializer):

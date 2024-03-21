@@ -59,12 +59,14 @@ class Create_task(APIView):
         request.data['task_builder'] = user.id
         task_data = Create_TaskSerializer(data=request.data)
         if task_data.is_valid():
-            task = task_data.save()
+            task_data.save()
             return JsonResponse(data={'message': 'Task added successfully'}, status=200)
         return JsonResponse(data={'message': 'Not valid data'}, status=400)
 
-    def get(self, request):
-        task_id = Task_View(data=request.data)
+
+class Current_Task(APIView):
+    def post(self, request):
+        task_id = Data_by_id_serializer(data=request.data)
         if task_id.is_valid():
             data = Task.objects.get(task_id.validated_data['task_id'])
             task_data = {
@@ -179,7 +181,7 @@ class Add_Student_to_group(APIView):
 
 class Group_Students_by_group_id(APIView):
     def post(self, request):
-        serializer = StudentGroup_Serializer(data=request.data)
+        serializer = Id_Group_serializer(data=request.data)
         if serializer.is_valid():
             group_students = Student.objects.filter(student_group=serializer.validated_data['group_id'])
             if group_students:
@@ -189,9 +191,21 @@ class Group_Students_by_group_id(APIView):
         return JsonResponse(data={'message': 'Not valid data'}, status=400)
 
 
+class Test_by_group_id(APIView):
+    def post(self, request):
+        serializer = Id_Group_serializer(data=request.data)
+        if serializer.is_valid():
+            tests_group = Test.objects.filter(group_id=serializer.validated_data['group_id'])
+            if tests_group:
+                data = {elem.id: elem.name_of_test for elem in tests_group}
+                return JsonResponse(data={"test_by_group_id": data}, status=200)
+            return JsonResponse(data={'message': 'Group not found'})
+        return JsonResponse(data={'message': 'Group not found'})
+
+
 class Group_name_by_group_id(APIView):
     def post(self, request):
-        serializer = GroupsName_serializer(data=request.data)
+        serializer = Id_Group_serializer(data=request.data)
         if serializer.is_valid():
             g_name = Group.objects.get(id=serializer.validated_data['group_id'])
             return JsonResponse(data={'group_name': g_name.group_name}, status=200)
@@ -200,7 +214,7 @@ class Group_name_by_group_id(APIView):
 
 class Test_Tasks_by_test_id(APIView):
     def post(self, request):
-        serializer = Test_Task_id_serializer(data=request.data)
+        serializer = Tets_Data_by_id_serializer(data=request.data)
         if serializer.is_valid():
             test_data = Test.objects.get(id=serializer.validated_data['test_id'])
             if test_data:
@@ -213,36 +227,49 @@ class Test_Tasks_by_test_id(APIView):
 class Teacher_tasks(APIView):
     def get(self, request):
         tasks_data = Task.objects.filter(task_builder=request.user.id)
-        task_ids, tasks_names = [], []
-        for task in tasks_data:
-            tasks_names.append(task.task_name)
-            task_ids.append(task.id)
-        if all([tasks_names, task_ids]):
+        if tasks_data:
+            task_ids, tasks_names = ([task.task_name for task in tasks_data]
+                                     , [elem.id for elem in tasks_data])
             return JsonResponse(data={'task_ids': task_ids, 'task_names': tasks_names}, status=200)
         return JsonResponse(data={'Message': 'Lists is empty'}, status=400)
 
 
 class Student_Login_and_Password_by_group_id(APIView):
     def post(self, request):
-        log = LoginsPassword_Serializers(data=request.data)
+        log = Id_Group_serializer(data=request.data)
         if log.is_valid():
             logins = Student.objects.filter(student_group=log.validated_data['group_id'])
-            logins_passwords = {
-                f"{elem.student_name} {elem.student_surname}": f"Логин:{elem.student_login} Пароль:{elem.student_password}"
-                for elem in logins}
-            return JsonResponse(data={'logins_passwords': logins_passwords}, status=200)
+            if logins:
+                logins_passwords = {
+                    f"{elem.student_name} {elem.student_surname}": f"Логин:{elem.student_login} Пароль:{elem.student_password}"
+                    for elem in logins}
+                return JsonResponse(data={'logins_passwords': logins_passwords}, status=200)
+            return JsonResponse(data={'Message': 'Logins is null'}, status=404)
         return JsonResponse(data={'Message': 'Not valid data'}, status=400)
 
 
 class Student_group_by_id(APIView):  # группы
     def post(self, request):
-        serializer = Student_by_id(data=request.data)
+        serializer = Data_by_id_serializer(data=request.data)
         if serializer.is_valid():
             students = Student.objects.get(id=serializer.validated_data['id'])
-            groups = {elem.id: elem.group_name for elem in students.student_group.all()}
-            if groups:
+            if students:
+                groups = {elem.id: elem.group_name for elem in students.student_group.all()}
                 return JsonResponse(data={'groups': groups}, status=200)
             return JsonResponse(data={'list of groups if null'}, status=404)
+        return JsonResponse(data={'message': 'Not valid data'}, status=400)
+
+
+class Teacher_Name(APIView):
+    def post(self, request):
+        serializer = Id_Group_serializer(data=request.data)
+        if serializer.is_valid():
+            teacher = Group.objects.get(id=serializer.validated_data['group_id'])
+            if teacher:
+                teacher_fio = UserModel.objects.get(id=teacher.group_builder)
+                return JsonResponse(data={'teacher_name': teacher_fio.name, 'teacher_surname': teacher_fio.surname},
+                                    status=200)
+            return JsonResponse(data={'message': 'Teacher is Null'}, status=404)
         return JsonResponse(data={'message': 'Not valid data'}, status=400)
 
 

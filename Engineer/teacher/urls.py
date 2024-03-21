@@ -21,14 +21,17 @@ urlpatterns = [
     path('add_test_data/', Add_Test.as_view(), name='add_test'),
     path('group_student/', Group_Students_by_group_id.as_view(), name='grop_student'),
     path('dashboard/add_students_to_group', include('main.urls')),
+    path('current_task/', Current_Task().as_view(), name='current_task_by_task_id'),
     path('dashboard/groups/group_name/', Group_name_by_group_id.as_view(), name='group_name'),
     path('dashboard/add_test_to_group_data/', Add_Test_to_group.as_view(), name='add_test_to_group'),
     path('dashboard/add_students_to_group_data/', Add_Student_to_group.as_view(), name='add_students_to_group'),
     path('teacher_tasks_data/', Teacher_tasks.as_view(), name='all of current teacher_tasks'),
     path('test_tasks/', Test_Tasks_by_test_id.as_view(), name='all of tasks of current test by test id'),
+    path('test_by_group/', Test_by_group_id.as_view(), name='all of test from current group'),
     path('dashboard/students_logins', include('main.urls')),
     path('students_logins/', Student_Login_and_Password_by_group_id.as_view(), name='all of student logins of current group'),
     path('students_groups/', Student_group_by_id.as_view(), name='all of group'),
     path('students_data/', Student_id_by_login.as_view(), name='all of students data'),
+    path('teacher_name_by_id/', Teacher_Name.as_view(), name='teacher name by id'),
     path('get_csrf/', get_csrf)
 ]
