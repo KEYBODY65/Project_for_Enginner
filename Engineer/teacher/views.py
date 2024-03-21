@@ -238,15 +238,14 @@ class Login_Passwords(APIView):
 
 class Students_by(APIView): # группы
     def post(self, request):
-        serializer = Student_by_login(data=request.data)
+        serializer = Student_by_id(data=request.data)
         if serializer.is_valid():
-            student_data = Student.objects.filter(student_group=serializer.validated_data['id'])
-            groups = [student.student_group for student in student_data]
+            students = Student.objects.get(id=serializer.validated_data['id'])
+            groups = [elem.group_name for elem in students.student_group.all()]
             if groups:
                 return JsonResponse(data={'groups': groups}, status=200)
-            return JsonResponse(data={'message': 'No group'}, status=404)
+            return JsonResponse(data={'list of groups if null'}, status=404)
         return JsonResponse(data={'message': 'Not valid data'}, status=400)
-
 
 class Student_id(APIView): # айдишники
     def post(self, request):

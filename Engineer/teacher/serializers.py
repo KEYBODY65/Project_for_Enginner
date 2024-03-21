@@ -58,7 +58,7 @@ class Create_StudentsSerializer(serializers.ModelSerializer):
         fields = ['id', 'student_name', 'student_surname', 'student_teacher']
 
 
-class Student_by_login(serializers.Serializer):
+class Student_by_id(serializers.Serializer):
     id = serializers.IntegerField()
 
 class Student_id_Serializer(serializers.Serializer):
