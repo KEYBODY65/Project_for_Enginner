@@ -39,15 +39,16 @@ class UploadAnswers_view(APIView):
             scores_col, iteration = 0, 0
             test = Test.objects.get(id=true_answers.validated_data['test_id'])
             task = test.task_ids.all()
+            true_answers = true_answers.validated_data['true_answers']
             for i in task:
-                if i.true_answer == true_answers.validated_data['true_answers'][iteration]:
+                if i.true_answer == true_answers[iteration]:
                     scores_col += i.weight
                     iteration += 1
-                elif true_answers.validated_data['true_answers'][iteration] == '-':
+                elif true_answers[iteration] == '-':
                     iteration += 1
                 else:
                     iteration += 1
             statistics = Statistic(student=student, col_balls=scores_col)
             statistics.save()
-            return JsonResponse(data={'score': scores_col}, status=200)
+            return JsonResponse(data={'score': scores_col, 'col_tasks': iteration + 1}, status=200)
         return JsonResponse(data={'message': 'Not valid data'}, status=400)

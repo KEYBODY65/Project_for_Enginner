@@ -61,6 +61,9 @@ class Create_StudentsSerializer(serializers.ModelSerializer):
 class Student_by_id(serializers.Serializer):
     id = serializers.IntegerField()
 
+class Test_Task_id_serializer(serializers.Serializer):
+    test_id = serializers.IntegerField()
+
 class Student_id_Serializer(serializers.Serializer):
     login = serializers.CharField()
 

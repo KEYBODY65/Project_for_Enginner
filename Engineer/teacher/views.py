@@ -1,6 +1,5 @@
 from django.contrib.auth import logout
 from rest_framework.decorators import APIView
-# from rest_framework.generics import ListAPIView
 from django.http import JsonResponse
 from .serializers import *
 from django.contrib.auth.models import auth
@@ -103,6 +102,20 @@ class Add_group(APIView):
         return JsonResponse(data={'Message': 'List is empty'}, status=400)
 
 
+class Add_Test(APIView):
+    def post(self, request):
+        user = UserModel.objects.get(id=request.user.id)
+        request.data['test_builder'] = user.id
+        serializers = Create_TestsSerializer(data=request.data)
+        if serializers.is_valid():
+            save_test = serializers.save()
+            tasks = serializers.validated_data['task_ids']
+            save_test.task_ids.add(*tasks)
+            save_test.save()
+            return JsonResponse(data={'message': "Test add"}, status=200)
+        return JsonResponse(data={'message': 'Not valid data'}, status=400)
+
+
 class Add_Student(APIView):
     def post(self, request):
         user = UserModel.objects.get(id=request.user.id)
@@ -128,38 +141,6 @@ class Add_Student(APIView):
         return JsonResponse(data={'Message': 'List is empty'}, status=400)
 
 
-class Add_Student_to_group(APIView):
-    def post(self, request):
-        serializer = Studentsgroups_Serializer(data=request.data)
-        if serializer.is_valid():
-            try:
-                group = Group.objects.get(id=serializer.validated_data['group_id'])
-                student = Student.objects.get(id=serializer.validated_data['student_id'])
-                student.student_group.add(group)
-                student.save()
-                return JsonResponse(data={'message': 'Student added to group successfully'}, status=200)
-            except Student.DoesNotExist:
-                return JsonResponse(data={'message': 'Student not found'}, status=404)
-            except Group.DoesNotExist:
-                return JsonResponse(data={'message': 'Group not found'}, status=404)
-
-        return JsonResponse(data={'message': 'Not valid data'}, status=400)
-
-
-class Group_Names(APIView):
-    def post(self, request):
-        serializer = StudentGroup_Serializer(data=request.data)
-        if serializer.is_valid():
-            group_students = Student.objects.filter(student_group=serializer.validated_data['group_id'])
-            if group_students:
-                data = []
-                for student in group_students:
-                    data.append(f'{student.student_name} {student.student_surname}')
-                return JsonResponse(data={'group_students': data}, status=200)
-            return JsonResponse(data={'message': 'Student not found'}, status=404)
-        return JsonResponse(data={'message': 'Not valid data'}, status=400)
-
-
 class Add_Test_to_group(APIView):
     def post(self, request):
         serializer = Testgroups_serializer(data=request.data)
@@ -178,13 +159,55 @@ class Add_Test_to_group(APIView):
         return JsonResponse(data={'message': 'Not valid data'}, status=400)
 
 
-class Group_name(APIView):
+class Add_Student_to_group(APIView):
+    def post(self, request):
+        serializer = Studentsgroups_Serializer(data=request.data)
+        if serializer.is_valid():
+            try:
+                group = Group.objects.get(id=serializer.validated_data['group_id'])
+                student = Student.objects.get(id=serializer.validated_data['student_id'])
+                student.student_group.add(group)
+                student.save()
+                return JsonResponse(data={'message': 'Student added to group successfully'}, status=200)
+            except Student.DoesNotExist:
+                return JsonResponse(data={'message': 'Student not found'}, status=404)
+            except Group.DoesNotExist:
+                return JsonResponse(data={'message': 'Group not found'}, status=404)
+
+        return JsonResponse(data={'message': 'Not valid data'}, status=400)
+
+
+class Group_Students_by_group_id(APIView):
+    def post(self, request):
+        serializer = StudentGroup_Serializer(data=request.data)
+        if serializer.is_valid():
+            group_students = Student.objects.filter(student_group=serializer.validated_data['group_id'])
+            if group_students:
+                data = [f'{student.student_name} {student.student_surname}' for student in group_students]
+                return JsonResponse(data={'group_students': data}, status=200)
+            return JsonResponse(data={'message': 'Student not found'}, status=404)
+        return JsonResponse(data={'message': 'Not valid data'}, status=400)
+
+
+class Group_name_by_group_id(APIView):
     def post(self, request):
         serializer = GroupsName_serializer(data=request.data)
         if serializer.is_valid():
             g_name = Group.objects.get(id=serializer.validated_data['group_id'])
             return JsonResponse(data={'group_name': g_name.group_name}, status=200)
         return JsonResponse(data={'message': 'Group not found'}, status=404)
+
+
+class Test_Tasks_by_test_id(APIView):
+    def post(self, request):
+        serializer = Test_Task_id_serializer(data=request.data)
+        if serializer.is_valid():
+            test_data = Test.objects.get(id=serializer.validated_data['test_id'])
+            if test_data:
+                tasks = [elem.id for elem in test_data.task_ids.all()]
+                return JsonResponse(data={'tasks': tasks}, status=200)
+            return JsonResponse(data={'message': 'test_data is empty'}, status=404)
+        return JsonResponse(data={'message': 'Not valid data'}, status=400)
 
 
 class Teacher_tasks(APIView):
@@ -199,32 +222,7 @@ class Teacher_tasks(APIView):
         return JsonResponse(data={'Message': 'Lists is empty'}, status=400)
 
 
-class Add_Test(APIView):
-    def post(self, request):
-        user = UserModel.objects.get(id=request.user.id)
-        request.data['test_builder'] = user.id
-        serializers = Create_TestsSerializer(data=request.data)
-        if serializers.is_valid():
-            save_test = serializers.save()
-            tasks = serializers.validated_data['task_ids']
-            save_test.task_ids.add(*tasks)
-            save_test.save()
-            return JsonResponse(data={'message': "Test add"}, status=200)
-        return JsonResponse(data={'message': 'Not valid data'}, status=400)
-
-    def get(self, request):
-        tests_data = Test.objects.filter(test_builder=request.user.id)
-        tests = []
-        tests_id = []
-        for elem in tests_data:
-            tests.append(elem.name_of_test)
-            tests_id.append(elem.id)
-        if all([tests, tests_id]):
-            return JsonResponse(data={'tests': tests, 'tests_id': tests_id}, status=200)
-        return JsonResponse(data={'Message': 'Lists is empty'}, status=400)
-
-
-class Login_Passwords(APIView):
+class Student_Login_and_Password_by_group_id(APIView):
     def post(self, request):
         log = LoginsPassword_Serializers(data=request.data)
         if log.is_valid():
@@ -236,18 +234,19 @@ class Login_Passwords(APIView):
         return JsonResponse(data={'Message': 'Not valid data'}, status=400)
 
 
-class Students_by(APIView): # группы
+class Student_group_by_id(APIView):  # группы
     def post(self, request):
         serializer = Student_by_id(data=request.data)
         if serializer.is_valid():
             students = Student.objects.get(id=serializer.validated_data['id'])
-            groups = [elem.group_name for elem in students.student_group.all()]
+            groups = {elem.id: elem.group_name for elem in students.student_group.all()}
             if groups:
                 return JsonResponse(data={'groups': groups}, status=200)
             return JsonResponse(data={'list of groups if null'}, status=404)
         return JsonResponse(data={'message': 'Not valid data'}, status=400)
 
-class Student_id(APIView): # айдишники
+
+class Student_id_by_login(APIView):  # айдишники
     def post(self, request):
         serializer = Student_id_Serializer(data=request.data)
         if serializer.is_valid():
