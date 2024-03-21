@@ -1,9 +1,9 @@
 import React, {Fragment, useState} from 'react';
 import {Link, Navigate} from 'react-router-dom';
 import {connect} from 'react-redux';
-import {logout} from '../actions/auth.jsx';
+import {logout, logoutStudent} from '../actions/auth.jsx';
 
-const Navbar = ({logout, isAuthenticated}) => {
+const Navbar = ({logout, logoutStudent, isAuthenticated}) => {
     const [redirect, setRedirect] = useState(false);
 
     const logout_user = () => {
@@ -25,7 +25,7 @@ const Navbar = ({logout, isAuthenticated}) => {
 
     const authLinks = () => (
         <li className='nav-item'>
-            <a className='nav-link' href='/' onClick={logout_user}>Выйти</a>
+            <a className='nav-link' href='/' onClick={logoutStudent}>Выйти</a>
         </li>
     );
     const authLinks2 = () => (

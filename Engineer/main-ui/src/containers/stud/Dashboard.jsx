@@ -5,7 +5,7 @@ import {Link} from "react-router-dom";
 
 export default function DashboardStudent() {
     // const [tests, setTests] = useState([]);
-    const [id, setId] = useState();
+    const [idsGroup, setIdsGroup] = useState();
     const [groups, setGroups] = useState([])
     const cookies = new Cookies();
     const config = {
@@ -23,24 +23,31 @@ export default function DashboardStudent() {
         axios.post('/teacher/students_groups/', formData, config)
             .then(res => {
                 console.log(res.data);
-                setGroups(res.data.groups);
+                setGroups(Object.values(res.data.groups));
+                setIdsGroup(Object.keys(res.data.groups));
             })
     }, []);
-    // console.log(groups);
+    console.log(groups);
+    console.log(idsGroup);
     return (
         <div className={'container'}>
-            <div className='jumbotron mt-5'>
+            <div className='jumbotron mt-5' style={{
+                textAlign: 'center'
+            }}>
                 <h1 className='display-4'>Добро пожаловать в личный кабинет ученика</h1>
+            </div>
+            <div className={'jumbotron mt-5'}>
+                <p className={'display-6'}>Группы, в которых вы состоите</p>
             </div>
             <hr className='my-4'/>
             <div className='c d-flex'>
                 {groups.map((group, id) => (
-                    <Link to='' key={id}>
+                    <Link to={`/student/dashboard/group?id=${idsGroup[id]}`} key={id}>
                         <div className='card border-primary mb-3' style={{maxWidth: '18rem'}}>
                             <div className='card-header' style={{height: 40}}></div>
                             <div className='card-body'>
-                                <h5 className='card-title'>Группы</h5>
-                                <p className='card-text'>Список ваших классов, добавление новых групп</p>
+                                <h5 className='card-title'>{group}</h5>
+                                <p className='card-text'> Учитель: </p>
                             </div>
                         </div>
                     </Link>
