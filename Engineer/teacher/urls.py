@@ -25,7 +25,7 @@ urlpatterns = [
     path('dashboard/add_test_to_group_data/', Add_Test_to_group.as_view(), name='add_test_to_group'),
     path('dashboard/add_students_to_group_data/', Add_Student_to_group.as_view(), name='add_students_to_group'),
     path('teacher_tasks_data/', Teacher_tasks.as_view(), name='all of current teacher_tasks'),
-    path('test_tasks', Test_Tasks_by_test_id.as_view(), name='all of tasks of current test by test id'),
+    path('test_tasks/', Test_Tasks_by_test_id.as_view(), name='all of tasks of current test by test id'),
     path('dashboard/students_logins', include('main.urls')),
     path('students_logins/', Student_Login_and_Password_by_group_id.as_view(), name='all of student logins of current group'),
     path('students_groups/', Student_group_by_id.as_view(), name='all of group'),
