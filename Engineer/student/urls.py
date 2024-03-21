@@ -9,5 +9,6 @@ urlpatterns = [
     path('student_login_data/', Login_student.as_view(), name='logining_students'),
     path('student_logout/', logout_student, name='logout_students'),
     path('upload_answers', UploadAnswers_view.as_view(), name='upload_answers'),
-    path('dashboard/', include('main.urls'))
+    path('dashboard/', include('main.urls')),
+    path('dashboard/group/', include('main.urls'))
 ]

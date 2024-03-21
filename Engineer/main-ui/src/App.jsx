@@ -18,6 +18,7 @@ import Add_student from './containers/add_student.jsx'
 import LoginStudent from "./containers/stud/Login.jsx";
 import DashboardStudent from "./containers/stud/Dashboard.jsx";
 import DataStudents from "./containers/Dashboard/Data_students.jsx";
+import GroupStudent from "./containers/stud/Group.jsx";
 
 const App = () => {
     return (
@@ -48,6 +49,7 @@ const App = () => {
 
                         <Route path="/student/student_login" element={<LoginStudent/>}/>
                         <Route path="/student/dashboard" element={<DashboardStudent/>}/>
+                        <Route path={'/student/dashboard/group'} element={<GroupStudent/>} />
                     </Routes>
                 </Layout>
             </Router>
