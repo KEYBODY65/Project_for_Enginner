@@ -116,7 +116,13 @@ class Add_Test(APIView):
             save_test.save()
             return JsonResponse(data={'message': "Test add"}, status=200)
         return JsonResponse(data={'message': 'Not valid data'}, status=400)
-
+    def get(self, request):
+        teacher_test = Test.objects.filter(test_builder=request.user.id)
+        if teacher_test:
+            test_id = [elem.id for elem in teacher_test]
+            tests = [test.name_of_test for test in teacher_test]
+            return JsonResponse(data={'tests_id':test_id,'tests': tests}, status=200)
+        return JsonResponse(data={'Message': 'Tests are None'}, status=400)
 
 class Add_Student(APIView):
     def post(self, request):
@@ -228,8 +234,8 @@ class Teacher_tasks(APIView):
     def get(self, request):
         tasks_data = Task.objects.filter(task_builder=request.user.id)
         if tasks_data:
-            task_ids, tasks_names = ([task.task_name for task in tasks_data]
-                                     , [elem.id for elem in tasks_data])
+            tasks_names = [task.task_name for task in tasks_data]
+            task_ids = [elem.id for elem in tasks_data]
             return JsonResponse(data={'task_ids': task_ids, 'task_names': tasks_names}, status=200)
         return JsonResponse(data={'Message': 'Lists is empty'}, status=400)
 
