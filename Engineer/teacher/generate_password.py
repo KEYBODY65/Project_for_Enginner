@@ -13,4 +13,3 @@ def generate_login(pupil_username: str):
     usernamae = f'{stroka[0]}{stroka[1][0]}{stroka[2][0]}{randrange(100)}'
     return usernamae
 
-print(generate_login('Попов Михаил Павлович'))
