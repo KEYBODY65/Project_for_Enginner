@@ -156,6 +156,7 @@ export default function Group() {
     const handleCheckboxChange = (student) => {
         {
             document.querySelectorAll('input[type="checkbox"]:checked').length !== 0 ?
+                // setSelectedStudents(selectedStudents => [...selectedStudents, student]) : setSelectedStudents('')
                 setSelectedStudents(student) : setSelectedStudents('')
         }
     };

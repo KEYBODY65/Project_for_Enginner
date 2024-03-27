@@ -24,6 +24,9 @@ function Login({login, isAuthenticated}) {
                 console.error(err);
             });
     }, []);
+    if (isAuthenticated) {
+        <Navigate to='/teacher/dashboard'/>
+    }
 
     const {email, password, csrfToken} = formData;
 
@@ -33,19 +36,8 @@ function Login({login, isAuthenticated}) {
         e.preventDefault();
 
         login(email, password, csrfToken)
-        // .catch((err) => {
-        //   console.error(err);
-        //   setErr('Неправильная почта или пароль');
-        //   setHasError(true);
-        // });
     };
 
-
-// Is the user authenticated?
-// Redirect them to the home page
-if (isAuthenticated){
-    return <Navigate to='/teacher/dashboard' />
-}
 
     return (
         <div className='container mt-5'>
