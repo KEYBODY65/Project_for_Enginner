@@ -10,5 +10,6 @@ def generate_password(length: int = 8):
 
 def generate_login(pupil_username: str):
     stroka = pupil_username.split()
-    usernamae = f'{stroka[0]}{stroka[1][0]}{randrange(100)}'
+    usernamae = f'{stroka[0]}{stroka[1][0]}{stroka[2][0]}{randrange(100)}'
     return usernamae
+
