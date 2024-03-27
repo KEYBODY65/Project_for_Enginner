@@ -39,7 +39,7 @@ class Testgroups_serializer(serializers.Serializer):
 class Create_StudentsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Student
-        fields = ['id', 'student_name', 'student_surname', 'student_teacher']
+        fields = ['id', 'student_name', 'student_surname', 'student_patronymic', 'student_teacher']
 
 
 class Data_by_id_serializer(serializers.Serializer):

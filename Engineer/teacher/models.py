@@ -45,6 +45,7 @@ class Student(models.Model):
     student_group = models.ManyToManyField(Group)
     student_name = models.CharField(max_length=255)
     student_surname = models.CharField(max_length=255)
+    student_patronymic = models.CharField(max_length=255)
     student_login = models.CharField(max_length=255)
     student_password = models.CharField(max_length=255)
 

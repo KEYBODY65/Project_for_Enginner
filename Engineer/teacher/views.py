@@ -133,7 +133,8 @@ class Add_Student(APIView):
             student = student_data.save()
             name = student_data.validated_data.get('student_name')
             surname = student_data.validated_data.get('student_surname')
-            student.student_login = generate_login(f'{surname} {name}')
+            patronymic = student_data.validated_data.get('student_patronymic')
+            student.student_login = generate_login(f'{surname} {name} {patronymic}')
             student.student_password = generate_password()
             student.save()
             return JsonResponse(data={'message': 'Student added successfully'}, status=200)
@@ -143,7 +144,7 @@ class Add_Student(APIView):
         students = Student.objects.filter(student_teacher=request.user.id)
         student = dict()
         for elem in students:
-            student.setdefault(elem.id, f'{elem.student_surname} {elem.student_name}')
+            student.setdefault(elem.id, f'{elem.student_surname} {elem.student_name} {elem.student_patronymic}')
         if student:
             return JsonResponse(data={'student': student}, status=200)
         return JsonResponse(data={'Message': 'List is empty'}, status=400)
