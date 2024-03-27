@@ -201,7 +201,7 @@ class Test_by_group_id(APIView):
     def post(self, request):
         serializer = Id_Group_serializer(data=request.data)
         if serializer.is_valid():
-            tests_group = Test.objects.filter(group_id=serializer.validated_data['group_id'])
+            tests_group = Test.objects.filter(group_test__id=serializer.validated_data['group_id'])
             if tests_group:
                 data = {elem.id: elem.name_of_test for elem in tests_group}
                 return JsonResponse(data={"test_by_group_id": data}, status=200)

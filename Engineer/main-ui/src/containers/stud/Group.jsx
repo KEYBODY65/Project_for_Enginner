@@ -19,11 +19,11 @@ export default function GroupStudent() {
         let params = new URLSearchParams(document.location.search);
         const groupId = Number(params.get("id"));
         const formData = new FormData();
-        formData.append("id", groupId);
-        axios.post('', formData, config)
+        formData.append("group_id", groupId);
+        axios.post('/teacher/test_by_group/', formData, config)
             .then(res => {
-                setVariantsByGroup(res.data.variants)
-                setVariantsIds(res.data.id);
+                setVariantsByGroup(Object.values(res.data.test_by_group_id))
+                setVariantsIds(Object.keys(res.data.test_by_group_id));
             })
 
     }, []);

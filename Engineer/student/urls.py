@@ -10,5 +10,6 @@ urlpatterns = [
     path('student_logout/', logout_student, name='logout_students'),
     path('upload_answers', UploadAnswers_view.as_view(), name='upload_answers'),
     path('dashboard/', include('main.urls')),
-    path('dashboard/group/', include('main.urls'))
+    path('dashboard/group/', include('main.urls')),
+    path('dashboard/group/test/', include('main.urls'))
 ]

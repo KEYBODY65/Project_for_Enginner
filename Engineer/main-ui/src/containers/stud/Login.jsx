@@ -7,7 +7,9 @@ import axios from "axios";
 
 // eslint-disable-next-line react/prop-types,react-refresh/only-export-components
 function LoginStudent({loginStudent, isStudentAuthenticated}) {
+    const [idStudent, setIdStudent] = useState();
     const [token, setToken] = useState('')
+    const navigate = useNavigate();
 
     useEffect(() => {
         const cookies = new Cookies();
@@ -31,15 +33,18 @@ function LoginStudent({loginStudent, isStudentAuthenticated}) {
         formData.append('login', login);
         axios.post('/teacher/students_data/', formData, config)
             .then(res => {
-                localStorage.setItem('id', res.data.student_id);
+                setIdStudent(res.data.student_id);
             })
     };
-    const navigate = useNavigate();
-    if (JSON.parse(isStudentAuthenticated)) {
-        let url = `/student/dashboard?id=${encodeURIComponent(localStorage.getItem("id"))}`;
-        console.log(url);
-        navigate(url);
-    }
+    useEffect(() => {
+        if (JSON.parse(isStudentAuthenticated)) {
+            if (idStudent) {
+                let url = `/student/dashboard?id=${idStudent}`;
+                navigate(url);
+            }
+        }
+    }, [idStudent]);
+
 
     return (
         <div className='container mt-5'>

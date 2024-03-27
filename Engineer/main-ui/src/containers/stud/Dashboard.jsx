@@ -4,8 +4,8 @@ import axios from "axios";
 import {Link} from "react-router-dom";
 
 export default function DashboardStudent() {
-    // const [tests, setTests] = useState([]);
-    const [idsGroup, setIdsGroup] = useState();
+    const [teachers, setTeachers] = useState([]);
+    const [idsGroup, setIdsGroup] = useState([]);
     const [groups, setGroups] = useState([])
     const cookies = new Cookies();
     const config = {
@@ -27,8 +27,21 @@ export default function DashboardStudent() {
                 setIdsGroup(Object.keys(res.data.groups));
             })
     }, []);
-    console.log(groups);
-    console.log(idsGroup);
+    useEffect(() => {
+        if (idsGroup) {
+            for (let i = 0; i < idsGroup.length; i++) {
+                let formData = new FormData();
+                console.log(idsGroup[i]);
+
+                formData.append('group_id', Number(idsGroup[i]));
+                axios.post('/teacher/teacher_name_by_id/', formData, config)
+                    .then(res => {
+                        console.log(res.data)
+                        // setTeachers()
+                    })
+            }
+        }
+    }, [idsGroup]);
     return (
         <div className={'container'}>
             <div className='jumbotron mt-5' style={{

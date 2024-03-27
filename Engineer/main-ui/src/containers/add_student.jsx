@@ -33,6 +33,7 @@ export default function Add_student() {
         const formData = new FormData();
         formData.append('student_name', document.getElementById('student_name').value);
         formData.append('student_surname', document.getElementById('student_surname').value);
+        formData.append('student_patronymic', document.getElementById('student_patronymic').value);
 
         axios.post('/teacher/add_student_data/', formData, config)
             .then(response => {
@@ -84,6 +85,17 @@ export default function Add_student() {
                         type="text"
                         className="form-control"
                         id='student_surname'
+                        required
+                        aria-label="Sizing example input"
+                        aria-describedby="inputGroup-sizing-default"
+                    />
+                </div>
+                <div className="input-group mb-3">
+                    <span className="input-group-text" id="inputGroup-sizing-default">Отчество</span>
+                    <input
+                        type="text"
+                        className="form-control"
+                        id='student_patronymic'
                         required
                         aria-label="Sizing example input"
                         aria-describedby="inputGroup-sizing-default"
