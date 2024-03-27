@@ -272,7 +272,7 @@ class Teacher_Name(APIView):
         if serializer.is_valid():
             teacher = Group.objects.get(id=serializer.validated_data['group_id'])
             if teacher:
-                teacher_fio = UserModel.objects.get(id=teacher.group_builder)
+                teacher_fio = teacher.group_builder
                 return JsonResponse(data={'teacher_name': teacher_fio.name, 'teacher_surname': teacher_fio.surname},
                                     status=200)
             return JsonResponse(data={'message': 'Teacher is Null'}, status=404)
