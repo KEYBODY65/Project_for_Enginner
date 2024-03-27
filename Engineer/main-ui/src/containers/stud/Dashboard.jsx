@@ -4,7 +4,7 @@ import axios from "axios";
 import {Link} from "react-router-dom";
 
 export default function DashboardStudent() {
-    const [teachers, setTeachers] = useState([]);
+    const [teachers, setTeachers] = useState({});
     const [idsGroup, setIdsGroup] = useState([]);
     const [groups, setGroups] = useState([])
     const cookies = new Cookies();
@@ -22,24 +22,27 @@ export default function DashboardStudent() {
         formData.append("id", studentId);
         axios.post('/teacher/students_groups/', formData, config)
             .then(res => {
-                console.log(res.data);
                 setGroups(Object.values(res.data.groups));
                 setIdsGroup(Object.keys(res.data.groups));
             })
     }, []);
     useEffect(() => {
         if (idsGroup) {
-            for (let i = 0; i < idsGroup.length; i++) {
-                let formData = new FormData();
-                console.log(idsGroup[i]);
+            const fetchTeachers = async () => {
+                for (let i = 0; i < idsGroup.length; i++) {
+                    const formData = new FormData();
+                    formData.append('group_id', Number(idsGroup[i]));
 
-                formData.append('group_id', Number(idsGroup[i]));
-                axios.post('/teacher/teacher_name_by_id/', formData, config)
-                    .then(res => {
-                        console.log(res.data)
-                        // setTeachers()
-                    })
-            }
+                    const res = await axios.post('/teacher/teacher_name_by_id/', formData, config);
+
+                    setTeachers(prevTeachers => ({
+                        ...prevTeachers,
+                        [idsGroup[i]]: `${res.data.teacher_surname} ${res.data.teacher_name}`
+                    }));
+                }
+            };
+
+            fetchTeachers();
         }
     }, [idsGroup]);
     return (
@@ -60,7 +63,7 @@ export default function DashboardStudent() {
                             <div className='card-header' style={{height: 40}}></div>
                             <div className='card-body'>
                                 <h5 className='card-title'>{group}</h5>
-                                <p className='card-text'> Учитель: </p>
+                                <p className='card-text'> Учитель: {teachers[id + 1]} </p>
                             </div>
                         </div>
                     </Link>
