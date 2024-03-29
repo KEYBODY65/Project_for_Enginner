@@ -24,9 +24,6 @@ function Login({login, isAuthenticated}) {
                 console.error(err);
             });
     }, []);
-    if (isAuthenticated) {
-        <Navigate to='/teacher/dashboard'/>
-    }
 
     const {email, password, csrfToken} = formData;
 
@@ -37,7 +34,9 @@ function Login({login, isAuthenticated}) {
 
         login(email, password, csrfToken)
     };
-
+    if (isAuthenticated) {
+         return <Navigate to='/teacher/dashboard'/>
+    }
 
     return (
         <div className='container mt-5'>
