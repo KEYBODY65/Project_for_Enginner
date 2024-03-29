@@ -45,6 +45,8 @@ export default function DashboardStudent() {
             fetchTeachers();
         }
     }, [idsGroup]);
+    console.log(teachers);
+    console.log(idsGroup);
     return (
         <div className={'container'}>
             <div className='jumbotron mt-5' style={{
@@ -63,7 +65,7 @@ export default function DashboardStudent() {
                             <div className='card-header' style={{height: 40}}></div>
                             <div className='card-body'>
                                 <h5 className='card-title'>{group}</h5>
-                                <p className='card-text'> Учитель: {teachers[id + 1]} </p>
+                                <p className='card-text'> Учитель: {teachers[idsGroup[id]]} </p>
                             </div>
                         </div>
                     </Link>
