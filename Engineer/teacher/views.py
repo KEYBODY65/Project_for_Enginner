@@ -31,7 +31,7 @@ class Login_user(APIView):
                                               password=log_data.validated_data['password'])
                     auth.login(request, login)
                     return JsonResponse(data={'message': 'All right'}, status=200)
-            return JsonResponse(data={'message': 'This User is not on our database'})
+            return JsonResponse(data={'message': 'This User is not on our database'}, status=400)
         return JsonResponse(data={'message': 'Not Valid'}, status=400)
 
     def get(self, request):
