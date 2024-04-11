@@ -88,6 +88,8 @@ export default function MyComponent(state = initialState, action) {
         case LOGIN_STUDENT_FAIL:
         case LOGOUT_STUDENT:
             localStorage.removeItem('isStudentAuthenticated');
+            localStorage.removeItem('access');
+            localStorage.removeItem('refresh');
             return {
                 ...state,
                 access: null,

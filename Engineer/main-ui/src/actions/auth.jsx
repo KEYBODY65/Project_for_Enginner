@@ -75,7 +75,6 @@ export const signup = (name, surname, email, password, csrfToken) => async dispa
     };
 
     const body = JSON.stringify({name, surname, email, password});
-    console.log(1)
     try {
         const res = await axios.post(`/teacher/register_data/`, body, config);
 
@@ -103,6 +102,7 @@ export const loginStudent = (student_login, student_password, csrfToken) => asyn
     try {
         const res = await axios.post(`/student/student_login_data/`, body, config);
         document.getElementById('incorrectValue').style.display = 'none';
+        console.log(1)
         dispatch({
             type: LOGIN_STUDENT_SUCCESS,
             payload: res.data

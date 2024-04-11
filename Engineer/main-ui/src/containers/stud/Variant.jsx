@@ -1,9 +1,12 @@
 import Cookies from "universal-cookie";
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
 import axios from "axios";
 
-export default function VariantOfStudent(){
+export default function VariantOfStudent() {
     const cookies = new Cookies();
+    const [tasks, setTasks] = useState([]);
+    let params = new URLSearchParams(document.location.search);
+    const variantId = Number(params.get("idTest"));
     const config = {
         headers: {
             'Content-Type': 'application/json',
@@ -12,20 +15,46 @@ export default function VariantOfStudent(){
         }
     };
     useEffect(() => {
-        let params = new URLSearchParams(document.location.search);
-        const variantId = Number(params.get("idTest"));
         const formData = new FormData();
-        formData.append("variantId", variantId);
-        axios.post('', formData, config)
+        formData.append("test_id", variantId);
+        axios.post('/teacher/test_tasks/', formData, config)
             .then(res => {
-                console.log(res.data)
+                console.log(res.data);
+                res.data.tasks.map(id_task => {
+                    let body = {
+                        task_id: id_task,
+                    }
+                    axios.post('/teacher/current_task/', body, config)
+                    .then(result => {
+                        setTasks(prevTasks => [...prevTasks, result.data])
+                    })
+                })
             })
-            .catch(err =>{
+            .catch(err => {
                 console.error(err);
             })
 
     }, []);
     return (
-        <p>Вариант</p>
+        <div className={'container'}>
+            {tasks.length > 0 ?
+                <form>
+                    <p>Вариант #{variantId}</p>
+                    {tasks.map(task => {
+                        <div className='form-group'>
+                            <p>{task[0]}</p>
+                            <input
+                                className='form-control'
+                                type={'text'}
+                                placeholder={'Впишите ответ'}
+                            />
+                        </div>
+                    })}
+                    <button type={'submit'}>Отправить</button>
+                </form> :
+            <p> Вариант пустой или его не создали </p>
+            }
+        </div>
+
     )
 }

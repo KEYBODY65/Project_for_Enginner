@@ -1,15 +1,19 @@
-import React, {Fragment, useState} from 'react';
+import {Fragment, useState} from 'react';
 import {Link, Navigate} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {logout, logoutStudent} from '../actions/auth.jsx';
 
-const Navbar = ({logout, logoutStudent, isAuthenticated}) => {
+const Navbar = ({logout, logoutStudent, isAuthenticated, isStudentAuthenticated}) => {
     const [redirect, setRedirect] = useState(false);
 
     const logout_user = () => {
         logout();
         setRedirect(true);
     };
+    const logout_student = () => {
+        logoutStudent();
+        setRedirect(true);
+    }
 
     const guestLinks = () => (
         <Fragment>
@@ -25,7 +29,7 @@ const Navbar = ({logout, logoutStudent, isAuthenticated}) => {
 
     const authLinks = () => (
         <li className='nav-item'>
-            <a className='nav-link' href='/' onClick={logoutStudent}>Выйти</a>
+            <a className='nav-link' href='/' onClick={logout_student}>Выйти</a>
         </li>
     );
     const authLinks2 = () => (
@@ -72,7 +76,7 @@ const Navbar = ({logout, logoutStudent, isAuthenticated}) => {
                 {document.location.pathname.startsWith('/student') &&
                     <div className='collapse navbar-collapse' id='navbarNav'>
                         <ul className='navbar-nav'>
-                            {isAuthenticated && authLinks()}
+                            {isStudentAuthenticated && authLinks()}
                         </ul>
                     </div>
                 }
@@ -84,7 +88,14 @@ const Navbar = ({logout, logoutStudent, isAuthenticated}) => {
 };
 
 const mapStateToProps = state => ({
-    isAuthenticated: state.auth.isAuthenticated
+    isAuthenticated: state.auth.isAuthenticated,
+    isStudentAuthenticated: state.auth.isStudentAuthenticated
 });
+const mapDispatchToProps = (dispatch) => {
+  return {
+    logout: () => dispatch(logout()),
+    logoutStudent: () => dispatch(logoutStudent())
+  }
+}
 
-export default connect(mapStateToProps, {logout})(Navbar);
+export default connect(mapStateToProps, mapDispatchToProps)(Navbar);

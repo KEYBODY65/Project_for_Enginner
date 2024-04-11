@@ -1,11 +1,11 @@
 import {Navigate, Outlet} from "react-router-dom";
 import Navbar from '../components/Navbar.jsx';
 import {useSelector} from "react-redux";
-export default function Layout() {
-    const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
+export default function LayoutStud() {
+    const isStudentAuthenticated = useSelector(state => state.auth.isStudentAuthenticated);
     return (
         <div>
-            {!isAuthenticated && <Navigate to={'/'} />}
+            {!isStudentAuthenticated && <Navigate to={'/'} />}
             <Navbar />
             <Outlet />
         </div>

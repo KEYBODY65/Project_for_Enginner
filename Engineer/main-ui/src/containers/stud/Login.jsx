@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import {loginStudent} from '../../actions/auth.jsx'
 import Cookies from "universal-cookie";
 import axios from "axios";
+import * as url from "url";
 
 // eslint-disable-next-line react/prop-types,react-refresh/only-export-components
 function LoginStudent({loginStudent, isStudentAuthenticated}) {
@@ -37,14 +38,13 @@ function LoginStudent({loginStudent, isStudentAuthenticated}) {
             })
     };
     useEffect(() => {
-        if (JSON.parse(isStudentAuthenticated)) {
+        if (isStudentAuthenticated) {
             if (idStudent) {
                 let url = `/student/dashboard?id=${idStudent}`;
                 navigate(url);
             }
         }
-    }, [idStudent]);
-
+    }, [idStudent, isStudentAuthenticated]);
 
     return (
         <div className='container mt-5'>

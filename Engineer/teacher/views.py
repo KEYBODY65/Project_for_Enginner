@@ -7,6 +7,7 @@ from django.middleware.csrf import get_token
 from .models import *
 from django.views.decorators.csrf import ensure_csrf_cookie
 from .generate_password import *
+import base64
 
 
 class Create_user(APIView):
@@ -116,13 +117,15 @@ class Add_Test(APIView):
             save_test.save()
             return JsonResponse(data={'message': "Test add"}, status=200)
         return JsonResponse(data={'message': 'Not valid data'}, status=400)
+
     def get(self, request):
         teacher_test = Test.objects.filter(test_builder=request.user.id)
         if teacher_test:
             test_id = [elem.id for elem in teacher_test]
             tests = [test.name_of_test for test in teacher_test]
-            return JsonResponse(data={'tests_id':test_id,'tests': tests}, status=200)
+            return JsonResponse(data={'tests_id': test_id, 'tests': tests}, status=200)
         return JsonResponse(data={'Message': 'Tests are None'}, status=400)
+
 
 class Add_Student(APIView):
     def post(self, request):
@@ -226,7 +229,7 @@ class Test_Tasks_by_test_id(APIView):
             test_data = Test.objects.get(id=serializer.validated_data['test_id'])
             if test_data:
                 tasks = [elem.id for elem in test_data.task_ids.all()]
-                return JsonResponse(data={'tasks': tasks}, status=200)
+                return JsonResponse(data={'tasks': 'xyi'}, status=200)
             return JsonResponse(data={'message': 'test_data is empty'}, status=404)
         return JsonResponse(data={'message': 'Not valid data'}, status=400)
 
