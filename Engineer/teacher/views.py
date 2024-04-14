@@ -7,7 +7,7 @@ from django.middleware.csrf import get_token
 from .models import *
 from django.views.decorators.csrf import ensure_csrf_cookie
 from .generate_password import *
-import base64
+from .utils import encoding_file
 
 
 class Create_user(APIView):
@@ -69,13 +69,15 @@ class Current_Task(APIView):
     def post(self, request):
         task_id = Data_by_id_serializer(data=request.data)
         if task_id.is_valid():
-            data = Task.objects.get(task_id.validated_data['id'])
+            data = Task.objects.get(id=task_id.validated_data['task_id'])
+            enc_file = encoding_file(
+                f'/home/misha/PycharmProjects/Project_for_Enginner/Engineer/media/{str(data.file)}')
             task_data = {
                 'task_id': data.id,
                 'task_name': data.task_name,
                 'task_description': data.task_description,
                 'weight': data.weight,
-                'file': data.file
+                'file': enc_file
             }
             if task_data:
                 return JsonResponse(data={'task': task_data}, status=200)
@@ -229,7 +231,7 @@ class Test_Tasks_by_test_id(APIView):
             test_data = Test.objects.get(id=serializer.validated_data['test_id'])
             if test_data:
                 tasks = [elem.id for elem in test_data.task_ids.all()]
-                return JsonResponse(data={'tasks': 'xyi'}, status=200)
+                return JsonResponse(data={'tasks': tasks}, status=200)
             return JsonResponse(data={'message': 'test_data is empty'}, status=404)
         return JsonResponse(data={'message': 'Not valid data'}, status=400)
 
@@ -237,6 +239,7 @@ class Test_Tasks_by_test_id(APIView):
 class Teacher_tasks(APIView):
     def get(self, request):
         tasks_data = Task.objects.filter(task_builder=request.user.id)
+        print(tasks_data)
         if tasks_data:
             tasks_names = [task.task_name for task in tasks_data]
             task_ids = [elem.id for elem in tasks_data]

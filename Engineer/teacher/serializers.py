@@ -43,7 +43,7 @@ class Create_StudentsSerializer(serializers.ModelSerializer):
 
 
 class Data_by_id_serializer(serializers.Serializer):
-    id = serializers.IntegerField()
+    task_id = serializers.IntegerField()
 
 
 class Tets_Data_by_id_serializer(serializers.Serializer):
