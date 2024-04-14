@@ -69,7 +69,7 @@ class Current_Task(APIView):
     def post(self, request):
         task_id = Data_by_id_serializer(data=request.data)
         if task_id.is_valid():
-            data = Task.objects.get(task_id.validated_data['task_id'])
+            data = Task.objects.get(task_id.validated_data['id'])
             task_data = {
                 'task_id': data.id,
                 'task_name': data.task_name,
