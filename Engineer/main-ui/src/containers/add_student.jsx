@@ -4,8 +4,9 @@ import './static/add_students.css';
 
 
 export default function Add_student() {
-    const [csrfToken, setCsrfToken] = useState()
-    const [succes, setSucces] = useState(false)
+    const [csrfToken, setCsrfToken] = useState();
+    const [success, setsuccess] = useState(false);
+    const [list, setList] = useState(false);
     const config = {
         headers: {
             'Content-Type': 'application/json',
@@ -28,7 +29,7 @@ export default function Add_student() {
 
     function onSubmit(e) {
         e.preventDefault();
-        setSucces(false);
+        setsuccess(false);
 
         const formData = new FormData();
         formData.append('student_name', document.getElementById('student_name').value);
@@ -39,7 +40,7 @@ export default function Add_student() {
             .then(response => {
                 // Обработайте ответ сервера здесь
                 console.log(response.data);
-                setSucces(true);
+                setsuccess(true);
                 document.querySelectorAll('input').forEach(input => {
                     input.value = '';
                 });
@@ -47,24 +48,28 @@ export default function Add_student() {
             .catch(error => {
                 // Обработайте ошибку здесь
                 console.error(error);
-                setSucces(false);
+                setsuccess(false);
             });
 
     }
 
-    function Succes() {
+    function Success() {
         return (
             <div className="tn-box tn-box-color-1">
 
-                <p>Succes</p>
+                <p>success</p>
 
             </div>
 
         )
     }
 
+    function ListOfUsers(){
+
+    }
+
     return (
-        <div className="container d-">
+        <section className="container d-">
             <h3 style={{textAlign: 'center', marginTop: 20}}>Добавление ученика</h3>
             <hr className="my-4"/>
             <form onSubmit={onSubmit}>
@@ -103,9 +108,10 @@ export default function Add_student() {
                 </div>
                 <input type="submit" className="btn btn-primary mt-2"/>
             </form>
-            {succes && (<Succes/>)
-
-            }
-        </div>
+            {success && (<Success/>)}
+            <hr className="my-4"/>
+            <button type={'button'} onClick={() => setList(!list)} className="btn btn-primary mt-2">Список учеников</button>
+            {list && <Success/>}
+        </section>
     )
 }

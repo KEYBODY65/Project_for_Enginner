@@ -14,13 +14,9 @@ export default function VariantOfStudent() {
             'X-CSRFToken': cookies.get('csrftoken')
         }
     };
-    useEffect(() => {
-        const formData = new FormData();
-        formData.append("test_id", variantId);
-        axios.post('/teacher/test_tasks/', formData, config)
-            .then(res => {
-                console.log(res.data);
-                res.data.tasks.map(id_task => {
+
+    function getTasks(tasks) {
+        tasks.map(id_task => {
                     let body = {
                         task_id: id_task,
                     }
@@ -29,27 +25,42 @@ export default function VariantOfStudent() {
                         setTasks(prevTasks => [...prevTasks, result.data])
                     })
                 })
+    }
+
+    useEffect(() => {
+        const formData = {};
+        formData.id = variantId;
+        axios.post('/teacher/current_task/', formData, config)
+            .then(res => {
+                console.log(res.data)
+                // console.log(res.data.tasks.split(' '));
+                // if (res.data.tasks.split(' ').length > 1){
+                //     getTasks(res.data.tasks);
+                // } else{
+                //     setTasks([res.data.tasks]);
+                // }
             })
             .catch(err => {
                 console.error(err);
             })
 
     }, []);
+    console.log(tasks)
     return (
         <div className={'container'}>
             {tasks.length > 0 ?
                 <form>
                     <p>Вариант #{variantId}</p>
-                    {tasks.map(task => {
-                        <div className='form-group'>
-                            <p>{task[0]}</p>
+                    {tasks.map((task, id) =>
+                        <div className='form-group' key={id}>
+                            <p>{task}</p>
                             <input
                                 className='form-control'
                                 type={'text'}
                                 placeholder={'Впишите ответ'}
                             />
                         </div>
-                    })}
+                    )}
                     <button type={'submit'}>Отправить</button>
                 </form> :
             <p> Вариант пустой или его не создали </p>
