@@ -69,22 +69,22 @@ export default function Add_student() {
             <hr className="my-4"/>
             <form onSubmit={onSubmit}>
                 <div className="input-group mb-3">
-                    <span className="input-group-text" id="inputGroup-sizing-default">Имя</span>
+                    <span className="input-group-text" id="inputGroup-sizing-default">Фамилия</span>
                     <input
                         type="text"
                         className="form-control"
-                        id='student_name'
+                        id='student_surname'
                         required
                         aria-label="Sizing example input"
                         aria-describedby="inputGroup-sizing-default"
                     />
                 </div>
                 <div className="input-group mb-3">
-                    <span className="input-group-text" id="inputGroup-sizing-default">Фамилия</span>
+                    <span className="input-group-text" id="inputGroup-sizing-default">Имя</span>
                     <input
                         type="text"
                         className="form-control"
-                        id='student_surname'
+                        id='student_name'
                         required
                         aria-label="Sizing example input"
                         aria-describedby="inputGroup-sizing-default"
