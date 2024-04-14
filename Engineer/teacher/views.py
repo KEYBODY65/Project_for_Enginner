@@ -69,7 +69,7 @@ class Current_Task(APIView):
     def post(self, request):
         task_id = Data_by_id_serializer(data=request.data)
         if task_id.is_valid():
-            data = Task.objects.get(id=task_id.validated_data['task_id'])
+            data = Task.objects.get(id=task_id.validated_data['id'])
             enc_file = encoding_file(
                 f'/home/misha/PycharmProjects/Project_for_Enginner/Engineer/media/{str(data.file)}')
             task_data = {

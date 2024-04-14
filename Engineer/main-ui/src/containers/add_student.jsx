@@ -1,30 +1,29 @@
 import {useEffect, useState} from "react";
 import axios from "axios";
 import './static/add_students.css';
+import Cookies from "universal-cookie";
 
 
 export default function Add_student() {
-    const [csrfToken, setCsrfToken] = useState();
+    const cookies = new Cookies();
     const [success, setsuccess] = useState(false);
     const [list, setList] = useState(false);
+    const [names, setNames] = useState([]);
+    const [ids, setIds] = useState([]);
     const config = {
         headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
-            'X-CSRFToken': csrfToken
+            'X-CSRFToken': cookies.get('csrftoken')
         }
     };
 
     useEffect(() => {
-        axios
-            .get('/teacher/get_csrf')
+        axios.get('/teacher/add_student_data/')
             .then(res => {
-                const csrfToken = res.data.csrfToken;
-                setCsrfToken(csrfToken);
+                setNames(Object.values(res.data.student));
+                setIds(Object.keys(res.data.student));
             })
-            .catch(err => {
-                console.error(err);
-            });
     }, []);
 
     function onSubmit(e) {
@@ -51,6 +50,7 @@ export default function Add_student() {
                 setsuccess(false);
             });
 
+
     }
 
     function Success() {
@@ -63,9 +63,47 @@ export default function Add_student() {
 
         )
     }
+    function DeleteStudent(ids_index, index){
+        setIds(ids.filter((id) => id !== ids_index));
+        setNames(names.filter((name) => name !== index));
+        console.log(names);
+        const body = {};
+        body.id = ids_index;
+        axios.post('', body, config);
+    }
 
-    function ListOfUsers(){
-
+    function ListOfUsers() {
+        return (
+            <>
+                {names.length > 0 ?
+                    <section className="container">
+                        <h3> Таблица учеников</h3>
+                        <br/>
+                        <table className="table">
+                            <thead className="thead-dark">
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">ФИО</th>
+                                <th scope="row">Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {names.map((name, id) => (
+                                    <tr key={id}>
+                                        <th scope="row">{ids[id]}</th>
+                                        <th scope="row">{name}</th>
+                                        <th scope="row">
+                                            <button type="button" className="btn btn-danger" onClick={() => DeleteStudent(ids[id], name)}>Удалить</button>
+                                        </th>
+                                    </tr>
+                                )
+                            )}
+                            </tbody>
+                        </table>
+                    </section> : <p> Вы не добавили ни одного ученика</p>
+            }
+            </>
+        )
     }
 
     return (
@@ -110,8 +148,9 @@ export default function Add_student() {
             </form>
             {success && (<Success/>)}
             <hr className="my-4"/>
-            <button type={'button'} onClick={() => setList(!list)} className="btn btn-primary mt-2">Список учеников</button>
-            {list && <Success/>}
+            <button type={'button'} onClick={() => setList(!list)} className="btn btn-primary mt-2">Список учеников
+            </button>
+            {list && <ListOfUsers />}
         </section>
     )
 }

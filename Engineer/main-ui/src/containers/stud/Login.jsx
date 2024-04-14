@@ -8,7 +8,6 @@ import * as url from "url";
 
 // eslint-disable-next-line react/prop-types,react-refresh/only-export-components
 function LoginStudent({loginStudent, isStudentAuthenticated}) {
-    const [idStudent, setIdStudent] = useState();
     const [token, setToken] = useState('')
     const navigate = useNavigate();
 
@@ -34,17 +33,17 @@ function LoginStudent({loginStudent, isStudentAuthenticated}) {
         formData.append('login', login);
         axios.post('/teacher/students_data/', formData, config)
             .then(res => {
-                setIdStudent(res.data.student_id);
+                localStorage.setItem('id', res.data.student_id)
             })
     };
     useEffect(() => {
         if (isStudentAuthenticated) {
-            if (idStudent) {
-                let url = `/student/dashboard?id=${idStudent}`;
+            if (localStorage.getItem('id')) {
+                let url = `/student/dashboard?id=${localStorage.getItem('id')}`;
                 navigate(url);
             }
         }
-    }, [idStudent, isStudentAuthenticated]);
+    }, [isStudentAuthenticated]);
 
     return (
         <div className='container mt-5'>
@@ -89,7 +88,7 @@ function LoginStudent({loginStudent, isStudentAuthenticated}) {
 
 
 const mapStateToProps = state => ({
-    isStudentAuthenticated: state.auth.isStudentAuthenticated
+    isStudentAuthenticated: state.auth.isStudentAuthenticated,
 });
 
 // eslint-disable-next-line react-refresh/only-export-components

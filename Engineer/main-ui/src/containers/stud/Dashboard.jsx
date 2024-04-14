@@ -45,8 +45,6 @@ export default function DashboardStudent() {
             fetchTeachers();
         }
     }, [idsGroup]);
-    console.log(teachers);
-    console.log(idsGroup);
     return (
         <div className={'container'}>
             <div className='jumbotron mt-5' style={{
