@@ -1,8 +1,10 @@
 import Cookies from "universal-cookie";
 import {useEffect, useState} from "react";
 import axios from "axios";
+import './stud.css';
 
 export default function VariantOfStudent() {
+    const [isModal, setIsModal] = useState(false);
     const cookies = new Cookies();
     const [tasks, setTasks] = useState([]);
     let params = new URLSearchParams(document.location.search);
@@ -16,54 +18,61 @@ export default function VariantOfStudent() {
     };
 
     function getTasks(tasks) {
+        setTasks([])
         tasks.map(id_task => {
-                    let body = {
-                        task_id: id_task,
-                    }
-                    axios.post('/teacher/current_task/', body, config)
-                    .then(result => {
-                        setTasks(prevTasks => [...prevTasks, result.data])
-                    })
+            let body = {
+                id: id_task,
+            }
+            axios.post('/teacher/current_task/', body, config)
+                .then(result => {
+                    setTasks(prevTasks => [...prevTasks, result.data.task])
                 })
+        })
     }
 
     useEffect(() => {
         const formData = {};
-        formData.id = variantId;
-        axios.post('/teacher/current_task/', formData, config)
+        formData.test_id = variantId;
+        axios.post('/teacher/test_tasks/', formData, config)
             .then(res => {
-                console.log(res.data)
-                // console.log(res.data.tasks.split(' '));
-                // if (res.data.tasks.split(' ').length > 1){
-                //     getTasks(res.data.tasks);
-                // } else{
-                //     setTasks([res.data.tasks]);
-                // }
+                getTasks(res.data.tasks);
             })
             .catch(err => {
                 console.error(err);
             })
 
     }, []);
-    console.log(tasks)
+    function ShowModal(){
+
+    }
+
     return (
         <div className={'container'}>
             {tasks.length > 0 ?
                 <form>
                     <p>Вариант #{variantId}</p>
                     {tasks.map((task, id) =>
-                        <div className='form-group' key={id}>
-                            <p>{task}</p>
-                            <input
-                                className='form-control'
-                                type={'text'}
-                                placeholder={'Впишите ответ'}
-                            />
+                        <div className="card mb-3" key={id}>
+                            <img src={`data:image/jpeg;base64,${task.file}`} width="200" height="200" className="card-img-top" onClick={() => setIsModal(!isModal)}/>
+                            <div className="card-body">
+                                <h5 className="card-title">{task.task_name}</h5>
+                                <p className="card-text">{task.task_description}</p>
+                                <input
+                                    id={`task_${task.task_id}`}
+                                    className='form-control'
+                                    type={'text'}
+                                    placeholder={'Впишите ответ'}
+                                />
+                            </div>
                         </div>
                     )}
-                    <button type={'submit'}>Отправить</button>
+                    <button className={'btn btn-secondary'} type={'submit'}>
+                        Отправить
+                        <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        <span className="visually-hidden">Loading...</span>
+                    </button>
                 </form> :
-            <p> Вариант пустой или его не создали </p>
+                <p> Вариант пустой или его не создали </p>
             }
         </div>
 

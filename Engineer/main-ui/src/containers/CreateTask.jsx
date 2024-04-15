@@ -1,9 +1,8 @@
 import './static/Dashboard.css';
-import React, {useEffect, useState} from 'react';
+import {useEffect, useState} from 'react';
 import axios from "axios";
 
 export default function CreateTask() {
-    const [submittedTasks, setSubmittedTasks] = useState([]);
     const [tasks, setTasks] = useState(false);
     const [csrfToken, setCsrfToken] = useState();
 
@@ -22,28 +21,17 @@ export default function CreateTask() {
                 console.error(err);
             });
     }, []);
-
     function handleSubmit(event) {
         event.preventDefault();
-        const newTask = {
+        const formData = {
             task_name: document.getElementById('describe').value,
             task_description: document.getElementById('floatingTextarea').value,
             true_answer: document.getElementById('true_answer').value,
             weight: document.getElementById('input').value,
             file: document.getElementById('formFileMultiple').files[0],
-            subject: document.getElementById('floatingSelect').value
+            subject: document.getElementById('floatingSelect').value,
+            choice: document.querySelector('input[type="radio"]:checked').id,
         };
-        setSubmittedTasks([newTask]); // Добавление задания в список
-        console.log(submittedTasks);
-        const formData = new FormData();
-
-        // Добавляем остальные данные в formData
-        formData.append('task_name', newTask.task_name);
-        formData.append('task_description', newTask.task_description);
-        formData.append('true_answer', newTask.true_answer);
-        formData.append('weight', newTask.weight);
-        formData.append('file', newTask.file);
-        formData.append('subject', newTask.subject);
 
         // Отправляем formData на сервер
         axios.post('/teacher/new_task_data/', formData, {
@@ -92,7 +80,20 @@ export default function CreateTask() {
                 </div>
                 <div className='form-floating'>
                     <input className="form-control" placeholder="Leave a comment here" id="true_answer" type='number'/>
-                    <label htmlFor="input">Правильный ответ:</label>
+                    <label htmlFor="input">Правильный ответ</label>
+                </div>
+                <div className="form-check">
+                    <input className="form-check-input" type="radio" name="flexRadioDefault" id="0"/>
+                    <label className="form-check-label" htmlFor="0">
+                        Несколько вариантов ответа
+                    </label>
+                </div>
+                <div className="form-check">
+                    <input className="form-check-input" type="radio" name="flexRadioDefault" id="1"
+                           checked/>
+                    <label className="form-check-label" htmlFor="1">
+                        Развернутый ответ
+                    </label>
                 </div>
                 <br/>
             </div>
