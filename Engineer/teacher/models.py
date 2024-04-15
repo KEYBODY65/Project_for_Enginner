@@ -33,6 +33,7 @@ class Task(models.Model):
     true_answer = models.CharField(max_length=255)
     file = models.FileField(blank=True, null=True, upload_to='task_files/')
     subject = models.CharField(max_length=255)
+    choice = models.BooleanField(default=False)
 
 
 class Group(models.Model):

@@ -17,7 +17,7 @@ class Login_UserSerializer(serializers.Serializer):
 class Create_TaskSerializer(serializers.ModelSerializer):
     class Meta:
         model = Task
-        fields = ['id', 'task_builder', 'task_name', 'task_description', 'true_answer', 'weight', 'file', 'subject']
+        fields = ['id', 'task_builder', 'task_name', 'task_description', 'true_answer', 'weight', 'file', 'subject', 'choice']
 
 
 class Create_GroupsSerializer(serializers.ModelSerializer):

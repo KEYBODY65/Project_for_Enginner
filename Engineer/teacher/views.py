@@ -77,7 +77,8 @@ class Current_Task(APIView):
                 'task_name': data.task_name,
                 'task_description': data.task_description,
                 'weight': data.weight,
-                'file': enc_file
+                'file': enc_file,
+                'choice': data.choice
             }
             if task_data:
                 return JsonResponse(data={'task': task_data}, status=200)
