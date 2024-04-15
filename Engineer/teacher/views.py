@@ -232,6 +232,7 @@ class Test_Tasks_by_test_id(APIView):
             test_data = Test.objects.get(id=serializer.validated_data['test_id'])
             if test_data:
                 tasks = [elem.id for elem in test_data.task_ids.all()]
+                print(f'333333333333333333333333    {tasks}')
                 return JsonResponse(data={'tasks': tasks}, status=200)
             return JsonResponse(data={'message': 'test_data is empty'}, status=404)
         return JsonResponse(data={'message': 'Not valid data'}, status=400)

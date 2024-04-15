@@ -34,13 +34,14 @@ class StudentStatistics_view(APIView):
 class UploadAnswers_view(APIView):
     def post(self, request):
         true_answers = Answer_Serializer(data=request.data)
-        student = Student.objects.get(id=1)
         if true_answers.is_valid():
+            student = Student.objects.get(id=true_answers.validated_data['student_id'])
             scores_col, iteration = 0, 0
             test = Test.objects.get(id=true_answers.validated_data['test_id'])
             task = test.task_ids.all()
             true_answers = true_answers.validated_data['true_answers']
             for i in task:
+                print(i.true_answer)
                 if i.true_answer == true_answers[iteration]:
                     scores_col += i.weight
                     iteration += 1
