@@ -7,6 +7,9 @@ export default function VariantOfStudent() {
     const [isModal, setIsModal] = useState(false);
     const cookies = new Cookies();
     const [tasks, setTasks] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
+    const [url, setUrl] = useState('');
+    const [formData, setFormData] = useState([]);
     let params = new URLSearchParams(document.location.search);
     const variantId = Number(params.get("idTest"));
     const config = {
@@ -26,13 +29,14 @@ export default function VariantOfStudent() {
             axios.post('/teacher/current_task/', body, config)
                 .then(result => {
                     setTasks(prevTasks => [...prevTasks, result.data.task])
-                })
+                }).finally(() => setIsLoading(false))
         })
     }
 
     useEffect(() => {
         const formData = {};
         formData.test_id = variantId;
+        setIsLoading(true);
         axios.post('/teacher/test_tasks/', formData, config)
             .then(res => {
                 getTasks(res.data.tasks);
@@ -42,38 +46,81 @@ export default function VariantOfStudent() {
             })
 
     }, []);
-    function ShowModal(){
 
+    function ComponentModel() {
+        setIsModal(true);
+        document.addEventListener("click", event => {
+            if (event.target.closest("#modal-content-src") || event.target.closest("#modalSrc")) {
+                setIsModal(false);
+            }
+        });
     }
+
+    function ShowModal() {
+        return (
+            <section id={'modalSrc'}>
+                <img id={'modal-content-src'} src={`data:image/jpeg;base64,${url}`} alt={''}/>
+            </section>
+        )
+    }
+
+    const onChange = (id, value) => setFormData(prevFormData => ({...prevFormData, [id]: value}));
+
+    function SendAnswers() {
+        const data = {};
+        data.test_id = variantId;
+        data.true_answers = Object.values(formData);
+        axios.post('/student/upload_answers/', data, config)
+            .then(() => setIsLoading(true))
+            .finally(() => setIsLoading(false));
+    }
+
 
     return (
         <div className={'container'}>
-            {tasks.length > 0 ?
-                <form>
-                    <p>Вариант #{variantId}</p>
-                    {tasks.map((task, id) =>
-                        <div className="card mb-3" key={id}>
-                            <img src={`data:image/jpeg;base64,${task.file}`} width="200" height="200" className="card-img-top" onClick={() => setIsModal(!isModal)}/>
-                            <div className="card-body">
-                                <h5 className="card-title">{task.task_name}</h5>
-                                <p className="card-text">{task.task_description}</p>
-                                <input
-                                    id={`task_${task.task_id}`}
-                                    className='form-control'
-                                    type={'text'}
-                                    placeholder={'Впишите ответ'}
-                                />
-                            </div>
-                        </div>
-                    )}
-                    <button className={'btn btn-secondary'} type={'submit'}>
-                        Отправить
-                        <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                        <span className="visually-hidden">Loading...</span>
-                    </button>
-                </form> :
-                <p> Вариант пустой или его не создали </p>
-            }
+            {isLoading ?
+                <>
+                    <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    <span className="visually-hidden">Loading...</span>
+                </> : <section>
+                    {tasks.length > 0 ?
+                        <form>
+                            <p>Вариант #{variantId}</p>
+                            {tasks.map((task, id) =>
+                                <div className="card mb-3" key={id}>
+                                    <img src={`data:image/jpeg;base64,${task.file}`} className="card-img-top"
+                                         onClick={() => {
+                                             setUrl(task.file)
+                                             ComponentModel()
+                                         }}/>
+                                    <div className="card-body">
+                                        <h5 className="card-title">{task.task_name}</h5>
+                                        <p className="card-text">{task.task_description}</p>
+                                        <textarea
+                                            id={`task_${task.task_id}`}
+                                            className='form-control'
+                                            placeholder={'Впишите ответ'}
+                                            rows={1}
+                                            required={true}
+                                            onBlur={e => onChange(e.target.id, e.target.value)}
+                                        />
+                                    </div>
+                                </div>
+                            )}
+                            {isModal && <ShowModal/>}
+                            <button className={'btn btn-secondary'} type={'button'} onClick={SendAnswers}>
+                                {isLoading ?
+                                    <>
+                                <span className="spinner-border spinner-border-sm" role="status"
+                                      aria-hidden="true"></span>
+                                        <span className="visually-hidden">Loading...</span>
+                                    </> : <p>Отправить</p>}
+                            < /button>
+                        </form> :
+                        <p> Вариант пустой или его не создали </p>
+                    }
+                </section>}
+
         </div>
 
     )
