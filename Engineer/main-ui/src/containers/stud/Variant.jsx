@@ -42,8 +42,23 @@ export default function VariantOfStudent() {
             })
 
     }, []);
-    function ShowModal(){
 
+    function ComponentModel(){
+        setIsModal(true);
+    }
+    function ShowModal(props){
+        console.log(isModal)
+        // document.addEventListener("click", event => {
+        //     if (!event.target.closest("#modal-content-src") && !event.target.closest("#modalSrc")) {
+        //         setIsModal(false);
+        //     }
+        // });
+        return(
+            <section id={'modalSrc'}>
+                <img id={'modal-content-src'} src={props.src} alt={''}/>
+                <p>xyi</p>
+            </section>
+        )
     }
 
     return (
@@ -53,7 +68,9 @@ export default function VariantOfStudent() {
                     <p>Вариант #{variantId}</p>
                     {tasks.map((task, id) =>
                         <div className="card mb-3" key={id}>
-                            <img src={`data:image/jpeg;base64,${task.file}`} width="200" height="200" className="card-img-top" onClick={() => setIsModal(!isModal)}/>
+                            <button type={"button"} onClick={ComponentModel}>
+                                <img src={`data:image/jpeg;base64,${task.file}`} className="card-img-top"/>
+                            </button>
                             <div className="card-body">
                                 <h5 className="card-title">{task.task_name}</h5>
                                 <p className="card-text">{task.task_description}</p>
@@ -66,6 +83,7 @@ export default function VariantOfStudent() {
                             </div>
                         </div>
                     )}
+                    {isModal && <ShowModal />}
                     <button className={'btn btn-secondary'} type={'submit'}>
                         Отправить
                         <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
