@@ -263,7 +263,7 @@ class Student_Login_and_Password_by_group_id(APIView):
 
 class Student_group_by_id(APIView):  # группы
     def post(self, request):
-        serializer = Data_by_id_serializer(data=request.data)
+        serializer = Student_id_Serializer(data=request.data)
         if serializer.is_valid():
             students = Student.objects.get(id=serializer.validated_data['id'])
             if students:
@@ -288,12 +288,23 @@ class Teacher_Name(APIView):
 
 class Student_id_by_login(APIView):  # айдишники
     def post(self, request):
-        serializer = Student_id_Serializer(data=request.data)
+        serializer = Student_login_Serializer(data=request.data)
         if serializer.is_valid():
             student_id = Student.objects.filter(student_login=serializer.validated_data["login"])
             if student_id:
                 return JsonResponse(data={'student_id': student_id[0].id}, status=200)
             return JsonResponse(data={'message': 'Id is Null'}, status=404)
+        return JsonResponse(data={'message': 'Not valid data'}, status=400)
+
+class Delete_Student(APIView):
+    def post(self, request):
+        student_id = Student_id_Serializer(data=request.data)
+        if student_id.is_valid():
+                student_del = Student.objects.get(id=student_id.validated_data["id"])
+                if student_del:
+                    student_del.delete()
+                    return JsonResponse(data={'message': 'Student was deleted successfully'}, status=200)
+                return JsonResponse(data={'message': 'Tis student is None'}, status=404)
         return JsonResponse(data={'message': 'Not valid data'}, status=400)
 
 
