@@ -11,6 +11,7 @@ import {
     AUTHENTICATED_SUCCESS,
     LOGOUT_FAIL, LOGIN_STUDENT_SUCCESS, LOGIN_STUDENT_FAIL, LOGOUT_STUDENT, LOGOUT_STUDENT_FAIL
 } from './types.jsx';
+import Cookies from "universal-cookie";
 
 export const load_user = () => async dispatch => {
     if (localStorage.getItem('access')) {
@@ -153,39 +154,13 @@ export const checkAuthenticated = () => async dispatch => {
 };
 
 export const logout = () => dispatch => {
-    try {
-        const res = axios.post(`/teacher/logout/`, {});
-
-        dispatch({
-            type: LOGOUT,
-            payload: res.data
-        })
-    }
-    catch(err)
-    {
-        dispatch({
-            type: LOGOUT_FAIL
-        })
-    }
-
-
+    dispatch({
+        type: LOGOUT
+    })
 };
 export const logoutStudent = () => dispatch => {
-    try {
-        const res = axios.post(`/student/student_logout/`, {});
-
-        dispatch({
-            type: LOGOUT_STUDENT,
-            payload: res.data
-        })
-    }
-    catch(err)
-    {
-        dispatch({
-            type: LOGOUT_STUDENT_FAIL
-        })
-    }
-
-
+    dispatch({
+        type: LOGOUT_STUDENT
+    })
 };
 

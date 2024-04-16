@@ -6,6 +6,8 @@ import './stud.css';
 export default function VariantOfStudent() {
     const [isModal, setIsModal] = useState(false);
     const cookies = new Cookies();
+    const [error, setError] = useState('');
+    const [numTasks, setNumTasks] = useState();
     const [tasks, setTasks] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [url, setUrl] = useState('');
@@ -39,6 +41,7 @@ export default function VariantOfStudent() {
         setIsLoading(true);
         axios.post('/teacher/test_tasks/', formData, config)
             .then(res => {
+                setNumTasks(res.data.tasks.length)
                 getTasks(res.data.tasks);
             })
             .catch(err => {
@@ -64,18 +67,23 @@ export default function VariantOfStudent() {
         )
     }
 
-    const onChange = (id, value) => setFormData(prevFormData => ({...prevFormData, [id]: value}));
+    const onChange = (id, value) => setFormData(prevFormData => ({...prevFormData, [id]: value.trim()}));
 
     function SendAnswers() {
         const data = {};
         data.test_id = variantId;
         data.true_answers = Object.values(formData);
-        axios.post('/student/upload_answers/', data, config)
+        console.log(data.true_answers.length, numTasks);
+        if (data.true_answers.length === numTasks){
+            axios.post('/student/upload_answers/', data, config)
             .then(() => setIsLoading(true))
             .finally(() => setIsLoading(false));
+        } else {
+            setError('Вы не заполнили все поля ответов')
+        }
     }
 
-
+    console.log(error);
     return (
         <div className={'container'}>
             {isLoading ?
@@ -95,13 +103,13 @@ export default function VariantOfStudent() {
                                          }}/>
                                     <div className="card-body">
                                         <h5 className="card-title">{task.task_name}</h5>
-                                        <p className="card-text">{task.task_description}</p>
+                                        <pre className="card-text">{task.task_description}</pre>
                                         <textarea
                                             id={`task_${task.task_id}`}
                                             className='form-control'
                                             placeholder={'Впишите ответ'}
                                             rows={1}
-                                            required={true}
+                                            required
                                             onBlur={e => onChange(e.target.id, e.target.value)}
                                         />
                                     </div>
@@ -114,6 +122,7 @@ export default function VariantOfStudent() {
                                 <span className="spinner-border spinner-border-sm" role="status"
                                       aria-hidden="true"></span>
                                         <span className="visually-hidden">Loading...</span>
+                                {error.length > 0 && error}
                                     </> : <p>Отправить</p>}
                             < /button>
                         </form> :
