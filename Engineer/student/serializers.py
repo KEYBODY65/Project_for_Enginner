@@ -8,4 +8,4 @@ class Login_StudentSerializer(serializers.Serializer):
 
 class Answer_Serializer(serializers.Serializer):
     task_id = serializers.IntegerField()
-    true_answer = serializers.CharField() # child - в какой типизации передаются объекты в массиве
+    true_answers = serializers.CharField(allow_null=True)  # child - в какой типизации передаются объекты в массиве

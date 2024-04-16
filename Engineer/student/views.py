@@ -24,10 +24,12 @@ class Login_student(APIView):
 class UploadAnswers_view(APIView):
     def post(self, request):
         true_answer = Answer_Serializer(data=request.data)
+        true_answer.is_valid()
+        print(true_answer.errors)
         if true_answer.is_valid():
             tsk = Task.objects.get(id=true_answer.validated_data['task_id'])
             if tsk is not None:
-                tru_answ = true_answer.validated_data['true_answer']
+                tru_answ = true_answer.validated_data['true_answers']
                 if tsk.true_answer == tru_answ:
                     return JsonResponse(data={'True_of_False': 1}, status=200)
                 return JsonResponse(data={'True_of_False': 0}, status=200)

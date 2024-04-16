@@ -64,7 +64,7 @@ class Current_Task(APIView):
         if task_id.is_valid():
             data = Task.objects.get(id=task_id.validated_data['id'])
             enc_file = encoding_file(
-                f'/home/misha/PycharmProjects/Project_for_Enginner/Engineer/media/{str(data.file)}')
+                f'C:/Users/Lenovo X1/PycharmProjects/Project_for_Enginner/Engineer/media/{str(data.file)}')
             task_data = {
                 'task_id': data.id,
                 'task_name': data.task_name,

@@ -8,7 +8,6 @@ urlpatterns = [
     path('register_data/', Create_user.as_view(), name='user_create'),
     path('auth/', include('main.urls')),
     path('auth_data/', Login_user.as_view(), name='auth_users'),
-    path('logout/', Logout_user.as_view(), name='logout_user'),
     path('dashboard/', include('main.urls')),
     path('dashboard/new_task/', include('main.urls')),
     path('new_task_data/', Create_task.as_view(), name='creation_tasks'),

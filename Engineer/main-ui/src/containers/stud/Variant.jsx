@@ -67,14 +67,13 @@ export default function VariantOfStudent() {
         )
     }
 
-    const onChange = (id, value) => setFormData(prevFormData => ({...prevFormData, [id]: value.trim()}));
+    const onChange = (id, value) => setFormData(prevFormData => ({...prevFormData, [id]: value}));
 
     function SendAnswers() {
         const data = {};
         data.test_id = variantId;
-        data.true_answers = Object.values(formData);
-        console.log(data.true_answers.length, numTasks);
-        if (data.true_answers.length === numTasks){
+        data.true_answers = formData;
+        if (Object.values(formData).length === numTasks){
             axios.post('/student/upload_answers/', data, config)
             .then(() => setIsLoading(true))
             .finally(() => setIsLoading(false));
@@ -105,7 +104,7 @@ export default function VariantOfStudent() {
                                         <h5 className="card-title">{task.task_name}</h5>
                                         <pre className="card-text">{task.task_description}</pre>
                                         <textarea
-                                            id={`task_${task.task_id}`}
+                                            id={`${task.task_id}`}
                                             className='form-control'
                                             placeholder={'Впишите ответ'}
                                             rows={1}
