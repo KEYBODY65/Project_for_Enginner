@@ -232,7 +232,6 @@ class Test_Tasks_by_test_id(APIView):
             test_data = Test.objects.get(id=serializer.validated_data['test_id'])
             if test_data:
                 tasks = [elem.id for elem in test_data.task_ids.all()]
-                print(f'333333333333333333333333    {tasks}')
                 return JsonResponse(data={'tasks': tasks}, status=200)
             return JsonResponse(data={'message': 'test_data is empty'}, status=404)
         return JsonResponse(data={'message': 'Not valid data'}, status=400)
@@ -241,7 +240,6 @@ class Test_Tasks_by_test_id(APIView):
 class Teacher_tasks(APIView):
     def get(self, request):
         tasks_data = Task.objects.filter(task_builder=request.user.id)
-        print(tasks_data)
         if tasks_data:
             tasks_names = [task.task_name for task in tasks_data]
             task_ids = [elem.id for elem in tasks_data]

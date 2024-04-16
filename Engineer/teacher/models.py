@@ -56,9 +56,3 @@ class Test(models.Model):
     name_of_test = models.CharField(max_length=255)
     task_ids = models.ManyToManyField(Task)
     group_test = models.ForeignKey(Group, on_delete=models.PROTECT, blank=True, null=True)
-
-
-class Statistic(models.Model):
-    student = models.ForeignKey(Student, on_delete=models.CASCADE)
-    col_balls = models.IntegerField()
-    time = models.TimeField(auto_now=True)
