@@ -1,5 +1,5 @@
 from rest_framework.decorators import APIView
-from teacher.models import Task
+from teacher.models import Task, Student
 from .serializers import *
 from django.contrib.auth.models import auth
 from django.contrib.auth import login, logout
@@ -19,16 +19,6 @@ class Login_student(APIView):
                 return JsonResponse(data={'message': 'Student was successfully logged in!'}, status=200)
             return JsonResponse(data={'message': 'Student was`t successfully logged'}, status=400)
         return JsonResponse(data={'message': 'Invalid data'}, status=400)
-
-
-def logout_student(request):
-    logout(request)
-    return JsonResponse({'message': 'Student was logout'})
-
-
-class StudentStatistics_view(APIView):
-    def post(self, request):
-        pass
 
 
 class UploadAnswers_view(APIView):

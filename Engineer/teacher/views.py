@@ -40,13 +40,6 @@ class Login_user(APIView):
         return JsonResponse(data={'user_name': data.name}, status=200)
 
 
-class Logout_user(APIView):
-
-    def post(self, request):
-        logout(request)
-        return JsonResponse(data={'message': 'The User was logout'}, status=200)
-
-
 @ensure_csrf_cookie  # для получения CSRF-токена
 def get_csrf(request):
     cookies = request.COOKIES
@@ -296,15 +289,16 @@ class Student_id_by_login(APIView):  # айдишники
             return JsonResponse(data={'message': 'Id is Null'}, status=404)
         return JsonResponse(data={'message': 'Not valid data'}, status=400)
 
+
 class Delete_Student(APIView):
     def post(self, request):
         student_id = Student_id_Serializer(data=request.data)
         if student_id.is_valid():
-                student_del = Student.objects.get(id=student_id.validated_data["id"])
-                if student_del:
-                    student_del.delete()
-                    return JsonResponse(data={'message': 'Student was deleted successfully'}, status=200)
-                return JsonResponse(data={'message': 'Tis student is None'}, status=404)
+            student_del = Student.objects.get(id=student_id.validated_data["id"])
+            if student_del:
+                student_del.delete()
+                return JsonResponse(data={'message': 'Student was deleted successfully'}, status=200)
+            return JsonResponse(data={'message': 'Tis student is None'}, status=404)
         return JsonResponse(data={'message': 'Not valid data'}, status=400)
 
 
