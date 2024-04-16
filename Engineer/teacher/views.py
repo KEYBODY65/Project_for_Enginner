@@ -1,4 +1,3 @@
-from django.contrib.auth import logout
 from rest_framework.decorators import APIView
 from django.http import JsonResponse
 from .serializers import *
@@ -64,7 +63,7 @@ class Current_Task(APIView):
         if task_id.is_valid():
             data = Task.objects.get(id=task_id.validated_data['id'])
             enc_file = encoding_file(
-                f'C:/Users/Lenovo X1/PycharmProjects/Project_for_Enginner/Engineer/media/{str(data.file)}')
+                f'/home/misha/PycharmProjects/Project_for_Enginner/Engineer/media/{str(data.file)}')
             task_data = {
                 'task_id': data.id,
                 'task_name': data.task_name,
@@ -300,13 +299,3 @@ class Delete_Student(APIView):
                 return JsonResponse(data={'message': 'Student was deleted successfully'}, status=200)
             return JsonResponse(data={'message': 'Tis student is None'}, status=404)
         return JsonResponse(data={'message': 'Not valid data'}, status=400)
-
-
-class Statics_View(APIView):
-    def get(self, request):
-        statistic = Statistic.objects.all()
-        data = dict()
-        for elem in statistic:
-            data.setdefault(elem.student, elem.col_balls)
-
-        return JsonResponse(data={'data': data}, status=200)

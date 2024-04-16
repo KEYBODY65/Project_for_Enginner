@@ -2,8 +2,7 @@ from rest_framework.decorators import APIView
 from teacher.models import Task, Student
 from .serializers import *
 from django.contrib.auth.models import auth
-from django.contrib.auth import login, logout
-from django.contrib.auth import logout
+from django.contrib.auth import login
 from rest_framework.exceptions import JsonResponse
 
 
@@ -24,14 +23,12 @@ class Login_student(APIView):
 class UploadAnswers_view(APIView):
     def post(self, request):
         true_answer = Answer_Serializer(data=request.data)
-        true_answer.is_valid()
-        print(true_answer.errors)
         if true_answer.is_valid():
-            tsk = Task.objects.get(id=true_answer.validated_data['task_id'])
-            if tsk is not None:
-                tru_answ = true_answer.validated_data['true_answers']
-                if tsk.true_answer == tru_answ:
-                    return JsonResponse(data={'True_of_False': 1}, status=200)
-                return JsonResponse(data={'True_of_False': 0}, status=200)
-            return JsonResponse(data={'message': 'task is None'}, status=404)
+            col_true, col_tasks = 0, 0
+            for key, value in true_answer.validated_data['true_answers'].items():
+                col_tasks += 1
+                tsk = Task.objects.get(id=key)
+                if tsk.true_answer == value:
+                    col_true += 1
+            return JsonResponse(data={'col_true': col_true, 'col_tasks': col_tasks}, status=200)
         return JsonResponse(data={'message': 'Not valid data'}, status=400)
