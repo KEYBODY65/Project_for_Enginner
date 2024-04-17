@@ -7,6 +7,7 @@ import axios from "axios";
 export default function GroupStudent() {
     const [variantsByGroup, setVariantsByGroup] = useState([]);
     const [variantsIds, setVariantsIds] = useState([]);
+    const [groupId, setGroupId] = useState();
     const cookies = new Cookies();
     const config = {
         headers: {
@@ -18,6 +19,7 @@ export default function GroupStudent() {
     useEffect(() => {
         let params = new URLSearchParams(document.location.search);
         const groupId = Number(params.get("id"));
+        setGroupId(groupId);
         const formData = new FormData();
         formData.append("group_id", groupId);
         axios.post('/teacher/test_by_group/', formData, config)
@@ -43,7 +45,7 @@ export default function GroupStudent() {
                         </div>
                         <div className="card-body">
                             <h5 className="card-title">{variant}</h5>
-                            <a href={`/student/dashboard/group/test?idTest=${variantsIds[id]}`} className="btn btn-primary">Начать решать</a>
+                            <a href={`/student/dashboard/group/test?idTest=${variantsIds[id]}&Group_id=${groupId}`} className="btn btn-primary">Начать решать</a>
                         </div>
                     </div>
                 ))}

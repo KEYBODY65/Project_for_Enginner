@@ -24,11 +24,13 @@ class UploadAnswers_view(APIView):
     def post(self, request):
         true_answer = Answer_Serializer(data=request.data)
         if true_answer.is_valid():
-            col_true, col_tasks = 0, 0
+            col_true, col_tasks, max_col = 0, 0, 0
             for key, value in true_answer.validated_data['true_answers'].items():
                 col_tasks += 1
                 tsk = Task.objects.get(id=key)
-                if tsk.true_answer == value:
-                    col_true += 1
-            return JsonResponse(data={'col_true': col_true, 'col_tasks': col_tasks}, status=200)
+                trueansw = tsk.true_answer
+                max_col += int(trueansw)
+                if trueansw == value:
+                    col_true += int(trueansw)
+            return JsonResponse(data={'col_true': col_true, 'col_tasks': col_tasks, 'max_col': max_col}, status=200)
         return JsonResponse(data={'message': 'Not valid data'}, status=400)
