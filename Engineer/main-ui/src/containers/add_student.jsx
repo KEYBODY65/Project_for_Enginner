@@ -18,12 +18,16 @@ export default function Add_student() {
         }
     };
 
-    useEffect(() => {
+    function GetStudents() {
         axios.get('/teacher/add_student_data/')
             .then(res => {
                 setNames(Object.values(res.data.student));
                 setIds(Object.keys(res.data.student));
             })
+    }
+
+    useEffect(() => {
+        GetStudents();
     }, []);
 
     function onSubmit(e) {
@@ -36,13 +40,12 @@ export default function Add_student() {
         formData.append('student_patronymic', document.getElementById('student_patronymic').value);
 
         axios.post('/teacher/add_student_data/', formData, config)
-            .then(response => {
-                // Обработайте ответ сервера здесь
-                console.log(response.data);
+            .then(() => {
                 setsuccess(true);
                 document.querySelectorAll('input').forEach(input => {
                     input.value = '';
                 });
+                GetStudents();
             })
             .catch(error => {
                 // Обработайте ошибку здесь
@@ -63,16 +66,17 @@ export default function Add_student() {
 
         )
     }
-    function DeleteStudent(ids_index, index){
+
+    function DeleteStudent(ids_index, index) {
         setIds(ids.filter((id) => id !== ids_index));
         setNames(names.filter((name) => name !== index));
-        console.log(names);
         const body = {};
         body.id = ids_index;
-        axios.post('', body, config);
+        axios.post('/teacher/delete_student/', body, config);
     }
 
     function ListOfUsers() {
+        setsuccess(false);
         return (
             <>
                 {names.length > 0 ?
@@ -93,7 +97,9 @@ export default function Add_student() {
                                         <th scope="row">{ids[id]}</th>
                                         <th scope="row">{name}</th>
                                         <th scope="row">
-                                            <button type="button" className="btn btn-danger" onClick={() => DeleteStudent(ids[id], name)}>Удалить</button>
+                                            <button type="button" className="btn btn-danger"
+                                                    onClick={() => DeleteStudent(ids[id], name)}>Удалить
+                                            </button>
                                         </th>
                                     </tr>
                                 )
@@ -101,7 +107,7 @@ export default function Add_student() {
                             </tbody>
                         </table>
                     </section> : <p> Вы не добавили ни одного ученика</p>
-            }
+                }
             </>
         )
     }
@@ -150,7 +156,7 @@ export default function Add_student() {
             <hr className="my-4"/>
             <button type={'button'} onClick={() => setList(!list)} className="btn btn-primary mt-2">Список учеников
             </button>
-            {list && <ListOfUsers />}
+            {list && <ListOfUsers/>}
         </section>
     )
 }

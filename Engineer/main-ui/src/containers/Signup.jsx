@@ -1,44 +1,34 @@
-import React, {useState, useEffect} from 'react';
+import {useState} from 'react';
 import {Link, Navigate} from 'react-router-dom';
 import { connect } from 'react-redux';
 import { signup } from '../actions/auth.jsx';
-import axios from 'axios';
+import Cookies from "universal-cookie";
 
 
 
 const Signup = ({signup, isAuthenticated}) => {
     const [accountCreated, setAccountCreated] = useState(false);
     const [formData, setFormData] = useState({
-        email: '', name: '', surname: '', password: '', re_password: '', csrfToken: '',
+        email: '', name: '', surname: '', password: '', re_password: '',
     });
+    const cookies = new Cookies();
 
-    useEffect(() => {
-        axios
-            .get('/teacher/get_csrf')
-            .then(res => {
-                const csrfToken = res.data.csrfToken;
-                setFormData({...formData, csrfToken});
-            })
-            .catch(err => {
-                console.error(err);
-            });
-    }, []);
 
-    const {csrfToken, name, surname, email, password, re_password} = formData;
+    const { name, surname, email, password, re_password} = formData;
     const onChange = e => setFormData({...formData, [e.target.name]: e.target.value});
     const onSubmit = e => {
         e.preventDefault();
 
         if (password === re_password) {
-            signup(name, surname, email, password, csrfToken);
+            signup(name, surname, email, password, cookies.get('csrftoken'));
             setAccountCreated(true);
         }
     };
 
 
-// if (isAuthenticated) {
-//     return <Navigate to='/teacher' />
-// }
+if (isAuthenticated) {
+    return <Navigate to='/teacher/dashboard' />
+}
 
 if (accountCreated) {
     return <Navigate to='/teacher/auth' />
@@ -48,7 +38,7 @@ if (accountCreated) {
         <h1>Регистрация</h1>
         <p>Создай свой аккаунт</p>
         <form onSubmit={e => onSubmit(e)}>
-            <input type="hidden" name="csrfmiddlewaretoken" value={csrfToken}/>
+            <input type="hidden" name="csrfmiddlewaretoken" value={cookies.get('csrftoken')}/>
             <div className='form-group'>
                 <input
                     className='form-control'

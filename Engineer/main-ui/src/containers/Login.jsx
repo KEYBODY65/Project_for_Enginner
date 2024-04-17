@@ -1,38 +1,25 @@
-import {useState, useEffect} from 'react';
+import {useState} from 'react';
 import {Link, Navigate} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {login} from '../actions/auth.jsx'
-import axios from 'axios';
+import Cookies from "universal-cookie";
 
 function Login({login, isAuthenticated}) {
     const [formData, setFormData] = useState({
         email: '',
-        password: '',
-        csrfToken: ''
+        password: ''
     });
-    // const [err, setErr] = useState('');
-    // const [hasError, setHasError] = useState(false)
 
-    useEffect(() => {
-        axios
-            .get('/teacher/get_csrf')
-            .then(res => {
-                const csrfToken = res.data.csrfToken;
-                setFormData({...formData, csrfToken});
-            })
-            .catch(err => {
-                console.error(err);
-            });
-    }, []);
+    const cookies = new Cookies();
 
-    const {email, password, csrfToken} = formData;
+    const {email, password} = formData;
 
     const onChange = e => setFormData({...formData, [e.target.name]: e.target.value});
 
     const onSubmit = e => {
         e.preventDefault();
 
-        login(email, password, csrfToken)
+        login(email, password, cookies.get('csrftoken'))
     };
     if (isAuthenticated) {
          return <Navigate to='/teacher/dashboard'/>
@@ -43,7 +30,7 @@ function Login({login, isAuthenticated}) {
             <h1>Вход</h1>
             <p>Войти в аккаунт</p>
             <form name='login' onSubmit={e => onSubmit(e)}>
-                <input type="hidden" name="csrfmiddlewaretoken" value={csrfToken}/>
+                <input type="hidden" name="csrfmiddlewaretoken" value={cookies.get('csrftoken')}/>
                 <div className='form-group'>
                     <input
                         className='form-control'

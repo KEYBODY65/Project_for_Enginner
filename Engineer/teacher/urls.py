@@ -32,5 +32,6 @@ urlpatterns = [
     path('students_groups/', Student_group_by_id.as_view(), name='all of group'),
     path('students_data/', Student_id_by_login.as_view(), name='all of students data'),
     path('teacher_name_by_id/', Teacher_Name.as_view(), name='teacher name by id'),
+    path('delete_student/', Delete_Student.as_view(), name='delete student'),
     path('get_csrf/', get_csrf)
 ]
