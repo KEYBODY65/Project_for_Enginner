@@ -1,14 +1,15 @@
 import axios from 'axios';
 import {useEffect, useState} from 'react';
+import Cookies from "universal-cookie";
 
 export default function Group() {
     const [Test, setTest] = useState(false);
     const [tests, setTests] = useState([]);
     const [tasks, setTasks] = useState([]);
-    const [token, setToken] = useState();
+    const cookies = new Cookies();
     const config = {
         headers: {
-            'Content-Type': 'application/json', 'Accept': 'application/json', 'X-CSRFToken': token
+            'Content-Type': 'application/json', 'Accept': 'application/json', 'X-CSRFToken': cookies.get('csrftoken')
         }
     };
 
@@ -44,15 +45,6 @@ export default function Group() {
             .catch(error => {
                 console.error(error);
             });
-
-        axios.get('/teacher/get_csrf')
-            .then(res => {
-                const Token = res.data.csrfToken;
-                setToken(Token);
-            })
-            .catch(err => {
-                console.error(err);
-            });
     }, []);
 
     function onSubmit(e) {
@@ -64,15 +56,12 @@ export default function Group() {
         document.querySelectorAll('input[type="checkbox"]:checked').forEach(elem => {
             taskIds.push(elem.id);
         })
-        console.log(taskIds)
 
         taskIds.forEach(id => {
             formData.append('task_ids[]', id);
         });
-        console.log(FormData)
         axios.post('/teacher/add_test_data/', formData, config)
-            .then(response => {
-                console.log(response.data);
+            .then(() => {
                 location.reload();
             })
             .catch(error => {

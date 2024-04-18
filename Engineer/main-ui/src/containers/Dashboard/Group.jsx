@@ -55,7 +55,6 @@ export default function Group() {
 
         axios.post('/teacher/group_student/', formData, config)
             .then(res => {
-                console.log(res.data);
                 setGettingStudents(res.data.group_students);
             })
             .catch(err => {
@@ -92,8 +91,7 @@ export default function Group() {
         }
         formData.append('student_id', selectedStudents);
         axios.post('/teacher/dashboard/add_students_to_group_data/', formData, config)
-            .then(res => {
-                console.log(res.data)
+            .then(() => {
                 location.reload();
             })
             .catch(err => {
@@ -117,8 +115,7 @@ export default function Group() {
             formData.append('group_id', groupId);
             formData.append('test_id', test[0])
             axios.post('/teacher/dashboard/add_test_to_group_data/', formData, config)
-                .then(response => {
-                    console.log(response.data)
+                .then(() => {
                     setSuccess(true);
                     document.querySelectorAll('input[type="radio"]:checked').forEach(input => {
                         input.checked = false;

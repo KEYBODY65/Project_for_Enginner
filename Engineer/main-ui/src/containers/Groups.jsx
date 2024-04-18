@@ -1,25 +1,25 @@
 import './static/Dashboard.css';
 import axios from 'axios';
 import {useState, useEffect} from 'react';
+import Cookies from "universal-cookie";
 
 export default function CreateTask() {
     const [Group, setGroup] = useState(false);
     const [groups, setGroups] = useState([]);
     const [url, setUrl] = useState([]);
-    const [Token, setToken] = useState('');
+    const cookies = new Cookies();
 
     const config = {
         headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
-            'X-CSRFToken': Token
+            'X-CSRFToken': cookies.get('csrftoken')
         }
     };
 
     useEffect(() => {
         axios.get('/teacher/new_group_data')
             .then(response => {
-                console.log(response.data);
                 setGroups([]);
                 const groups = response.data.groups
                 const group_ids = response.data.groups_ids;
@@ -34,10 +34,8 @@ export default function CreateTask() {
                 group_ids.forEach(id => {
                     let url = new URL('/teacher/dashboard/groups/group', window.location.origin);
                     url.searchParams.set('id', id)
-                    console.log(url)
                     paramsUrl.push(url)
                 })
-                console.log(paramsUrl)
                 setUrl(paramsUrl);
 
                 // setUrl(paramsUrl);
@@ -45,15 +43,6 @@ export default function CreateTask() {
             })
             .catch(error => {
                 console.error(error);
-            });
-
-        axios.get('/teacher/get_csrf')
-            .then(res => {
-                const Token = res.data.csrfToken;
-                setToken(Token);
-            })
-            .catch(err => {
-                console.error(err);
             });
     }, []);
 
@@ -64,10 +53,6 @@ export default function CreateTask() {
         formData.append('group_name', document.getElementById('group_name').value);
 
         axios.post('/teacher/new_group_data/', formData, config)
-            .then(response => {
-                // Обработайте ответ сервера здесь
-                console.log(response.data);
-            })
             .catch(error => {
                 // Обработайте ошибку здесь
                 console.error(error);

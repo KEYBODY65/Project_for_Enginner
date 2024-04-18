@@ -1,26 +1,16 @@
 import './static/Dashboard.css';
-import {useEffect, useState} from 'react';
+import {useState} from 'react';
 import axios from "axios";
+import Cookies from "universal-cookie";
 
 export default function CreateTask() {
     const [tasks, setTasks] = useState(false);
-    const [csrfToken, setCsrfToken] = useState();
+    const cookies = new Cookies();
 
     function handleNewTaskClick() {
         setTasks(true);
     }
 
-    useEffect(() => {
-        axios
-            .get('/teacher/get_csrf')
-            .then(res => {
-                const csrfToken = res.data.csrfToken;
-                setCsrfToken(csrfToken);
-            })
-            .catch(err => {
-                console.error(err);
-            });
-    }, []);
     function handleSubmit(event) {
         event.preventDefault();
         const formData = {
@@ -29,20 +19,17 @@ export default function CreateTask() {
             true_answer: document.getElementById('true_answer').value,
             weight: document.getElementById('input').value,
             file: document.getElementById('formFileMultiple').files[0],
-            subject: document.getElementById('floatingSelect').value,
-            choice: document.querySelector('input[type="radio"]:checked').id,
+            subject: document.getElementById('floatingSelect').value
         };
 
         // Отправляем formData на сервер
         axios.post('/teacher/new_task_data/', formData, {
             headers: {
-                'X-CSRFToken': csrfToken,
+                'X-CSRFToken': cookies.get('csrftoken'),
                 'Content-Type': 'multipart/form-data'
             }
         })
-            .then(response => {
-                console.log(response.data);
-            })
+
             .catch(error => {
                 console.error('Error:', error);
             });
@@ -82,19 +69,6 @@ export default function CreateTask() {
                     <input className="form-control" placeholder="Leave a comment here" id="true_answer" type='number'/>
                     <label htmlFor="input">Правильный ответ</label>
                 </div>
-                <div className="form-check">
-                    <input className="form-check-input" type="radio" name="flexRadioDefault" id="0"/>
-                    <label className="form-check-label" htmlFor="0">
-                        Несколько вариантов ответа
-                    </label>
-                </div>
-                <div className="form-check">
-                    <input className="form-check-input" type="radio" name="flexRadioDefault" id="1"
-                           checked/>
-                    <label className="form-check-label" htmlFor="1">
-                        Развернутый ответ
-                    </label>
-                </div>
                 <br/>
             </div>
         );
@@ -117,7 +91,7 @@ export default function CreateTask() {
             {tasks ? (
                 <>
                     <form>
-                        <input type="hidden" name="csrfmiddlewaretoken" value={csrfToken}/>
+                        <input type="hidden" name="csrfmiddlewaretoken" value={cookies.get('csrftoken')}/>
                         {renderTasks()}
                         <button type='button' onClick={handleSubmit}
                                 className='btn btn-primary mt-2'> Отправить данные на сервер
