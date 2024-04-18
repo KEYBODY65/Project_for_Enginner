@@ -62,8 +62,7 @@ class Current_Task(APIView):
         task_id = Data_by_id_serializer(data=request.data)
         if task_id.is_valid():
             data = Task.objects.get(id=task_id.validated_data['id'])
-            enc_file = encoding_file(
-                f'C:/Users/Lenovo X1/PycharmProjects/Project_for_Enginner/Engineer/media/{str(data.file)}')
+            enc_file = encoding_file(f'/home/a0842658/domains/protontasks.ru/Engineer/media/{str(data.file)}')
             task_data = {
                 'task_id': data.id,
                 'task_name': data.task_name,
@@ -228,14 +227,13 @@ class Test_Tasks_by_test_id(APIView):
         return JsonResponse(data={'message': 'Not valid data'}, status=400)
 
 
-class Teacher_tasks(APIView):
-    def get(self, request):
-        tasks_data = Task.objects.filter(task_builder=request.user.id)
-        if tasks_data:
-            tasks_names = [task.task_name for task in tasks_data]
-            task_ids = [elem.id for elem in tasks_data]
-            return JsonResponse(data={'task_ids': task_ids, 'task_names': tasks_names}, status=200)
-        return JsonResponse(data={'Message': 'Lists is empty'}, status=400)
+    class Teacher_tasks(APIView):
+        def get(self, request):
+            tasks_data = Task.objects.filter(task_builder=request.user.id)
+            if tasks_data:
+                tasks_names = {task.id:task.task_name for task in tasks_data}
+                return JsonResponse(data={'task_names': tasks_names}, status=200)
+            return JsonResponse(data={'Message': 'Lists is empty'}, status=400)
 
 
 class Student_Login_and_Password_by_group_id(APIView):
